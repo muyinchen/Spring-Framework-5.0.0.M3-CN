@@ -8,4 +8,5 @@
         * [2.2 Modules](22-modules.md)
             * [2.2.1 Core Container](221-core-container.md)
             * [2.2.2 AOP and Instrumentation](222-aop-and-instrumentation.md)
+            * [2.2.3 Messaging](223-messaging.md)
 
