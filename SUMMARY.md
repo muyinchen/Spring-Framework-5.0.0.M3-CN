@@ -6,4 +6,5 @@
     * [2.Spring框架简介](2spring框架简介.md)
         * [2.1 依赖注入和控制反转](21-依赖注入和控制反转.md)
         * [2.2 Modules](22-modules.md)
+            * [2.2.1 Core Container](221-core-container.md)
 

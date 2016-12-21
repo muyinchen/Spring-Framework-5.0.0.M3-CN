@@ -1,0 +1,17 @@
+### 2.2.1 Core Container
+
+The [*Core Container*](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-introduction) consists of the `spring-core`, `spring-beans`, `spring-context`, `spring-context-support`, and `spring-expression` (Spring Expression Language) modules.
+
+The `spring-core` and `spring-beans` modules [provide the fundamental parts of the framework](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-introduction), including the IoC and Dependency Injection features. The`BeanFactory` is a sophisticated implementation of the factory pattern. It removes the need for programmatic singletons and allows you to decouple the configuration and specification of dependencies from your actual program logic.
+
+核心容器由`spring-core`，`spring-beans`，`spring-context`，`spring-context-support`和`spring-expression（Spring Expression Language）模块`组成。
+
+`spring-core`和`spring-beans`模块提供了框架的基本部分，包括`IoC`和依赖注入功能。 `BeanFactory`是一个复杂的工厂模式的实现。 它消除了编程单例的需要(程序员不必对单例亲力亲为)，并允许你从实际的程序逻辑中分离依赖性的配置和规范。
+
+The [*Context*](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#context-introduction) (`spring-context`) module builds on the solid base provided by the [*Core and Beans*](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-introduction) modules: it is a means to access objects in a framework-style manner that is similar to a JNDI registry. The Context module inherits its features from the Beans module and adds support for internationalization (using, for example, resource bundles), event propagation, resource loading, and the transparent creation of contexts by, for example, a Servlet container. The Context module also supports Java EE features such as EJB, JMX, and basic remoting. The `ApplicationContext` interface is the focal point of the Context module. `spring-context-support` provides support for integrating common third-party libraries into a Spring application context, in particular for caching (EhCache, JCache) and scheduling (CommonJ, Quartz).
+
+`Context（spring-context）`模块建立在`Core和Beans模块`提供的实体基础之上：它是一种以类似于`JNDI注册表`的框架样式方式访问对象的手段。 `Context模块`从`Beans模块`继承其特性，并增加了对国际化（例如使用资源束），事件传播，资源加载以及通过例如`Servlet容器`的透明创建上下文的支持。 `Context模块`还支持`Java EE功能`，如`EJB`，`JMX`和基本远程处理。` ApplicationContext`接口是`Context模块`的焦点。` spring-context-support`提供支持将常见的第三方库集成到`Spring`应用程序上下文中，特别是用于缓存（`EhCache`，`JCache`）和调度（`CommonJ`，`Quartz`）。
+
+The `spring-expression` module provides a powerful [*Expression Language*](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#expressions) for querying and manipulating an object graph at runtime. It is an extension of the unified expression language (unified EL) as specified in the JSP 2.1 specification. The language supports setting and getting property values, property assignment, method invocation, accessing the content of arrays, collections and indexers, logical and arithmetic operators, named variables, and retrieval of objects by name from Spring’s IoC container. It also supports list projection and selection as well as common list aggregations.
+
+`spring-expression`模块提供了一个强大的表达式语言，用于在运行时查询和操作对象图。 它是JSP 2.1规范中规定的统一表达式语言（统一`EL`）的扩展。 该语言支持设置和获取属性值，属性赋值，方法调用，访问数组的内容，集合和索引器，逻辑和算术运算符，命名变量，以及通过`Spring IoC`容器中的名称检索对象。 它还支持列表投影和选择以及公共列表聚合。
