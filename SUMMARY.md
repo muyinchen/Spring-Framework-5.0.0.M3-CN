@@ -13,4 +13,5 @@
             * [2.2.5 Web](225-web.md)
             * [2.2.6 Test](226-test.md)
         * [2.3 Usage scenarios 使用场景](23-usage-scenarios-使用场景.md)
+            * [2.3.1 Dependency Management and Naming Conventions    依赖关系管理和命名约定](231-dependency-management-and-naming-conventions----依赖关系管理和命名约定.md)
 
