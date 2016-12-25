@@ -15,5 +15,7 @@
         * [2.3 Usage scenarios 使用场景](23-usage-scenarios-使用场景.md)
             * [2.3.1 Dependency Management and Naming Conventions    依赖关系管理和命名约定](231-dependency-management-and-naming-conventions----依赖关系管理和命名约定.md)
             * [2.3.2 Logging 日志](232-logging-日志.md)
-* [Part II. Core Technologies 核心技术](part-ii-core-technologies-核心技术.md)
+* [Part II. Core Technologies核心技术](part-ii-core-technologies-核心技术.md)
+    * [3.The IoC container](3the-ioc-container.md)
+        * [3.1 Spring IoC容器和bean的简介](31-spring-ioc容器和bean的简介.md)
 
