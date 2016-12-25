@@ -18,4 +18,5 @@
 * [Part II. Core Technologies核心技术](part-ii-core-technologies-核心技术.md)
     * [3.The IoC container](3the-ioc-container.md)
         * [3.1 Spring IoC容器和bean的简介](31-spring-ioc容器和bean的简介.md)
+        * [3.2 容器概述](32-容器概述.md)
 
