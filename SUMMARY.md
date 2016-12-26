@@ -19,4 +19,5 @@
     * [3.The IoC container](3the-ioc-container.md)
         * [3.1 Spring IoC容器和bean的简介](31-spring-ioc容器和bean的简介.md)
         * [3.2 容器概述](32-容器概述.md)
+            * [3.2.1 配置元数据](321-配置元数据.md)
 
