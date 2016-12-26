@@ -22,6 +22,7 @@ Spring IoC容器管理一个或多个* beans *。这些bean是使用您提供给
 - 在新创建的对象中设置的其他配置设置，例如，在管理连接池的bean中使用的连接数，或者池的大小限制。
 
 此元数据转换为构成每个bean定义的一组属性。
+
 **Table 3.1. The bean definition**
 
 | Property                 | Explained in…​ 解释所在地方... ​               |
