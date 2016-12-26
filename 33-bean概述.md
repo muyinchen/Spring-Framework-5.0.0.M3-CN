@@ -39,6 +39,7 @@ Spring IoC容器管理一个或多个* beans *。这些bean是使用您提供给
 In addition to bean definitions that contain information on how to create a specific bean, the `ApplicationContext` implementations also permit the registration of existing objects that are created outside the container, by users. This is done by accessing the ApplicationContext’s BeanFactory via the method `getBeanFactory()`which returns the BeanFactory implementation `DefaultListableBeanFactory`. `DefaultListableBeanFactory` supports this registration through the methods `registerSingleton(..)` and `registerBeanDefinition(..)`. However, typical applications work solely with beans defined through metadata bean definitions.
 
 除了包含如何创建特定bean的bean定义之外，ApplicationContext实现还允许注册由用户在容器外部创建的现有对象。 这是通过访问ApplicationContext的BeanFactory通过方法`getBeanFactory()`来实现的，它返回BeanFactory实现`DefaultListableBeanFactory`。 `DefaultListableBeanFactory`通过方法`registerSingleton(..)`和`registerBeanDefinition(..)`支持这种注册。 然而,典型的应用程序只能通过元数据定义的 bean 来定义。
+
 | ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/note.png) |
 | ---------------------------------------- |
 | Bean元数据和手动提供的单例实例需要尽早注册，以便容器在自动装配和其他自检步骤期间正确地进行推理。 虽然在某种程度上支持覆盖现有元数据和现有单例实例，但是在运行时（与动态访问工厂同时）对新bean的注册未被官方支持，并且可能导致并发访问异常和/或bean容器中的不一致状态 。 |
