@@ -25,4 +25,5 @@
         * [3.3 Bean概述](33-bean概述.md)
             * [3.3.1 命名bean](331-命名bean.md)
             * [3.3.2 Instantiating beans](332-instantiating-beans.md)
+        * [3.4 Dependencies](34-dependencies.md)
 
