@@ -11,3 +11,26 @@ DI exists in two major variants, [Constructor-based dependency injection](http:
 代码与DI原理更清洁，当对象提供其依赖性时，解耦更有效。该对象不查找其依赖关系，并且不知道依赖关系的位置或类。因此，您的类变得更容易测试，特别是当依赖关系在接口或抽象基类上时，这允许在单元测试中使用存根或模拟实现。
 
 DI存在两个主要形式，[基于构造函数的依赖注入](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-constructor-injection) 和[基于Setter的依赖注入](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-setter-injection)。
+
+#### 基于构造方法的依赖注入
+
+*Constructor-based* DI is accomplished by the container invoking a constructor with a number of arguments, each representing a dependency. Calling a `static` factory method with specific arguments to construct the bean is nearly equivalent, and this discussion treats arguments to a constructor and to a `static` factory method similarly. The following example shows a class that can only be dependency-injected with constructor injection. Notice that there is nothing *special* about this class, it is a POJO that has no dependencies on container specific interfaces, base classes or annotations.
+
+*基于构造函数的* DI由容器调用具有多个参数的构造函数完成，每个参数表示依赖。 调用具有特定参数的`static`工厂方法来构造bean几乎是等效的，并且这个结论同样对将参数传递给构造函数和静态工厂方法有效。 以下示例显示只能使用构造函数注入进行依赖关系注入的类。 注意，这个类没有什么特别的*，它是一个POJO没有依赖于容器特定的接口，基类或注释。
+
+```java
+public class SimpleMovieLister {
+
+    // the SimpleMovieLister has a dependency on a MovieFinder
+    private MovieFinder movieFinder;
+
+    // a constructor so that the Spring container can inject a MovieFinder
+    public SimpleMovieLister(MovieFinder movieFinder) {
+        this.movieFinder = movieFinder;
+    }
+
+    // business logic that actually uses the injected MovieFinder is omitted...
+
+}
+```
+
