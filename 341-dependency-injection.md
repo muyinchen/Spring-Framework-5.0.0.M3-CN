@@ -103,4 +103,32 @@ The Spring container validates the configuration of each bean as the container i
 
 Spring容器在创建容器时验证每个bean的配置。但是，bean属性本身不会设置，直到实际创建的时候调用。在创建容器时创建单例范围并设置为预实例化的Bean（默认值）。范围在[第3.5节 “Bean scopes”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-scopes)中定义。否则，仅当请求时才创建bean。创建bean可能导致创建bean的图形，因为bean的依赖关系及其依赖关系（依此类推）被创建和分配。注意，那些依赖关系之间的分辨率不匹配可能迟到，即首次创建受影响的bean时显示。
 
+**循环依赖**
+
+If you use predominantly constructor injection, it is possible to create an unresolvable circular dependency scenario.
+
+For example: Class A requires an instance of class B through constructor injection, and class B requires an instance of class A through constructor injection. If you configure beans for classes A and B to be injected into each other, the Spring IoC container detects this circular reference at runtime, and throws a`BeanCurrentlyInCreationException`.
+
+One possible solution is to edit the source code of some classes to be configured by setters rather than constructors. Alternatively, avoid constructor injection and use setter injection only. In other words, although it is not recommended, you can configure circular dependencies with setter injection.
+
+Unlike the *typical* case (with no circular dependencies), a circular dependency between bean A and bean B forces one of the beans to be injected into the other prior to being fully initialized itself (a classic chicken/egg scenario).
+
+You can generally trust Spring to do the right thing. It detects configuration problems, such as references to non-existent beans and circular dependencies, at container load-time. Spring sets properties and resolves dependencies as late as possible, when the bean is actually created. This means that a Spring container which has loaded correctly can later generate an exception when you request an object if there is a problem creating that object or one of its dependencies. For example, the bean throws an exception as a result of a missing or invalid property. This potentially delayed visibility of some configuration issues is why `ApplicationContext` implementations by default pre-instantiate singleton beans. At the cost of some upfront time and memory to create these beans before they are actually needed, you discover configuration issues when the `ApplicationContext` is created, not later. You can still override this default behavior so that singleton beans will lazy-initialize, rather than be pre-instantiated.
+
+If no circular dependencies exist, when one or more collaborating beans are being injected into a dependent bean, each collaborating bean is *totally* configured prior to being injected into the dependent bean. This means that if bean A has a dependency on bean B, the Spring IoC container completely configures bean B prior to invoking the setter method on bean A. In other words, the bean is instantiated (if not a pre-instantiated singleton), its dependencies are set, and the relevant lifecycle methods (such as a [configured init method](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-initializingbean) or the [InitializingBean callback method](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-initializingbean)) are invoked.
+
+
+
+如果主要使用构造函数注入，可以创建一个不可解析的循环依赖场景。
+
+例如：A类通过构造函数注入需要B类的实例，B类通过构造函数注入需要A类的实例。如果将A和B类的bean配置为彼此注入，则Spring IoC容器在运行时检测到此循环引用，并抛出一个`BeanCurrentlyInCreationException`。
+
+一个可行的解决方案是编辑要由setter而不是构造函数配置的一些类的源代码。或者，避免构造函数注入，并仅使用setter注入。换句话说，虽然不推荐，可以使用setter注入配置循环依赖性。
+
+与典型情况（没有循环依赖）不同，bean A和bean B之间的循环依赖性迫使一个bean在被完全初始化之前被注入另一个bean（一个经典的鸡/鸡蛋场景）。
+
+你一般可以信任Spring做正确的事情。它在容器加载时检测配置问题，例如引用不存在的bean和循环依赖性。 Spring在实际创建bean时尽可能晚地设置属性并解析依赖关系。这意味着，如果在创建该对象或其某个依赖关系时出现问题，则在请求对象时，已正确加载的Spring容器可能稍后会生成异常。例如，bean由于缺少或无效的属性而抛出异常。这可能延迟一些配置问题的可见性是因为ApplicationContext实现这默认情况下预实例化单例bean。以实际需要之前创建这些bean的一些预先时间和内存为代价，您在创建ApplicationContext时不会发现配置问题。您仍然可以覆盖此默认行为，以便单例bean将延迟初始化，而不是预先实例化(其实就是懒加载，真正用到的时候才会发生，提高了系统的性能)。
+
+如果不存在循环依赖性，则当一个或多个协作bean被注入到依赖bean中时，每个协作bean在被注入到依赖bean之前被完全配置。这意味着如果bean A对bean B有依赖性，则Spring IoC容器在调用bean A上的setter方法之前完全配置bean B.换句话说，bean被实例化（如果不是实例化的单例）设置相关性，并调用相关的生命周期方法（如配置的init方法或InitializingBean回调方法）。
+
 
