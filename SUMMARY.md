@@ -27,4 +27,5 @@
             * [3.3.2 Instantiating beans](332-instantiating-beans.md)
         * [3.4 Dependencies](34-dependencies.md)
             * [3.4.1 Dependency Injection](341-dependency-injection.md)
+            * [ 3.4.2 Dependencies and configuration in detail](342-dependencies-and-configuration-in-detail.md)
 
