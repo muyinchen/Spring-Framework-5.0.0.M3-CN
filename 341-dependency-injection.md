@@ -131,4 +131,131 @@ If no circular dependencies exist, when one or more collaborating beans are bein
 
 如果不存在循环依赖性，则当一个或多个协作bean被注入到依赖bean中时，每个协作bean在被注入到依赖bean之前被完全配置。这意味着如果bean A对bean B有依赖性，则Spring IoC容器在调用bean A上的setter方法之前完全配置bean B.换句话说，bean被实例化（如果不是实例化的单例）设置相关性，并调用相关的生命周期方法（如配置的init方法或InitializingBean回调方法）。
 
+#### 依赖注入示例
+
+The following example uses XML-based configuration metadata for setter-based DI. A small part of a Spring XML configuration file specifies some bean definitions:
+以下示例使用基于XML的配置基于setter的DI。 Spring XML配置文件的一小部分指定了一些bean定义：
+
+```xml
+<bean id="exampleBean" class="examples.ExampleBean">
+    <!-- setter injection using the nested ref element -->
+    <property name="beanOne">
+        <ref bean="anotherExampleBean"/>
+    </property>
+
+    <!-- setter injection using the neater ref attribute -->
+    <property name="beanTwo" ref="yetAnotherBean"/>
+    <property name="integerProperty" value="1"/>
+</bean>
+
+<bean id="anotherExampleBean" class="examples.AnotherBean"/>
+<bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
+```
+
+```java
+public class ExampleBean {
+
+    private AnotherBean beanOne;
+    private YetAnotherBean beanTwo;
+    private int i;
+
+    public void setBeanOne(AnotherBean beanOne) {
+        this.beanOne = beanOne;
+    }
+
+    public void setBeanTwo(YetAnotherBean beanTwo) {
+        this.beanTwo = beanTwo;
+    }
+
+    public void setIntegerProperty(int i) {
+        this.i = i;
+    }
+
+}
+```
+
+In the preceding example, setters are declared to match against the properties specified in the XML file. The following example uses constructor-based DI:
+
+在前面的示例中，setters被声明为与XML文件中指定的属性匹配。 以下示例使用基于构造函数的DI：
+
+```xml
+<bean id="exampleBean" class="examples.ExampleBean">
+    <!-- constructor injection using the nested ref element -->
+    <constructor-arg>
+        <ref bean="anotherExampleBean"/>
+    </constructor-arg>
+
+    <!-- constructor injection using the neater ref attribute -->
+    <constructor-arg ref="yetAnotherBean"/>
+
+    <constructor-arg type="int" value="1"/>
+</bean>
+
+<bean id="anotherExampleBean" class="examples.AnotherBean"/>
+<bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
+```
+
+```java
+public class ExampleBean {
+
+    private AnotherBean beanOne;
+    private YetAnotherBean beanTwo;
+    private int i;
+
+    public ExampleBean(
+        AnotherBean anotherBean, YetAnotherBean yetAnotherBean, int i) {
+        this.beanOne = anotherBean;
+        this.beanTwo = yetAnotherBean;
+        this.i = i;
+    }
+
+}
+```
+
+The constructor arguments specified in the bean definition will be used as arguments to the constructor of the `ExampleBean`.
+
+Now consider a variant of this example, where instead of using a constructor, Spring is told to call a `static` factory method to return an instance of the object:
+
+在bean定义中指定的构造函数参数将被用作`ExampleBean`构造函数的参数。
+
+现在考虑这个例子的一个变体，在这里不使用构造函数，Spring被告知要调用一个`static`工厂方法来返回一个对象的实例：
+
+```java
+<bean id="exampleBean" class="examples.ExampleBean" factory-method="createInstance">
+    <constructor-arg ref="anotherExampleBean"/>
+    <constructor-arg ref="yetAnotherBean"/>
+    <constructor-arg value="1"/>
+</bean>
+
+<bean id="anotherExampleBean" class="examples.AnotherBean"/>
+<bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
+```
+
+```java
+public class ExampleBean {
+
+    // a private constructor
+    private ExampleBean(...) {
+        ...
+    }
+
+    // a static factory method; the arguments to this method can be
+    // considered the dependencies of the bean that is returned,
+    // regardless of how those arguments are actually used.
+    public static ExampleBean createInstance (
+        AnotherBean anotherBean, YetAnotherBean yetAnotherBean, int i) {
+
+        ExampleBean eb = new ExampleBean (...);
+        // some other operations...
+        return eb;
+    }
+
+}
+```
+
+Arguments to the `static` factory method are supplied via undefined`undefined` elements, exactly the same as if a constructor had actually been used. The type of the class being returned by the factory method does not have to be of the same type as the class that contains the `static` factory method, although in this example it is. An instance (non-static) factory method would be used in an essentially identical fashion (aside from the use of the `factory-bean` attribute instead of the `class` attribute), so details will not be discussed here.
+
+`static`工厂方法的参数是通过未定义的`undefined`元素提供的，完全和实际使用的构造函数一样。 由工厂方法返回的类的类型不必与包含“static”工厂方法的类的类型相同，尽管在本例中它是。 一个实例（非静态）工厂方法将以基本相同的方式使用（除了使用“factory-bean”属性而不是“class”属性），因此这里不再讨论细节。
+
+
 
