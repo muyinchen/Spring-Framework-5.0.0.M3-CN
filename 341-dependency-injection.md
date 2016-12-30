@@ -255,7 +255,7 @@ public class ExampleBean {
 
 Arguments to the `static` factory method are supplied via undefined`undefined` elements, exactly the same as if a constructor had actually been used. The type of the class being returned by the factory method does not have to be of the same type as the class that contains the `static` factory method, although in this example it is. An instance (non-static) factory method would be used in an essentially identical fashion (aside from the use of the `factory-bean` attribute instead of the `class` attribute), so details will not be discussed here.
 
-`static`工厂方法的参数是通过未定义的`undefined`元素提供的，完全和实际使用的构造函数一样。 由工厂方法返回的类的类型不必与包含“static”工厂方法的类的类型相同，尽管在本例中它是。 一个实例（非静态）工厂方法将以基本相同的方式使用（除了使用“factory-bean”属性而不是“class”属性），因此这里不再讨论细节。
+`static`工厂方法的参数是通过未定义的`<constructor-arg/>`元素提供的，完全和实际使用的构造函数一样。 由工厂方法返回的类的类型不必与包含“static”工厂方法的类的类型相同，尽管在本例中它是。 一个实例（非静态）工厂方法将以基本相同的方式使用（除了使用“factory-bean”属性而不是“class”属性），因此这里不再讨论细节。
 
 
 
