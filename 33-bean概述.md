@@ -24,18 +24,19 @@ Spring IoC容器管理一个或多个* beans *。这些bean是使用您提供给
 此元数据转换为构成每个bean定义的一组属性。
 
 **Table 3.1. The bean definition**
-
-| Property                 | Explained in…​ 解释所在地方... ​               |
+| Property                 | Explained in…​   解释所在地方... ​                           |
 | ------------------------ | ---------------------------------------- |
-| class                    | [Section 3.3.2, “Instantiating beans”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class) |
-| name                     | [Section 3.3.1, “Naming beans”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-beanname) |
-| scope                    | [Section 3.5, “Bean scopes”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-scopes) |
-| constructor arguments    | [Section 3.4.1, “Dependency Injection”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-collaborators) |
-| properties               | [Section 3.4.1, “Dependency Injection”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-collaborators) |
-| autowiring mode          | [Section 3.4.5, “Autowiring collaborators”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-autowire) |
-| lazy-initialization mode | [Section 3.4.4, “Lazy-initialized beans”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-lazy-init) |
-| initialization method    | [the section called “Initialization callbacks”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-initializingbean) |
-| destruction method       | [the section called “Destruction callbacks”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-disposablebean) |
+| class                    | [Section 3.3.2, “Instantiating beans”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class) |
+| name                     | [Section 3.3.1, “Naming beans”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-beanname) |
+| scope                    | [Section 3.5, “Bean scopes”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-scopes) |
+| constructor arguments    | [Section 3.4.1, “Dependency Injection”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-collaborators) |
+| properties               | [Section 3.4.1, “Dependency Injection”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-collaborators) |
+| autowiring mode          | [Section 3.4.5, “Autowiring collaborators”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-autowire) |
+| lazy-initialization mode | [Section 3.4.4, “Lazy-initialized beans”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-lazy-init) |
+| initialization method    | [the section called “Initialization callbacks”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-initializingbean) |
+| destruction method       | [the section called “Destruction callbacks”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-lifecycle-disposablebean) |
+
+
 
 In addition to bean definitions that contain information on how to create a specific bean, the `ApplicationContext` implementations also permit the registration of existing objects that are created outside the container, by users. This is done by accessing the ApplicationContext’s BeanFactory via the method `getBeanFactory()`which returns the BeanFactory implementation `DefaultListableBeanFactory`. `DefaultListableBeanFactory` supports this registration through the methods `registerSingleton(..)` and `registerBeanDefinition(..)`. However, typical applications work solely with beans defined through metadata bean definitions.
 
