@@ -4,13 +4,13 @@ Every bean has one or more identifiers. These identifiers must be unique within 
 
 In XML-based configuration metadata, you use the `id` and/or `name` attributes to specify the bean identifier\(s\). The `id` attribute allows you to specify exactly one id. Conventionally these names are alphanumeric \('myBean', 'fooService', etc.\), but may contain special characters as well. If you want to introduce other aliases to the bean, you can also specify them in the `name` attribute, separated by a comma \(`,`\), semicolon \(`;`\), or white space. As a historical note, in versions prior to Spring 3.1, the `id` attribute was defined as an `xsd:ID` type, which constrained possible characters. As of 3.1, it is defined as an `xsd:string` type. Note that bean `id` uniqueness is still enforced by the container, though no longer by XML parsers.
 
-You are not required to supply a name or id for a bean. If no name or id is supplied explicitly, the container generates a unique name for that bean. However, if you want to refer to that bean by name, through the use of the `ref` element or [Service Locator](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-servicelocator) style lookup, you must provide a name. Motivations for not supplying a name are related to using [inner beans](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-inner-beans) and [autowiring collaborators](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-autowire).
+You are not required to supply a name or id for a bean. If no name or id is supplied explicitly, the container generates a unique name for that bean. However, if you want to refer to that bean by name, through the use of the `ref` element or [Service Locator](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-servicelocator) style lookup, you must provide a name. Motivations for not supplying a name are related to using [inner beans](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-inner-beans) and [autowiring collaborators](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-autowire).
 
 每个`bean`都有一个或多个标识符。这些标识符在托管bean的容器中必须是唯一的。一个bean通常只有一个标识符，但是如果它需要多个标识符，那么额外的标识符可以被认为是别名。
 
 在基于XML的配置元数据中，您使用`id`和/或`name`属性来指定bean标识符。 `id`属性允许你指定一个id。通常这些名称是字母数字的\('myBean'，'fooService'等\)，但也可能包含特殊字符。如果要向bean引入其他别名，还可以在`name`属性中指定它们，用逗号\(`，`\)，分号\(`;`\)或空格分隔。作为一个历史记录，在Spring 3.1之前的版本中，'id'属性被定义为一个`xsd：ID'类型，它限制了可能的字符。从3.1开始，它被定义为一个`xsd：string\`类型。注意bean'id'唯一性仍然由容器强制执行，虽然不再由XML解析器。
 
-您不需要为bean提供名称或ID。如果没有明确提供名称或ID，容器将为该bean生成一个唯一的名称。但是，如果你想通过名称引用那个bean，通过使用`ref`元素或[Service Locator](http://docs.spring.io/spring/docs/5.0.0.M3/spring- framework-reference / htmlsingle /＃beans-servicelocator)样式查找，您必须提供一个名称。不提供名称的动机与使用[内部bean](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-inner-beans)和[自动装配协作者](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-autowire)相关。
+您不需要为bean提供名称或ID。如果没有明确提供名称或ID，容器将为该bean生成一个唯一的名称。但是，如果你想通过名称引用那个bean，通过使用`ref`元素或[Service Locator](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-servicelocator)样式查找，您必须提供一个名称。不提供名称的动机与使用[内部bean](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-inner-beans)和[自动装配协作者](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-autowire)相关。
 
 **Bean命名约定**
 
@@ -22,11 +22,9 @@ Naming beans consistently makes your configuration easier to read and understand
 
 命名Bean一致地使您的配置更容易阅读和理解，如果您使用Spring AOP，它对按照名称相关的一组bean应用建议时会有很多帮助。
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/note.png) |
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png) |
 | --- |
-| With component scanning in the classpath, Spring generates bean names for unnamed components, following the rules above: essentially, taking the simple class name and turning its initial character to lower-case. However, in the \(unusual\) special case when there is more than one character and both the first and second characters are upper case, the original casing gets preserved. These are the same rules as defined by `java.beans.Introspector.decapitalize` \(which Spring is using here\). |
-
-通过类路径中的组件扫描，Spring根据上面的规则生成未命名组件的bean名称：基本上，取简单的类名称并将其初始字符转换为小写。 然而，在（异常）特殊情况下，当存在多个字符并且第一和第二字符都是大写字母时，原始形式被保留。 这些是由`java.beans.Introspector.decapitalize`（Spring在这里使用）定义的相同规则 \|
+| With component scanning in the classpath, Spring generates bean names for unnamed components, following the rules above: essentially, taking the simple class name and turning its initial character to lower-case. However, in the \(unusual\) special case when there is more than one character and both the first and second characters are upper case, the original casing gets preserved. These are the same rules as defined by `java.beans.Introspector.decapitalize`\(which Spring is using here\).   通过类路径中的组件扫描，Spring根据上面的规则生成未命名组件的bean名称：基本上，取简单的类名称并将其初始字符转换为小写。 然而，在（异常）特殊情况下，当存在多个字符并且第一和第二字符都是大写字母时，原始形式被保留。 这些是由`java.beans.Introspector.decapitalize`（Spring在这里使用）定义的相同规则 |
 
 #### Aliasing a bean outside the bean definition  `bean 的别名`
 
@@ -60,5 +58,5 @@ Now each component and the main application can refer to the dataSource through 
 
 **基于 Java 的配置**
 
-如果你使用Java配置，`@ Bean`注解可以用来提供别名,详细信息请看[Section 3.12.3, “Using the @Bean annotation”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-java-bean-annotation).
+如果你使用Java配置，`@ Bean`注解可以用来提供别名,详细信息请看[Section 3.12.3, “Using the @Bean annotation”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-java-bean-annotation).
 
