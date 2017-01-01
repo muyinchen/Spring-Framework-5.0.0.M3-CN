@@ -41,7 +41,7 @@ To exclude commons-logging, add the following to your `dependencyManagement` s
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
-        <version>5.0.0.M3</version>
+        <version>5.0.0.M4</version>
         <exclusions>
             <exclusion>
                 <groupId>commons-logging</groupId>
@@ -75,7 +75,7 @@ A common choice might be to bridge Spring to SLF4J, and then provide explicit bi
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
-        <version>5.0.0.M3</version>
+        <version>5.0.0.M4</version>
         <exclusions>
             <exclusion>
                 <groupId>commons-logging</groupId>
@@ -133,7 +133,7 @@ To make Log4j work with the default JCL dependency ( `commons-logging`) all you
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
-        <version>5.0.0.M3</version>
+        <version>5.0.0.M4</version>
     </dependency>
     <dependency>
         <groupId>log4j</groupId>
