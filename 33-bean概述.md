@@ -42,6 +42,6 @@ In addition to bean definitions that contain information on how to create a spec
 
 除了包含如何创建特定bean的bean定义之外，ApplicationContext实现还允许注册由用户在容器外部创建的现有对象。 这是通过访问ApplicationContext的BeanFactory通过方法`getBeanFactory()`来实现的，它返回BeanFactory实现`DefaultListableBeanFactory`。 `DefaultListableBeanFactory`通过方法`registerSingleton(..)`和`registerBeanDefinition(..)`支持这种注册。 然而,典型的应用程序只能通过元数据定义的 bean 来定义。
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/note.png) |
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png) |
 | ---------------------------------------- |
 | Bean元数据和手动提供的单例实例需要尽早注册，以便容器在自动装配和其他自检步骤期间正确地进行推理。 虽然在某种程度上支持覆盖现有元数据和现有单例实例，但是在运行时（与动态访问工厂同时）对新bean的注册未被官方支持，并且可能导致并发访问异常和/或bean容器中的不一致状态 。 |
