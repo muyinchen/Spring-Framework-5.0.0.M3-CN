@@ -2,7 +2,7 @@
 
 Dependency management and dependency injection are different things. To get those nice features of Spring into your application (like dependency injection) you need to assemble all the libraries needed (jar files) and get them onto your classpath at runtime, and possibly at compile time. These dependencies are not virtual components that are injected, but physical resources in a file system (typically). The process of dependency management involves locating those resources, storing them and adding them to classpaths. Dependencies can be direct (e.g. my application depends on Spring at runtime), or indirect (e.g. my application depends on `commons-dbcp` which depends on `commons-pool`). The indirect dependencies are also known as "transitive" and it is those dependencies that are hardest to identify and manage.
 
-If you are going to use Spring you need to get a copy of the jar libraries that comprise the pieces of Spring that you need. To make this easier Spring is packaged as a set of modules that separate the dependencies as much as possible, so for example if you don’t want to write a web application you don’t need the spring-web modules. To refer to Spring library modules in this guide we use a shorthand naming convention `spring-*` or `spring-*.jar,` where `*` represents the short name for the module (e.g. `spring-core`, `spring-webmvc`, `spring-jms`, etc.). The actual jar file name that you use is normally the module name concatenated with the version number (e.g. *spring-core-5.0.0.M3.jar*).
+If you are going to use Spring you need to get a copy of the jar libraries that comprise the pieces of Spring that you need. To make this easier Spring is packaged as a set of modules that separate the dependencies as much as possible, so for example if you don’t want to write a web application you don’t need the spring-web modules. To refer to Spring library modules in this guide we use a shorthand naming convention `spring-*` or `spring-*.jar,` where `*` represents the short name for the module (e.g. `spring-core`, `spring-webmvc`, `spring-jms`, etc.). The actual jar file name that you use is normally the module name concatenated with the version number (e.g. *spring-core-5.0.0.M4.jar*).
 
 Each release of the Spring Framework will publish artifacts to the following places:
 
@@ -11,11 +11,11 @@ Each release of the Spring Framework will publish artifacts to the following pla
 
 So the first thing you need to decide is how to manage your dependencies: we generally recommend the use of an automated system like Maven, Gradle or Ivy, but you can also do it manually by downloading all the jars yourself.
 
-You will find bellow the list of Spring artifacts. For a more complete description of each modules, see [Section 2.2, “Modules”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#overview-modules).
+You will find bellow the list of Spring artifacts. For a more complete description of each modules, see [Section 2.2, “Modules”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#overview-modules).
 
 依赖管理和依赖注入是不同的。为了让 `Spring `的这些不错的功能运用到运用程序中(比如依赖注入)，你需要导入所有需要的库（jar文件），并且在编译、运行的时候将它们放到你的类路径中。这些依赖关系不是注入的虚拟组件，而是文件系统中的物理资源（通常）。依赖关系管理的过程包括定位这些资源，存储它们并将它们添加到类路径。依赖可以是直接的（例如我的应用程序依赖于`Spring`在运行时）或间接（例如我的应用程序依赖于`commons-dbcp`，这取决于`commons-pool`）。间接依赖性也称为“传递性”，它是那些最难识别和管理的依赖性。
 
-如果你要使用`Spring`，你需要得到一个包含你需要的`Spring`的`jar`库的`jar`文件。为了使这过程更简单，`Spring`被打包为一组模块，尽可能地分离依赖，所以假如你不想编写一个`web`应用程序，你不需要`spring-web`模块。为了在本指南中引用`Spring`库模块，我们使用一个简写命名约定`spring- *`或`spring - *.jar`，其中*表示模块的短名称（例如spring-core，spring-webmvc，spring-jms等）。 ）。你使用的实际jar文件名通常是与版本号连接的模块名（例如`spring-core-5.0.0.M3.jar`）。
+如果你要使用`Spring`，你需要得到一个包含你需要的`Spring`的`jar`库的`jar`文件。为了使这过程更简单，`Spring`被打包为一组模块，尽可能地分离依赖，所以假如你不想编写一个`web`应用程序，你不需要`spring-web`模块。为了在本指南中引用`Spring`库模块，我们使用一个简写命名约定`spring- *`或`spring - *.jar`，其中*表示模块的短名称（例如spring-core，spring-webmvc，spring-jms等）。 ）。你使用的实际jar文件名通常是与版本号连接的模块名（例如`spring-core-5.0.0.M4.jar`）。
 
 `Spring Framework`的每个版本都会将工件发布到以下位置：
 
@@ -71,7 +71,7 @@ If you are using [Maven](http://maven.apache.org/) for dependency management y
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <version>5.0.0.M3</version>
+        <version>5.0.0.M4</version>
         <scope>runtime</scope>
     </dependency>
 </dependencies>
@@ -135,7 +135,7 @@ To overcome such problems Maven supports the concept of a "bill of materials" (B
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-framework-bom</artifactId>
-            <version>5.0.0.M3</version>
+            <version>5.0.0.M4</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -182,8 +182,8 @@ You can change the `repositories` URL from `/release` to `/milestone` or 
 
 ```
 dependencies {
-    compile("org.springframework:spring-context:5.0.0.M3")
-    testCompile("org.springframework:spring-test:5.0.0.M3")
+    compile("org.springframework:spring-context:5.0.0.M4")
+    testCompile("org.springframework:spring-test:5.0.0.M4")
 }
 ```
 
@@ -217,7 +217,7 @@ Once configured, you can add dependencies in the usual way. For example (in `iv
 
 ```
 <dependency org="org.springframework"
-    name="spring-core" rev="5.0.0.M3" conf="compile->runtime"/>
+    name="spring-core" rev="5.0.0.M4" conf="compile->runtime"/>
 ```
 
 #### Distribution Zip Files
