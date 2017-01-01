@@ -14,7 +14,7 @@ Spring’s [declarative transaction management features](http://docs.spring.io/
 
 **图2.3。 Spring中间层使用第三方Web框架**
 
-![overview thirdparty web](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/overview-thirdparty-web.png)
+![overview thirdparty web](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/overview-thirdparty-web.png)
 
 Sometimes circumstances do not allow you to completely switch to a different framework. The Spring Framework does *not* force you to use everything within it; it is not an*all-or-nothing* solution. Existing front-ends built with Struts, Tapestry, JSF or other UI frameworks can be integrated with a Spring-based middle-tier, which allows you to use Spring transaction features. You simply need to wire up your business logic using an `ApplicationContext` and use a `WebApplicationContext` to integrate your web layer.
 
@@ -22,7 +22,7 @@ Sometimes circumstances do not allow you to completely switch to a different fra
 
 **图2.4。 远程使用场景**
 
-![overview remoting](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/overview-remoting.png)
+![overview remoting](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/overview-remoting.png)
 
 When you need to access existing code through web services, you can use Spring’s `Hessian-`, `Rmi-` or `HttpInvokerProxyFactoryBean` classes. Enabling remote access to existing applications is not difficult.
 
@@ -32,8 +32,8 @@ When you need to access existing code through web services, you can use Spring�
 
 **图2.5。 EJB - 包装现有POJO**
 
-![overview ejb](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/overview-ejb.png)
+![overview ejb](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/overview-ejb.png)
 
-The Spring Framework also provides an [access and abstraction layer](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#ejb) for Enterprise JavaBeans, enabling you to reuse your existing POJOs and wrap them in stateless session beans for use in scalable, fail-safe web applications that might need declarative security.
+The Spring Framework also provides an [access and abstraction layer](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#ejb) for Enterprise JavaBeans, enabling you to reuse your existing POJOs and wrap them in stateless session beans for use in scalable, fail-safe web applications that might need declarative security.
 
-`Spring Framework`还为`Enterprise JavaBeans`提供了一个 [访问和抽象层](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#ejb)，使您可以重用现有的`POJOs`，并将其封装在无状态会话`bean`中，以用于可能需要声明性安全性的扩展即有安全故障的`Web`应用程序中。
+`Spring Framework`还为`Enterprise JavaBeans`提供了一个 [访问和抽象层](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#ejb)，使您可以重用现有的`POJOs`，并将其封装在无状态会话`bean`中，以用于可能需要声明性安全性的扩展即有安全故障的`Web`应用程序中。
