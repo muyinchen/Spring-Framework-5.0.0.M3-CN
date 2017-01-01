@@ -3,14 +3,14 @@
 
 A bean definition essentially is a recipe for creating one or more objects. The container looks at the recipe for a named bean when asked, and uses the configuration metadata encapsulated by that bean definition to create (or acquire) an actual object.
 
-If you use XML-based configuration metadata, you specify the type (or class) of object that is to be instantiated in the `class` attribute of the ` <bean/> ` element. This`class` attribute, which internally is a `Class` property on a `BeanDefinition` instance, is usually mandatory. (For exceptions, see [the section called “Instantiation using an instance factory method”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method) and [Section 3.7, “Bean definition inheritance”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-child-bean-definitions).) You use the `Class` property in one of two ways:
+If you use XML-based configuration metadata, you specify the type (or class) of object that is to be instantiated in the `class` attribute of the ` <bean/> ` element. This`class` attribute, which internally is a `Class` property on a `BeanDefinition` instance, is usually mandatory. (For exceptions, see [the section called “Instantiation using an instance factory method”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method) and [Section 3.7, “Bean definition inheritance”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-child-bean-definitions).) You use the `Class` property in one of two ways:
 
 - Typically, to specify the bean class to be constructed in the case where the container itself directly creates the bean by calling its constructor reflectively, somewhat equivalent to Java code using the `new` operator.
 - To specify the actual class containing the `static` factory method that will be invoked to create the object, in the less common case where the container invokes a`static` *factory* method on a class to create the bean. The object type returned from the invocation of the `static` factory method may be the same class or another class entirely.
 
 bean定义本质上是创建一个或多个对象的方法。容器在询问时查看命名bean的配方，并使用由该bean定义封装的配置元数据来创建（或获取）实际对象。
 
-如果使用基于XML的配置元数据，则指定要在`<bean />`元素的`class`属性中实例化的对象的类型（或类）。这个`class`属性，在内部是一个`BeanDefinition`实例的`Class`属性，通常是强制的。 (对于异常，请参见[“使用实例工厂方法实例化”一节](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method)和[第3.7节“Bean定义继承”](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-child-bean-definitions).)使用`Class`属性有两种方法之一：
+如果使用基于XML的配置元数据，则指定要在`<bean />`元素的`class`属性中实例化的对象的类型（或类）。这个`class`属性，在内部是一个`BeanDefinition`实例的`Class`属性，通常是强制的。 (对于异常，请参见[“使用实例工厂方法实例化”一节](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method)和[第3.7节“Bean定义继承”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-child-bean-definitions).)使用`Class`属性有两种方法之一：
 
 - 通常，在容器本身通过反射调用其构造函数直接创建bean的情况下指定要构造的bean类，某种程度上等同于使用“new”运算符的Java代码。
 - 要指定包含将被调用来创建对象的“static”工厂方法的实际类，类中包含静态方法。从`static`工厂方法的调用返回的对象类型可以是完全相同的类或另一个类。
@@ -49,7 +49,7 @@ Spring IoC容器可以管理你想要管理的虚拟*任何*类;它不限于管�
 <bean name="anotherExample" class="examples.ExampleBeanTwo"/>
 ```
 
-有关向构造函数指定参数（如果需要）和在构建对象后设置对象实例属性的机制的详细信息，请参见[依赖注入](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-collaborators).
+有关向构造函数指定参数（如果需要）和在构建对象后设置对象实例属性的机制的详细信息，请参见[依赖注入](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-collaborators).
 
 #### Instantiation with a static factory method `使用静态工厂方法实例化`
 
@@ -79,13 +79,13 @@ public class ClientService {
 }
 ```
 
-有关向工厂方法提供（可选）参数和在工厂返回对象后设置对象实例属性的机制的详细信息，请参阅[依赖和配置详解](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-properties-detailed).
+有关向工厂方法提供（可选）参数和在工厂返回对象后设置对象实例属性的机制的详细信息，请参阅[依赖和配置详解](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-properties-detailed).
 
 #### 使用实例工厂方法实例化
 
 Similar to instantiation through a [static factory method](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method), instantiation with an instance factory method invokes a non-static method of an existing bean from the container to create a new bean. To use this mechanism, leave the `class` attribute empty, and in the `factory-bean` attribute, specify the name of a bean in the current (or parent/ancestor) container that contains the instance method that is to be invoked to create the object. Set the name of the factory method itself with the `factory-method` attribute.
 
-类似于通过[静态工厂方法](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method)实例化，使用实例工厂方法的实例化从容器调用现有bean的非静态方法以创建新bean。 要使用此机制，将`class`属性保留为空，并在`factory-bean`属性中，指定当前（或父/祖先）容器中包含要调用的实例方法的bean的名称 创建对象。 使用`factory-method`属性设置工厂方法本身的名称。
+类似于通过[静态工厂方法](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method)实例化，使用实例工厂方法的实例化从容器调用现有bean的非静态方法以创建新bean。 要使用此机制，将`class`属性保留为空，并在`factory-bean`属性中，指定当前（或父/祖先）容器中包含要调用的实例方法的bean的名称 创建对象。 使用`factory-method`属性设置工厂方法本身的名称。
 
 ```xml
 <!-- the factory bean, which contains a method called createInstance() -->
@@ -147,9 +147,8 @@ public class DefaultServiceLocator {
 }
 ```
 
-This approach shows that the factory bean itself can be managed and configured through dependency injection (DI). See [Dependencies and configuration in detail](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-properties-detailed).
+This approach shows that the factory bean itself can be managed and configured through dependency injection (DI). See [Dependencies and configuration in detail](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-properties-detailed).
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/images/note.png) |
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png) |
 | ---------------------------------------- |
-| In Spring documentation,* factory bean* refers to a bean that is configured in the Spring container that will create objects through an [instance](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method) or [static](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method) factory method. By contrast, `FactoryBean` (notice the capitalization) refers to a Spring-specific [`FactoryBean`](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-extension-factorybean). 
-在Spring文档中，* factory bean *是指在Spring容器中配置的bean，它将通过[instance](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method) 或[static](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method) 工厂方法创建对象。 相比之下，“FactoryBean”（注意大写）指的是Spring特有的[FactoryBean](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#beans-factory-extension-factorybean). |
+|在Spring文档中，* factory bean *是指在Spring容器中配置的bean，它将通过[instance](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class-instance-factory-method) 或[static](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-class-static-factory-method) 工厂方法创建对象。 相比之下，“FactoryBean”（注意大写）指的是Spring特有的[FactoryBean](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-extension-factorybean). |
