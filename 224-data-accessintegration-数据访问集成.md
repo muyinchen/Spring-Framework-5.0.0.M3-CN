@@ -2,15 +2,15 @@
 
 The *Data Access/Integration* layer consists of the JDBC, ORM, OXM, JMS, and Transaction modules.
 
-The `spring-jdbc` module provides a [JDBC](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#jdbc-introduction)-abstraction layer that removes the need to do tedious JDBC coding and parsing of database-vendor specific error codes.
+The `spring-jdbc` module provides a [JDBC](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#jdbc-introduction)-abstraction layer that removes the need to do tedious JDBC coding and parsing of database-vendor specific error codes.
 
-The `spring-tx` module supports [programmatic and declarative transaction](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#transaction) management for classes that implement special interfaces and for *all your POJOs (Plain Old Java Objects)*.
+The `spring-tx` module supports [programmatic and declarative transaction](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#transaction) management for classes that implement special interfaces and for *all your POJOs (Plain Old Java Objects)*.
 
-The `spring-orm` module provides integration layers for popular [object-relational mapping](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#orm-introduction) APIs, including [JPA](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#orm-jpa) and [Hibernate](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#orm-hibernate). Using the `spring-orm` module you can use these O/R-mapping frameworks in combination with all of the other features Spring offers, such as the simple declarative transaction management feature mentioned previously.
+The `spring-orm` module provides integration layers for popular [object-relational mapping](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#orm-introduction) APIs, including [JPA](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#orm-jpa) and [Hibernate](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#orm-hibernate). Using the `spring-orm` module you can use these O/R-mapping frameworks in combination with all of the other features Spring offers, such as the simple declarative transaction management feature mentioned previously.
 
-The `spring-oxm` module provides an abstraction layer that supports [Object/XML mapping](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#oxm) implementations such as JAXB, Castor, JiBX and XStream.
+The `spring-oxm` module provides an abstraction layer that supports [Object/XML mapping](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#oxm) implementations such as JAXB, Castor, JiBX and XStream.
 
-The `spring-jms` module ([Java Messaging Service](http://docs.spring.io/spring/docs/5.0.0.M3/spring-framework-reference/htmlsingle/#jms)) contains features for producing and consuming messages. Since Spring Framework 4.1, it provides integration with the `spring-messaging` module.
+The `spring-jms` module ([Java Messaging Service](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#jms)) contains features for producing and consuming messages. Since Spring Framework 4.1, it provides integration with the `spring-messaging` module.
 
 数据访问/集成层由`JDBC`，`ORM`，`OXM`，`JMS`和`Transaction `模块组成。
 
