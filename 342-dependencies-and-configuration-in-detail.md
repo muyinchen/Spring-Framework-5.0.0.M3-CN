@@ -89,3 +89,19 @@ A common place (at least in versions earlier than Spring 2.0) where the `<idref
 | `idref`元素上的`local`属性在4.0 bean xsd中不再支持，因为它不再提供超过正则`bean`引用的值。在升级到4.0模式时，只需将现有的“idref local”引用更改为“idref bean”。 |
 
 `<idref />`元素带来的一个常见的价值（至少在Spring 2.0之前的版本中）是在[AOP拦截器](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#aop-pfb-1) 的配置中。在一个`ProxyFactoryBean` bean定义中，当指定拦截器名称时，使用`<idref />`元素可防止拼写拦截器ID。
+
+#### References to other beans (collaborators)`引用其他bean（协作者）`
+
+
+The `ref` element is the final element inside a `<constructor-arg/>` or `<property/>` definition element. Here you set the value of the specified property of a bean to be a reference to another bean (a collaborator) managed by the container. The referenced bean is a dependency of the bean whose property will be set, and it is initialized on demand as needed before the property is set. (If the collaborator is a singleton bean, it may be initialized already by the container.) All references are ultimately a reference to another object. Scoping and validation depend on whether you specify the id/name of the other object through the `bean`, `local,` or `parent`attributes.
+
+Specifying the target bean through the `bean` attribute of the `<ref/>` tag is the most general form, and allows creation of a reference to any bean in the same container or parent container, regardless of whether it is in the same XML file. The value of the `bean` attribute may be the same as the `id` attribute of the target bean, or as one of the values in the `name` attribute of the target bean.
+
+`ref`元素是`<constructor-arg/>`或`<property/>`定义元素中的最后一个元素。在这里，你将bean的指定属性的值设置为对容器管理的另一个bean（协作者）的引用。引用的bean是将设置其属性的bean的依赖关系，并且在设置属性之前根据需要对其进行初始化。 （如果协作者是单例bean，它可能已经由容器初始化。）所有引用最终都是对另一个对象的引用。范围和验证取决于您是通过“bean”，“local”还是“parent”属性指定其他对象的id / name。
+
+通过`<ref/>`标签的`bean`属性指定目标bean是最通用的形式，允许创建对同一容器或父容器中的任何bean的引用，而不管它是否在同一个XML文件。 “bean”属性的值可以与目标bean的“id”属性相同，也可以与目标bean的“name”属性中的值之一相同。
+
+```xml
+<ref bean="someBean"/>
+```
+
