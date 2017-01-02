@@ -154,3 +154,49 @@ As a corner case, it is possible to receive destruction callbacks from a custom 
 内部bean定义不需要定义的id或名称; 如果指定，容器不使用这样的值作为标识符。 容器在创建时也忽略`scope`标志：内部bean *总是*匿名的，它们总是用外部bean创建。 将内部bean注入到协作bean中而不是注入到封闭bean中或者独立访问它们是不可能的。
 
 作为一种角落情况，可以从自定义范围接收销毁回调，例如。 对于包含在单例bean内的请求范围内部bean：内部bean实例的创建将绑定到其包含的bean，但销毁回调允许它参与请求范围的生命周期。 这不是一个常见的情况; 内部bean通常简单地共享它们被包含bean的范围。
+
+#### Collections `集合`
+
+In the `<list/>`, `<set/>`, `<map/>`, and `<props/>` elements, you set the properties and arguments of the Java `Collection` types `List`, `Set`, `Map`, and `Properties`, respectively.
+在`<list/>`，`<set/>`，`<map/>`和`<props/>`元素中，设置Java`Collection`类型`List`，`Set`，`Map`和`Properties`的属性和参数。
+
+```xml
+<bean id="moreComplexObject" class="example.ComplexObject">
+	<!-- results in a setAdminEmails(java.util.Properties) call -->
+	<property name="adminEmails">
+		<props>
+			<prop key="administrator">administrator@example.org</prop>
+			<prop key="support">support@example.org</prop>
+			<prop key="development">development@example.org</prop>
+		</props>
+	</property>
+	<!-- results in a setSomeList(java.util.List) call -->
+	<property name="someList">
+		<list>
+			<value>a list element followed by a reference</value>
+			<ref bean="myDataSource" />
+		</list>
+	</property>
+	<!-- results in a setSomeMap(java.util.Map) call -->
+	<property name="someMap">
+		<map>
+			<entry key="an entry" value="just some string"/>
+			<entry key ="a ref" value-ref="myDataSource"/>
+		</map>
+	</property>
+	<!-- results in a setSomeSet(java.util.Set) call -->
+	<property name="someSet">
+		<set>
+			<value>just some string</value>
+			<ref bean="myDataSource" />
+		</set>
+	</property>
+</bean>
+```
+
+*The value of a map key or value, or a set value, can also again be any of the following elements:*
+
+*一个map键或值或set值也可以是以下任何元素：*
+```properties
+bean | ref | idref | list | set | map | props | value | null
+```
