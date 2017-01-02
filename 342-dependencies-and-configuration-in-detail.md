@@ -130,3 +130,18 @@ Specifying the target bean through the `parent` attribute creates a reference 
 | ---------------------------------------- |
 |'ref`元素的`local`属性在4.0 beans xsd中不再支持，因为它不再提供超过正则范围`bean`引用的值。 在升级到4.0模式时，只需将现有的`ref local`引用更改为`ref bean` |
 
+#### Inner beans
+
+A `<bean/>` element inside the `<property/>` or `<constructor-arg/>` elements defines a so-called *inner bean*.
+元素内的`<property />`或`<constructor-arg />`元素里面定义了一个所谓的*inner(内部)bean *。
+```xml
+<bean id="outer" class="...">
+	<!-- instead of using a reference to a target bean, simply define the target bean inline -->
+	<property name="target">
+		<bean class="com.example.Person"> <!-- this is the inner bean -->
+			<property name="name" value="Fiona Apple"/>
+			<property name="age" value="25"/>
+		</bean>
+	</property>
+</bean>
+```
