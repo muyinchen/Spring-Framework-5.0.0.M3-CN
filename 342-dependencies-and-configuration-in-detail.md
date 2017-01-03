@@ -234,3 +234,19 @@ Spring容器还支持集合的*合并*。 一个应用程序开发人员可以�
 	</bean>
 <beans>
 ```
+
+Notice the use of the `merge=true` attribute on the `<props/>` element of the `adminEmails` property of the `child` bean definition. When the `child` bean is resolved and instantiated by the container, the resulting instance has an `adminEmails` `Properties` collection that contains the result of the merging of the child’s `adminEmails`collection with the parent’s `adminEmails` collection.
+
+注意在`child` bean定义的`adminEmails`属性的`<props />`元素上使用`merge = true`属性。 当`child` bean被容器解析和实例化时，生成的实例会有一个`adminEmails``Properties`集合，其中包含子集`adminEmails`collection与父集合'adminEmails`集合的合并结果。
+```properties
+administrator=administrator@example.com
+sales=sales@example.com
+support=support@example.co.uk
+```
+The child `Properties` collection’s value set inherits all property elements from the parent `<props/>`, and the child’s value for the `support` value overrides the value in the parent collection.
+
+This merging behavior applies similarly to the `<list/>`, `<map/>`, and `<set/>` collection types. In the specific case of the `<list/>` element, the semantics associated with the `List` collection type, that is, the notion of an `ordered` collection of values, is maintained; the parent’s values precede all of the child list’s values. In the case of the `Map`, `Set`, and `Properties` collection types, no ordering exists. Hence no ordering semantics are in effect for the collection types that underlie the associated `Map`, `Set`, and `Properties` implementation types that the container uses internally.
+
+子属性`Properties`集合的值集合从父`<props/>`继承所有属性元素，`support`值的子值将覆盖父集合中的值。
+
+这种合并行为类似地适用于`<list/>`，`<map/>`和`<set/>`集合类型。 在`<list/>`元素的特定情况下，与`List`集合类型相关联的语义，即`ordered`集合的值的概念被维护; 父级的值在所有子级列表的值之前。 在`Map`，`Set`和`Propertie`集合类型的情况下，不存在排序。 因此没有排序语义对集合类型有效，这些类型是容器在内部使用的相关联的`Map`，`Set`和`Properties`实现类型的基础。
