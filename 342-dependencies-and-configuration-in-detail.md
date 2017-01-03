@@ -250,3 +250,9 @@ This merging behavior applies similarly to the `<list/>`, `<map/>`, and `<set
 子属性`Properties`集合的值集合从父`<props/>`继承所有属性元素，`support`值的子值将覆盖父集合中的值。
 
 这种合并行为类似地适用于`<list/>`，`<map/>`和`<set/>`集合类型。 在`<list/>`元素的特定情况下，与`List`集合类型相关联的语义，即`ordered`集合的值的概念被维护; 父级的值在所有子级列表的值之前。 在`Map`，`Set`和`Propertie`集合类型的情况下，不存在排序。 因此没有排序语义对集合类型有效，这些类型是容器在内部使用的相关联的`Map`，`Set`和`Properties`实现类型的基础。
+
+##### Limitations of collection merging `集合合并的限制`
+
+You cannot merge different collection types (such as a `Map` and a `List`), and if you do attempt to do so an appropriate `Exception` is thrown. The `merge` attribute must be specified on the lower, inherited, child definition; specifying the `merge` attribute on a parent collection definition is redundant and will not result in the desired merging.
+
+你不能合并不同的集合类型（例如一个`Map`和一个`List`），如果你试图这样做，一个适当的`Exception`被抛出。 `merge`属性必须在下层，继承，子定义上指定; 在父集合定义上指定`merge`属性是多余的，并且不会导致所需的合并。
