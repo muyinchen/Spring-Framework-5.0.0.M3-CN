@@ -200,3 +200,37 @@ In the `<list/>`, `<set/>`, `<map/>`, and `<props/>` elements, you set the 
 ```properties
 bean | ref | idref | list | set | map | props | value | null
 ```
+
+##### Collection merging `集合合并`
+
+The Spring container also supports the *merging* of collections. An application developer can define a parent-style `<list/>`, `<set/>`, `<map/>` or `<props/>` element, and have child-style `<list/>`, `<set/>`, `<map/>` or `<props/>` elements inherit and override values from the parent collection. That is, the child collection’s values are the result of merging the elements of the parent and child collections, with the child’s collection elements overriding values specified in the parent collection.
+
+*This section on merging discusses the parent-child bean mechanism. Readers unfamiliar with parent and child bean definitions may wish to read the relevant section before continuing.*
+
+The following example demonstrates collection merging:
+Spring容器还支持集合的*合并*。 一个应用程序开发人员可以定义一个父类型 `<list/>`, `<set/>`, `<map/>` 或者`<props/>`, `<list/>``<set/>`，`<map/>`或`<props/>`元素继承并覆盖父集合中的值。 也就是说，子集合的值是合并父和子集合的元素的结果，子集合元素覆盖父集合中指定的值。
+
+*本节关于合并讨论了父子bean的机制。 不熟悉父和子bean定义的读者可能希望在继续之前阅读相关章节。
+
+以下示例演示集合合并：
+```xml
+<beans>
+	<bean id="parent" abstract="true" class="example.ComplexObject">
+		<property name="adminEmails">
+			<props>
+				<prop key="administrator">administrator@example.com</prop>
+				<prop key="support">support@example.com</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="child" parent="parent">
+		<property name="adminEmails">
+			<!-- the merge is specified on the child collection definition -->
+			<props merge="true">
+				<prop key="sales">sales@example.com</prop>
+				<prop key="support">support@example.co.uk</prop>
+			</props>
+		</property>
+	</bean>
+<beans>
+```
