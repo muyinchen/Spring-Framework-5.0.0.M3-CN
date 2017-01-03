@@ -256,3 +256,38 @@ This merging behavior applies similarly to the `<list/>`, `<map/>`, and `<set
 You cannot merge different collection types (such as a `Map` and a `List`), and if you do attempt to do so an appropriate `Exception` is thrown. The `merge` attribute must be specified on the lower, inherited, child definition; specifying the `merge` attribute on a parent collection definition is redundant and will not result in the desired merging.
 
 你不能合并不同的集合类型（例如一个`Map`和一个`List`），如果你试图这样做，一个适当的`Exception`被抛出。 `merge`属性必须在下层，继承，子定义上指定; 在父集合定义上指定`merge`属性是多余的，并且不会导致所需的合并。
+
+##### Strongly-typed collection `强类型集合`
+
+With the introduction of generic types in Java 5, you can use strongly typed collections. That is, it is possible to declare a `Collection` type such that it can only contain`String` elements (for example). If you are using Spring to dependency-inject a strongly-typed `Collection` into a bean, you can take advantage of Spring’s type-conversion support such that the elements of your strongly-typed `Collection` instances are converted to the appropriate type prior to being added to the `Collection`.
+
+随着在Java 5中引入泛型类型，可以使用强类型集合。 也就是说，可以声明一个`Collection`类型，使得它只能包含`String`元素（例如）。 如果你使用Spring来将一个强类型的“Collection”依赖注入到一个bean中，你可以利用Spring的类型转换支持，这样强类型的“Collection”实例的元素被转换为适当的类型 被添加到`Collection`。
+
+```java
+public class Foo {
+
+	private Map<String, Float> accounts;
+
+	public void setAccounts(Map<String, Float> accounts) {
+		this.accounts = accounts;
+	}
+}
+```
+
+```xml
+<beans>
+	<bean id="foo" class="x.y.Foo">
+		<property name="accounts">
+			<map>
+				<entry key="one" value="9.99"/>
+				<entry key="two" value="2.75"/>
+				<entry key="six" value="3.99"/>
+			</map>
+		</property>
+	</bean>
+</beans>
+```
+
+When the `accounts` property of the `foo` bean is prepared for injection, the generics information about the element type of the strongly-typed `Map` is available by reflection. Thus Spring’s type conversion infrastructure recognizes the various value elements as being of type `Float`, and the string values `9.99, 2.75`, and `3.99` are converted into an actual `Float` type.
+
+当`foo` bean的`accounts`属性准备注入时，强类型`Map`的元素类型的泛型信息可以通过反射来获得。 因此，Spring的类型转换基础设施将各种值元素识别为“Float”类型，并且字符串值“9.99,2.75”和“3.99”被转换为实际的“Float”类型。
