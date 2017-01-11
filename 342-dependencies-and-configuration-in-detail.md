@@ -447,7 +447,7 @@ For the rare cases where the constructor argument names are not available (usual
 
 In practice, the constructor resolution [mechanism](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-ctor-arguments-resolution) is quite efficient in matching arguments so unless one really needs to, we recommend using the name notation through-out your configuration.
 
-实际上，构造函数的解析[机制]（(http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-ctor-arguments-resolution)在匹配参数方面是 相当高效的，除非一个真正需要，我们建议通过使用名称符号来进行你的配置。
+实际上，构造函数的解析[机制](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-ctor-arguments-resolution)在匹配参数方面是 相当高效的，除非一个真正需要，我们建议通过使用名称符号来进行你的配置。
 
 #### Compound property names `组合属性名称`
 
