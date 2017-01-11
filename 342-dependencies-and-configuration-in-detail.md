@@ -291,3 +291,16 @@ public class Foo {
 When the `accounts` property of the `foo` bean is prepared for injection, the generics information about the element type of the strongly-typed `Map` is available by reflection. Thus Spring’s type conversion infrastructure recognizes the various value elements as being of type `Float`, and the string values `9.99, 2.75`, and `3.99` are converted into an actual `Float` type.
 
 当`foo` bean的`accounts`属性准备注入时，强类型`Map`的元素类型的泛型信息可以通过反射来获得。 因此，Spring的类型转换基础设施将各种值元素识别为“Float”类型，并且字符串值“9.99,2.75”和“3.99”被转换为实际的“Float”类型。
+
+#### References to other beans (collaborators) `引用其他bean（协作者）`
+
+The `ref` element is the final element inside a `<constructor-arg/>` or `<property/>` definition element. Here you set the value of the specified property of a bean to be a reference to another bean (a collaborator) managed by the container. The referenced bean is a dependency of the bean whose property will be set, and it is initialized on demand as needed before the property is set. (If the collaborator is a singleton bean, it may be initialized already by the container.) All references are ultimately a reference to another object. Scoping and validation depend on whether you specify the id/name of the other object through the `bean`, `local,` or `parent`attributes.
+
+Specifying the target bean through the `bean` attribute of the `<ref/>` tag is the most general form, and allows creation of a reference to any bean in the same container or parent container, regardless of whether it is in the same XML file. The value of the `bean` attribute may be the same as the `id` attribute of the target bean, or as one of the values in the `name` attribute of the target bean.
+
+`ref`元素是`<constructor-arg/>`或`<property/>`定义元素中的最后一个元素。在这里，您将bean的指定属性的值设置为对容器管理的另一个bean（协作者）的引用。该引用bean将被作为依赖注入，并且在注入属性之前根据需要对其进行初始化。 （如果协作者是单例bean，它可能已经由容器初始化）。所有引用最终都是对另一个对象的引用。范围和验证取决于你是通过`bean`，`local`还是`parent`属性指定其他对象的id / name。
+
+通过`<ref/>`标签的`bean`属性指定目标bean是最常见的形式，允许创建对同一容器或父容器中的任何bean的引用，而不管它是否在同一个XML文件。`bean`属性的值可以与目标bean的`id`属性相同，也可以与目标bean的`name`属性中的值之一相同。
+```xml
+<ref bean="someBean"/>
+```
