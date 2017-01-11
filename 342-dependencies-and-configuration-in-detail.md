@@ -395,3 +395,72 @@ As you can see, this example includes not only a property value using the p-name
 | ---------------------------------------- |
 |p-namespace(p命名空间)不如标准XML格式灵活。 例如，声明属性引用的格式与以“Ref”结尾的属性冲突(声明属性的引用是以Ref结尾的，采用p命名空间将会产生冲突)，而标准XML格式不会。 我们建议您仔细选择您的方法，并将其传达给您的团队成员，以避免生成同时使用所有这三种方法的XML文档。 |
 
+#### XML shortcut with the c-namespace
+
+Similar to the [the section called “XML shortcut with the p-namespace”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-p-namespace), the *c-namespace*, newly introduced in Spring 3.1, allows usage of inlined attributes for configuring the constructor arguments rather then nested `constructor-arg` elements.
+
+Let’s review the examples from [the section called “Constructor-based dependency injection”](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-constructor-injection) with the `c:` namespace:
+
+类似于[ “XML shortcut with the p-namespace”这一节](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-p-namespace)，在Spring 3.1中新引入的* c-namespace *允许使用内联属性来配置构造函数参数，而不是嵌套`constructor-arg`the section called “XML shortcut with the p-namespace”元素。
+
+让我们回顾一下[“基于构造函数的依赖注入”一节](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-constructor-injection)中的例子并顺带使用`c：`命名空间进行改造：
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bar" class="x.y.Bar"/>
+	<bean id="baz" class="x.y.Baz"/>
+
+	<!-- traditional declaration -->
+	<bean id="foo" class="x.y.Foo">
+		<constructor-arg ref="bar"/>
+		<constructor-arg ref="baz"/>
+		<constructor-arg value="foo@bar.com"/>
+	</bean>
+
+	<!-- c-namespace declaration -->
+	<bean id="foo" class="x.y.Foo" c:bar-ref="bar" c:baz-ref="baz" c:email="foo@bar.com"/>
+
+</beans>
+```
+
+The `c:` namespace uses the same conventions as the `p:` one (trailing `-ref` for bean references) for setting the constructor arguments by their names. And just as well, it needs to be declared even though it is not defined in an XSD schema (but it exists inside the Spring core).
+
+For the rare cases where the constructor argument names are not available (usually if the bytecode was compiled without debugging information), one can use fallback to the argument indexes:
+
+`c：`命名空间使用与`p：`一样的约定（用于bean引用的尾部“-ref”），用于通过其名称设置构造函数参数。 同样，它需要被声明，即使它没有在XSD模式中定义（但它存在于Spring核心内部）。
+
+对于少数情况下构造函数参数名称不可用（通常如果字节码没有调试信息编译），可以使用fallback到参数索引：
+
+```xml
+<!-- c-namespace index declaration -->
+<bean id="foo" class="x.y.Foo" c:_0-ref="bar" c:_1-ref="baz"/>
+```
+
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| ---------------------------------------- |
+|由于XML语法，索引符号需要存在前导`_`，因为XML属性名称不能以数字开头（即使某些IDE允许它）. |
+
+In practice, the constructor resolution [mechanism](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-ctor-arguments-resolution) is quite efficient in matching arguments so unless one really needs to, we recommend using the name notation through-out your configuration.
+
+实际上，构造函数的解析[机制]（(http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-ctor-arguments-resolution)在匹配参数方面是 相当高效的，除非一个真正需要，我们建议通过使用名称符号来进行你的配置。
+
+#### Compound property names `组合属性名称`
+
+You can use compound or nested property names when you set bean properties, as long as all components of the path except the final property name are not `null`. Consider the following bean definition.
+
+您可以在设置bean属性时使用复合或嵌套属性名称，只要路径的所有组件（最终属性名称除外）不为null。 考虑下面的bean定义:
+
+```xml
+<bean id="foo" class="foo.Bar">
+	<property name="fred.bob.sammy" value="123" />
+</bean>
+```
+
+The `foo` bean has a `fred` property, which has a `bob` property, which has a `sammy` property, and that final `sammy` property is being set to the value `123`. In order for this to work, the `fred` property of `foo`, and the `bob` property of `fred` must not be `null` after the bean is constructed, or a `NullPointerException` is thrown.
+
+`foo` bean有一个`fred`属性，`fred`又有一个`bob`属性，`bob`又有一个`sammy`属性，最后的`sammy`属性被设置为值`123`。 为了使这个工作，`foo`的`fred`属性和`fred`的`bob`属性在构造bean之后不能是`null`，否则`NullPointerException`会被抛出。
