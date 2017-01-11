@@ -328,3 +328,29 @@ Specifying the target bean through the `parent` attribute creates a reference 
 | ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | ---------------------------------------- |
 | `ref`元素的`local`属性在4.0 beans xsd中不再支持，因为它不再提供超过正则`bean`引用的值。 在升级到4.0模式时，只需将现有的`ref local`引用更改为`ref bean`. |
+
+#### Inner beans `内部bean`
+
+A `<bean/>` element inside the `<property/>` or`<constructor-arg/>` elements defines a so-called *inner bean*.
+通过元素`<bean/>` 在`<property/>`或`<constructor-arg/>`元素内定义了一个所谓的*内部bean *。
+```xml
+<bean id="outer" class="...">
+	<!-- instead of using a reference to a target bean, simply define the target bean inline -->
+	<property name="target">
+		<bean class="com.example.Person"> <!-- this is the inner bean -->
+			<property name="name" value="Fiona Apple"/>
+			<property name="age" value="25"/>
+		</bean>
+	</property>
+</bean>
+```
+
+An inner bean definition does not require a defined id or name; if specified, the container does not use such a value as an identifier. The container also ignores the `scope` flag on creation: Inner beans are *always* anonymous and they are *always* created with the outer bean. It is *not* possible to inject inner beans into collaborating beans other than into the enclosing bean or to access them independently.
+
+As a corner case, it is possible to receive destruction callbacks from a custom scope, e.g. for a request-scoped inner bean contained within a singleton bean: The creation of the inner bean instance will be tied to its containing bean, but destruction callbacks allow it to participate in the request scope’s lifecycle. This is not a common scenario; inner beans typically simply share their containing bean’s scope.
+
+内部bean定义不需要定义的id或名称; 如果指定，容器不使用这样的值作为标识符。 容器在创建时忽略`scope`标志：内部bean *总是*匿名的，它们总是用外部bean创建。 将内部bean注入到协作bean中而不是注入到封装bean中或者独立访问它们是不可能的。
+
+作为一种角落情况，可以从自定义范围接收销毁回调，例如。 对于包含在单例bean内的请求范围内部bean：内部bean实例的创建将绑定到其包含的bean，但销毁回调允许它参与请求范围的生命周期。 这不是一个常见的情况; 内部bean通常简单地共享它们的包含bean的范围。
+
+
