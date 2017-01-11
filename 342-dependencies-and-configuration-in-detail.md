@@ -293,4 +293,37 @@ When the `accounts` property of the `foo` bean is prepared for injection, th
 
 当`foo` bean的`accounts`属性准备注入时，强类型`Map`的元素类型的泛型信息可以通过反射来获得。 因此，Spring的类型转换基础设施将各种值元素识别为“Float”类型，并且字符串值“9.99,2.75”和“3.99”被转换为实际的“Float”类型。
 
+#### Null and empty string values `Null和空字符串`
+
+Spring treats empty arguments for properties and the like as empty `Strings`. The following XML-based configuration metadata snippet sets the email property to the empty `String` value ("").
+
+Spring将空参数的属性等作为空的字符串处理。 以下基于XML的配置元数据片段将email属性设置为空的“String”值（“”）。
+```xml
+<bean class="ExampleBean">
+	<property name="email" value=""/>
+</bean>
+```
+
+以上配置等同于以下Java代码：
+
+```java
+exampleBean.setEmail("")
+```
+
+`<null/>`元素用来处理null值。 例如：
+
+```xml
+<bean class="ExampleBean">
+	<property name="email">
+		<null/>
+	</property>
+</bean>
+```
+
+以上配置等同于以下Java代码：
+
+```java
+exampleBean.setEmail(null)
+```
+
 
