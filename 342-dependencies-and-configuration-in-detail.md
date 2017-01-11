@@ -326,4 +326,72 @@ exampleBean.setEmail("")
 exampleBean.setEmail(null)
 ```
 
+#### XML shortcut with the p-namespace `XML使用p命名空间进行简化操作`
+
+The p-namespace enables you to use the `bean` element’s attributes, instead of nested `<property/>` elements, to describe your property values and/or collaborating beans.
+
+Spring supports extensible configuration formats [with namespaces](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#xsd-configuration), which are based on an XML Schema definition. The `beans` configuration format discussed in this chapter is defined in an XML Schema document. However, the p-namespace is not defined in an XSD file and exists only in the core of Spring.
+
+The following example shows two XML snippets that resolve to the same result: The first uses standard XML format and the second uses the p-namespace.
+
+ p-namespace(命名空间p)使您能够使用`bean`元素的属性，而不是嵌套的`<property/>`元素来描述属性值和/或协作bean。
+
+Spring支持基于XML的可扩展配置格式[带命名空间](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#xsd-configuration) 模式定义。 本章讨论的`beans`配置格式在XML Schema文档中定义。 但是，p命名空间不是在XSD文件中定义的，只存在于Spring的核心。
+
+以下示例显示解析为相同结果的两个XML片段：第一个使用标准XML格式，第二个使用p命名空间。
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="classic" class="com.example.ExampleBean">
+		<property name="email" value="foo@bar.com"/>
+	</bean>
+
+	<bean name="p-namespace" class="com.example.ExampleBean"
+		p:email="foo@bar.com"/>
+</beans>
+```
+
+The example shows an attribute in the p-namespace called email in the bean definition. This tells Spring to include a property declaration. As previously mentioned, the p-namespace does not have a schema definition, so you can set the name of the attribute to the property name.
+
+This next example includes two more bean definitions that both have a reference to another bean:
+
+该示例显示了bean定义中名为email的p-namespace(p命名空间)中的属性。 这告诉Spring包含一个属性声明。 如前所述，p命名空间没有模式定义，因此你可以设置属性的名字作为bean的property的名字。
+
+下一个示例包括两个具有对另一个bean的引用的bean定义：
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="john-classic" class="com.example.Person">
+		<property name="name" value="John Doe"/>
+		<property name="spouse" ref="jane"/>
+	</bean>
+
+	<bean name="john-modern"
+		class="com.example.Person"
+		p:name="John Doe"
+		p:spouse-ref="jane"/>
+
+	<bean name="jane" class="com.example.Person">
+		<property name="name" value="Jane Doe"/>
+	</bean>
+</beans>
+```
+
+As you can see, this example includes not only a property value using the p-namespace, but also uses a special format to declare property references. Whereas the first bean definition uses `<property name="spouse" ref="jane"/>` to create a reference from bean `john` to bean `jane`, the second bean definition uses `p:spouse-ref="jane"` as an attribute to do the exact same thing. In this case `spouse` is the property name, whereas the `-ref` part indicates that this is not a straight value but rather a reference to another bean.
+
+如您所见，此示例不仅包含使用 p-namespace(p命名空间)的属性值，还使用特殊格式声明属性引用。 第一个bean定义使用`<property name =“spouse” ref =“jane”/>`创建一个john bean 对jane bean的引用,第二个bean的定义使用了`p:spouse-ref="jane"`作为一个属性来做同样的事情。 在这种情况下，`spouse`是属性名，而`-ref`部分表示这不是一个直接的值，而是一个对另一个bean的引用。
+
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| ---------------------------------------- |
+|p-namespace(p命名空间)不如标准XML格式灵活。 例如，声明属性引用的格式与以“Ref”结尾的属性冲突(声明属性的引用是以Ref结尾的，采用p命名空间将会产生冲突)，而标准XML格式不会。 我们建议您仔细选择您的方法，并将其传达给您的团队成员，以避免生成同时使用所有这三种方法的XML文档。 |
 
