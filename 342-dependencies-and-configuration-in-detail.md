@@ -304,3 +304,23 @@ Specifying the target bean through the `bean` attribute of the `<ref/>` tag 
 ```xml
 <ref bean="someBean"/>
 ```
+Specifying the target bean through the `parent` attribute creates a reference to a bean that is in a parent container of the current container. The value of the `parent`attribute may be the same as either the `id` attribute of the target bean, or one of the values in the `name` attribute of the target bean, and the target bean must be in a parent container of the current one. You use this bean reference variant mainly when you have a hierarchy of containers and you want to wrap an existing bean in a parent container with a proxy that will have the same name as the parent bean.
+
+通过`parent`属性指定目标bean将创建对当前容器的父容器中的bean的引用。`parent`属性的值可以与目标bean的`id`属性相同，也可以与目标bean的`name`属性中的一个值相同，并且目标bean必须位于父容器中 的当前一个。 你使用这个bean引用变体主要是当你有一个容器的层次结构，并且你想用一个与父bean同名的代理在一个父容器中包装一个现有的bean。
+```xml
+<!-- in the parent context -->
+<bean id="accountService" class="com.foo.SimpleAccountService">
+	<!-- insert dependencies as required as here -->
+</bean>
+```
+
+```xml
+<!-- in the child (descendant) context -->
+<bean id="accountService" <!-- bean name is the same as the parent bean -->
+	class="org.springframework.aop.framework.ProxyFactoryBean">
+	<property name="target">
+		<ref parent="accountService"/> <!-- notice how we refer to the parent bean -->
+	</property>
+	<!-- insert other configuration and dependencies as required here -->
+</bean>
+```
