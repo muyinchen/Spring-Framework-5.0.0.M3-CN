@@ -324,3 +324,7 @@ Specifying the target bean through the `parent` attribute creates a reference 
 	<!-- insert other configuration and dependencies as required here -->
 </bean>
 ```
+
+| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| ---------------------------------------- |
+| `ref`元素的`local`属性在4.0 beans xsd中不再支持，因为它不再提供超过正则`bean`引用的值。 在升级到4.0模式时，只需将现有的`ref local`引用更改为`ref bean`. |
