@@ -30,4 +30,5 @@
             * [ 3.4.2 Dependencies and configuration in detail](342-dependencies-and-configuration-in-detail.md)
             * [3.4.3 Using depends-on](343-using-depends-on.md)
             * [3.4.4 Lazy-initialized beans](344-lazy-initialized-beans.md)
+            * 3.4.5 Autowiring collaborators `自动装配协作者`
 
