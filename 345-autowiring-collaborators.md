@@ -13,3 +13,13 @@ Spring容器可以*自动装配*协作bean之间的关系。你可以允许Sprin
 - 自动装配可以在您的对象发生变化时更新配置。例如，如果您需要向类添加依赖关系，则可以自动满足该依赖关系，而无需修改配置。因此，自动依赖在开发期间可以是特别有用的，当系统趋于稳定时改为显式装配。
 
 当使用基于XML的配置元数据[[2 \]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#ftn.d5e1508)时，您指定autowire“属性的bean定义的自动装配模式。自动装配功能有四种模式。您指定自动装配*每个*bean，因此可以选择哪些自动装配。
+
+
+**Table 3.2. Autowiring modes**
+
+| Mode        | Explanation  模式解释                            |
+| ----------- | ---------------------------------------- |
+| no          | （默认）无自动装配。 Bean引用必须通过`ref`元素定义。 对于较大型部署，不建议更改默认设置，因为明确指定协作者会提供更好控制和清晰度。 在一定程度上，它记录了系统的结构. |
+| byName      |按属性名称自动装配。 Spring查找与需要自动注入的属性同名的bean。 例如，如果bean定义设置为autowire by name，并且它包含* master *属性（即它有一个* setMaster（..）*方法），Spring会查找名为`master`的bean定义， 并使用它来设置属性. |
+| byType      |允许属性在属性类型中只有一个bean存在于容器中时自动连接。 如果存在多个，则会抛出致命异常，这表示您不能对该bean使用* byType * autowiring。 如果没有匹配的bean，什么都不发生; 该属性未设置. |
+| constructor |类似于* byType *，但适用于构造函数参数。如果在容器中没有找到与构造器参数类型一致的bean，则会抛出异常. |
