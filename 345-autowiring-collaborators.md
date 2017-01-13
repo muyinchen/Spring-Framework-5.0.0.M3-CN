@@ -23,3 +23,11 @@ Spring容器可以*自动装配*协作bean之间的关系。你可以允许Sprin
 | byName      |按属性名称自动装配。 Spring查找与需要自动注入的属性同名的bean。 例如，如果bean定义设置为autowire by name，并且它包含* master *属性（即它有一个* setMaster（..）*方法），Spring会查找名为`master`的bean定义， 并使用它来设置属性. |
 | byType      |允许属性在属性类型中只有一个bean存在于容器中时自动连接。 如果存在多个，则会抛出致命异常，这表示您不能对该bean使用* byType * autowiring。 如果没有匹配的bean，什么都不发生; 该属性未设置. |
 | constructor |类似于* byType *，但适用于构造函数参数。如果在容器中没有找到与构造器参数类型一致的bean，则会抛出异常. |
+
+With *byType* or *constructor* autowiring mode, you can wire arrays and typed-collections. In such cases *all* autowire candidates within the container that match the expected type are provided to satisfy the dependency. You can autowire strongly-typed Maps if the expected key type is `String`. An autowired Maps values will consist of all bean instances that match the expected type, and the Maps keys will contain the corresponding bean names.
+
+You can combine autowire behavior with dependency checking, which is performed after autowiring completes.
+
+使用* byType *或*构造函数*自动装配模式，可以应用于数组和类型集合。 在这种情况下，提供容器中所有匹配的自动装配对象将 被应用于满足各种依赖。 如果预期的键类型为“String”，则可以自动注入强类型的Map。一个自动装配的Map value值将包含与预期类型匹配的所有Bean实例。
+
+你可以结合自动装配和依赖检查，后者将会在自动装配完成之后进行。
