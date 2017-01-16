@@ -12,7 +12,7 @@ Spring容器可以*自动装配*协作bean之间的关系。你可以允许Sprin
 - 自动装配可以显着减少指定属性或构造函数参数的需求.（其他机制，如bean模板[在本章其他地方讨论](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-child-bean-definitions) 在这方面也很有价值。）
 - 自动装配可以在您的对象发生变化时更新配置。例如，如果您需要向类添加依赖关系，则可以自动满足该依赖关系，而无需修改配置。因此，自动依赖在开发期间可以是特别有用的，当系统趋于稳定时改为显式装配。
 
-当使用基于XML的配置元数据[[2 \]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#ftn.d5e1508)时，您指定autowire“属性的bean定义的自动装配模式。自动装配功能有四种模式。您指定自动装配*每个*bean，因此可以选择哪些自动装配。
+当使用基于`XML`的配置元数据[[2 \]](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#ftn.d5e1508)时，您指定autowire“属性的bean定义的自动装配模式。自动装配功能有四种模式。您指定自动装配*每个*bean，因此可以选择哪些自动装配。
 
 
 **Table 3.2. Autowiring modes**
