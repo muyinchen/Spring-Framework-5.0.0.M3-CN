@@ -4,7 +4,7 @@ A solution is to forego some inversion of control. You can [make bean A aware o
 
 在大多数应用场景中，容器中的大多数bean都是 [singletons](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-scopes-singleton)。 当单例bean需要与另一个单例bean协作或非单例bean需要与另一个非单例bean协作时，通常通过将一个bean定义为另一个的属性来处理依赖关系。不过对于具有不同生命周期的bean 来说这样做就会出现问题。 假设单例bean A需要使用非单例（原型）bean B，也许在A上的每个方法调用上。容器仅创建单例bean A一次，因此只有一次机会来设置属性。 这样就没办法 在需要的时候每次让容器为bean A提供一个新的bean B实例。
 
-解决方案是放弃一些控制的反转。 您可以通过实现以下操作来[让bean A知道容器](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-aware)  `ApplicationContextAware`接口，并通过[对容器调用getBean（“B”）](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-client)在每次bean A需要它时请求（一个通常是新的）bean B实例。 以下是此方法的示例：
+解决方案是放弃一些控制的反转。 您可以通过实现以下操作来[让`bean A`知道容器](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-aware)  `ApplicationContextAware`接口，并通过[对容器调用getBean（“B”）](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/#beans-factory-client)在每次bean A需要它时请求（一个通常是新的）bean B实例。 以下是此方法的示例：
 ```java
 // a class that uses a stateful Command-style class to perform some processing
 package fiona.apple;
