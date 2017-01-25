@@ -18,7 +18,7 @@ The convention is to use the standard Java convention for instance field names w
 
 Naming beans consistently makes your configuration easier to read and understand, and if you are using Spring AOP it helps a lot when applying advice to a set of beans related by name.
 
-约定是在命名bean时使用标准Java约定作为实例字段名称。 也就是说，bean名称以小写字母开头，从那时开始是驼峰式的。 这样的名称的示例将是（无引号）`'accountManager'，`'accountService'`，''userDao'`，\`'loginController''等。
+约定是在命名bean时使用标准Java约定作为实例字段名称。 也就是说，bean名称以小写字母开头，从那时开始是驼峰式的。 这样的名称的示例将是（无引号）`accountManager`，`accountService`，`userDao`，`loginController`等。
 
 命名Bean一致地使您的配置更容易阅读和理解，如果您使用Spring AOP，它对按照名称相关的一组bean应用建议时会有很多帮助。
 
