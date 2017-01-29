@@ -34,5 +34,5 @@
       * [3.4.6 Method injection](346-method-injection.md)
     * [3.5 bean作用域](3.5-bean.md)
       * [3.5.1 单例作用域](3.5-bean/3.5.1.md)
-      * 3.5.2 
+      * [3.5.2 The prototype 作用域](3.5-bean/3.5.2-the-prototype.md)
 
