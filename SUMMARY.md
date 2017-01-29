@@ -33,4 +33,6 @@
       * [3.4.5 Autowiring collaborators](345-autowiring-collaborators.md)
       * [3.4.6 Method injection](346-method-injection.md)
     * [3.5 bean作用域](3.5-bean.md)
+      * [3.5.1 单例作用域](3.5-bean/3.5.1.md)
+      * 3.5.2 
 
