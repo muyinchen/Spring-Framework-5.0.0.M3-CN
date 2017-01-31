@@ -41,4 +41,5 @@
       * 3.6 Customizing the nature of a bean
         * [3.6.1 生命周期回调函数](3.5-bean/3.6.1.md)
         * [3.6.2 ApplicationContextAware和BeanNameAware](3.5-bean/3.6.2-applicationcontextawarebeannameaware.md)
+        * [3.6.3 Other Aware interfaces](3.5-bean/3.6.3-other-aware-interfaces.md)
 
