@@ -40,4 +40,5 @@
       * [3.5.5 自定义作用域](3.5-bean/3.5.5.md)
       * 3.6 Customizing the nature of a bean
         * [3.6.1 生命周期回调函数](3.5-bean/3.6.1.md)
+        * [3.6.2 ApplicationContextAware和BeanNameAware](3.5-bean/3.6.2-applicationcontextawarebeannameaware.md)
 
