@@ -44,4 +44,5 @@
       * [3.6.3 Other Aware interfaces](3.5-bean/3.6.3-other-aware-interfaces.md)
     * [3.7 Spring Bean的继承](3.7-spring-bean.md)
     * [3.8 容器扩展点](3.8.md)
+      * [3.8.1 使用BeanPostProcessor定制bean](3.8/3.8.1-beanpostprocessorbean.md)
 
