@@ -37,4 +37,5 @@
       * [3.5.2 The prototype 作用域](3.5-bean/3.5.2-the-prototype.md)
       * [3.5.3 Singleton beans with prototype-bean dependencies](3.5-bean/3.5.3-singleton-beans-with-prototype-bean-dependencies.md)
       * [3.5.4 Request, session, application, and WebSocket scopes](3.5-bean/3.5.4-request-session-application-and-websocket-scopes.md)
+      * [3.5.5 自定义作用域](3.5-bean/3.5.5.md)
 
