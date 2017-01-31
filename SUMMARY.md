@@ -38,8 +38,9 @@
       * [3.5.3 Singleton beans with prototype-bean dependencies](3.5-bean/3.5.3-singleton-beans-with-prototype-bean-dependencies.md)
       * [3.5.4 Request, session, application, and WebSocket scopes](3.5-bean/3.5.4-request-session-application-and-websocket-scopes.md)
       * [3.5.5 自定义作用域](3.5-bean/3.5.5.md)
-      * 3.6 Customizing the nature of a bean
-        * [3.6.1 生命周期回调函数](3.5-bean/3.6.1.md)
-        * [3.6.2 ApplicationContextAware和BeanNameAware](3.5-bean/3.6.2-applicationcontextawarebeannameaware.md)
-        * [3.6.3 Other Aware interfaces](3.5-bean/3.6.3-other-aware-interfaces.md)
+    * 3.6 Customizing the nature of a bean
+      * [3.6.1 生命周期回调函数](3.5-bean/3.6.1.md)
+      * [3.6.2 ApplicationContextAware和BeanNameAware](3.5-bean/3.6.2-applicationcontextawarebeannameaware.md)
+      * [3.6.3 Other Aware interfaces](3.5-bean/3.6.3-other-aware-interfaces.md)
+    * [3.7 Spring Bean的继承](3.7-spring-bean.md)
 
