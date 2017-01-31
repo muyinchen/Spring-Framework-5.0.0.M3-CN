@@ -35,4 +35,5 @@
     * [3.5 bean作用域](3.5-bean.md)
       * [3.5.1 单例作用域](3.5-bean/3.5.1.md)
       * [3.5.2 The prototype 作用域](3.5-bean/3.5.2-the-prototype.md)
+      * [3.5.3 Singleton beans with prototype-bean dependencies](3.5-bean/3.5.3-singleton-beans-with-prototype-bean-dependencies.md)
 
