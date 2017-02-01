@@ -45,4 +45,5 @@
     * [3.7 Spring Bean的继承](3.7-spring-bean.md)
     * [3.8 容器扩展点](3.8.md)
       * [3.8.1 使用BeanPostProcessor定制bean](3.8/3.8.1-beanpostprocessorbean.md)
+      * [3.8.2 使用BeanFactoryPostProcessor定制配置元数据](3.8/3.8.2-beanfactorypostprocessoryuan.md)
 
