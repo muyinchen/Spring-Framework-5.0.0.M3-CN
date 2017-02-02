@@ -50,4 +50,5 @@
     * [3.9 基于注解的容器配置](3.9.md)
       * [3.9.1 @Required](3.9/3.9.1-@required.md)
       * [3.9.2 @Autowired](3.9/3.9.2-@autowired.md)
+      * [3.9.3  使用@Primary微调基于注解的自动装配](3.9/3.9.3-@primary.md)
 
