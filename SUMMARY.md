@@ -54,4 +54,5 @@
       * [3.9.4 使用@Qualifier限定符微调基于注解的自动装配](3.9/3.9.4-@qualifier.md)
       * [3.9.5 使用泛型作为自动注入的限定符](3.9/3.9.5.md)
       * [3.9.6 CustomAutowireConfigurer](3.9/3.9.6-customautowireconfigurer.md)
+      * [3.9.7 @Resource](3.9/3.9.7-@resource.md)
 
