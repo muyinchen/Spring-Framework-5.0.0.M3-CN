@@ -48,4 +48,5 @@
       * [3.8.2 使用BeanFactoryPostProcessor定制配置元数据](3.8/3.8.2-beanfactorypostprocessoryuan.md)
       * [3.8.3 使用FactoryBean定制实例化逻辑](3.8/3.8.3-factorybean.md)
     * [3.9 基于注解的容器配置](3.9.md)
+      * [3.9.1 @Required](3.9/3.9.1-@required.md)
 
