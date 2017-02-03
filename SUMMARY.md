@@ -61,4 +61,5 @@
       * [3.10.2 Meta-annotations 元注解](3.10-classpath/3.10.2-meta-annotations-yuan.md)
       * [3.10.3 自动检测类并注册bean定义](3.10-classpath/3.10.3-bean.md)
       * [3.10.4 使用过滤器自定义扫描](3.10-classpath/3.10.4.md)
+      * [3.10.5 在组件中定义Bean元数据](3.10-classpath/3.10.5-beanyuan.md)
 
