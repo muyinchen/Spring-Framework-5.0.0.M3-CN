@@ -59,4 +59,5 @@
     * [3.10 ClassPath扫描和管理组件](3.10-classpath.md)
       * [3.10.1 @Component和各代码层注解](3.10-classpath/3.10.1-@component.md)
       * [3.10.2 Meta-annotations 元注解](3.10-classpath/3.10.2-meta-annotations-yuan.md)
+      * [3.10.3 自动检测类并注册bean定义](3.10-classpath/3.10.3-bean.md)
 
