@@ -56,4 +56,5 @@
       * [3.9.6 CustomAutowireConfigurer](3.9/3.9.6-customautowireconfigurer.md)
       * [3.9.7 @Resource](3.9/3.9.7-@resource.md)
       * [3.9.8 @PostConstruct and @PreDestroy](3.9/3.9.8-@postconstruct-and-@predestroy.md)
+    * [3.10 ClassPath扫描和管理组件](3.10-classpath.md)
 
