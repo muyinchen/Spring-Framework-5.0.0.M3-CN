@@ -58,5 +58,4 @@
       * [3.9.8 @PostConstruct and @PreDestroy](3.9/3.9.8-@postconstruct-and-@predestroy.md)
     * [3.10 ClassPath扫描和管理组件](3.10-classpath.md)
       * [3.10.1 @Component和各代码层注解](3.10-classpath/3.10.1-@component.md)
-      * [3.10.2 Meta-annotations 元注解](3.10-classpath/3.10.2-meta-annotations-yuan.md)
 
