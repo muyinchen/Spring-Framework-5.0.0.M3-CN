@@ -57,4 +57,5 @@
       * [3.9.7 @Resource](3.9/3.9.7-@resource.md)
       * [3.9.8 @PostConstruct and @PreDestroy](3.9/3.9.8-@postconstruct-and-@predestroy.md)
     * [3.10 ClassPath扫描和管理组件](3.10-classpath.md)
+      * [3.10.1 @Component和各代码层注解](3.10-classpath/3.10.1-@component.md)
 
