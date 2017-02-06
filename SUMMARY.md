@@ -63,4 +63,5 @@
       * [3.10.4 使用过滤器自定义扫描](3.10-classpath/3.10.4.md)
       * [3.10.5 在组件中定义Bean元数据](3.10-classpath/3.10.5-beanyuan.md)
       * [3.10.6 命名自动注册组件](3.10-classpath/3.10.6.md)
+      * [3.10.7 为\`component-scan\`组件提供作用域](3.10-classpath/3.10.7-component-scan.md)
 
