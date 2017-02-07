@@ -67,4 +67,5 @@
       * [3.10.8 为注解提供标示符Qualifier](3.10-classpath/3.10.8-qualifier.md)
     * [3.11 使用JSR-330标准注解](3.11-jsr-330.md)
       * [3.11.1 使用@Inject @Name依赖注入](3.11-jsr-330/3.11.1.md)
+      * [3.11.2 @Named:相当于@Component](3.11-jsr-330/3.11.2-@named@component.md)
 
