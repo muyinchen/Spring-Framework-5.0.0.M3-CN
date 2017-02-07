@@ -65,4 +65,5 @@
       * [3.10.6 命名自动注册组件](3.10-classpath/3.10.6.md)
       * [3.10.7 为\`component-scan\`组件提供作用域](3.10-classpath/3.10.7-component-scan.md)
       * [3.10.8 为注解提供标示符Qualifier](3.10-classpath/3.10.8-qualifier.md)
+    * [3.11 使用JSR-330标准注解](3.11-jsr-330.md)
 
