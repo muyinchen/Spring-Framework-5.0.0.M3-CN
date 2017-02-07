@@ -69,5 +69,6 @@
       * [3.11.1 使用@Inject @Name依赖注入](3.11-jsr-330/3.11.1.md)
       * [3.11.2 @Named:相当于@Component](3.11-jsr-330/3.11.2-@named@component.md)
       * [3.11.3 JSR-330标准注解的限制](3.11-jsr-330/3.11.3-jsr-330.md)
-    * 3.12 基于Java的容器配置
+    * [3.12 基于Java的容器配置](3.12-java.md)
+      * [3.12.1 基本概念：@Bean和@Configuration](3.12.1-@bean@configuration.md)
 
