@@ -78,4 +78,5 @@
     * [3.13  Environment抽象](3.13-environment.md)
       * [3.13.1 bean定义profiles](3.13-environment/3.13.1-beanprofiles.md)
       * [3.13.2  XML bean定义profile](3.13-environment/3.13.2-xml-beanprofile.md)
+      * [3.13.3 PropertySource abstraction](3.13-environment/3.13.3-propertysource-abstraction.md)
 
