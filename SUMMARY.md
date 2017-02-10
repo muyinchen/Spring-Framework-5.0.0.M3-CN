@@ -82,4 +82,5 @@
       * [3.13.4 @PropertySource](3.13-environment/3.13.4-@propertysource.md)
       * [3.13.5 Placeholder resolution in statements](3.13-environment/3.13.5-placeholder-resolution-in-statements.md)
     * [3.14 注册LoadTimeWeaver](3.14-loadtimeweaver.md)
+    * [3.15 ApplicationContext 的附加功能](3.15-applicationcontext.md)
 
