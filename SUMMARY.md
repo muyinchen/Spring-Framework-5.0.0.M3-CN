@@ -77,4 +77,5 @@
       * [3.12.5 组合Java基本配置](3.12.5.md)
     * [3.13  Environment抽象](3.13-environment.md)
       * [3.13.1 bean定义profiles](3.13-environment/3.13.1-beanprofiles.md)
+      * [3.13.2  XML bean定义profile](3.13-environment/3.13.2-xml-beanprofile.md)
 
