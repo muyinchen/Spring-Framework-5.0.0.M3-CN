@@ -80,4 +80,5 @@
       * [3.13.2  XML bean定义profile](3.13-environment/3.13.2-xml-beanprofile.md)
       * [3.13.3 PropertySource abstraction](3.13-environment/3.13.3-propertysource-abstraction.md)
       * [3.13.4 @PropertySource](3.13-environment/3.13.4-@propertysource.md)
+      * [3.13.5 Placeholder resolution in statements](3.13-environment/3.13.5-placeholder-resolution-in-statements.md)
 
