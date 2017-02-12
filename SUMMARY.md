@@ -85,4 +85,5 @@
     * [3.15 ApplicationContext 的附加功能](3.15-applicationcontext.md)
       * [3.15.1 Internationalization using MessageSource](3.15-applicationcontext/3.15.1-internationalization-using-messagesource.md)
       * [3.15.2 Standard and Custom Events](3.15-applicationcontext/3.15.2-standard-and-custom-events.md)
+      * [3.15.3 通过便捷的方式访问底层资源](3.15-applicationcontext/3.15.3.md)
 
