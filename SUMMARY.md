@@ -86,4 +86,5 @@
       * [3.15.1 Internationalization using MessageSource](3.15-applicationcontext/3.15.1-internationalization-using-messagesource.md)
       * [3.15.2 Standard and Custom Events](3.15-applicationcontext/3.15.2-standard-and-custom-events.md)
       * [3.15.3 通过便捷的方式访问底层资源](3.15-applicationcontext/3.15.3.md)
+      * [3.15.4 快速对web应用的\`ApplicationContext\`实例化](3.15-applicationcontext/3.15.4-webapplicationcontext.md)
 
