@@ -8,6 +8,8 @@ Chinese translation of Spring Framework 5.x Reference Documentation. The current
 本人会在文档内做版本间的对比，请关注里面的注即可，对比文档版本 `4.3.0.RELEASE`
 
 
+#### 2017.2.12：
+终于在十六将第三章搞完
 
 ####2017.1.1：
  对5.0.0.M3做升级版本到5.0.0.M4
@@ -23,7 +25,11 @@ Chinese translation of Spring Framework 5.x Reference Documentation. The current
 
 ## Introduction
 
-### Github : [https://github.com/muyinchen](https://github.com/muyinchen)
-### Github 本书阅读地址：https://github.com/muyinchen/Spring-Framework-5.0.0.M3-CN/blob/master/SUMMARY.md
+### Github :
+ [https://github.com/muyinchen](https://github.com/muyinchen)
+### Github 本书阅读地址：
+https://github.com/muyinchen/Spring-Framework-5.0.0.M3-CN/blob/master/SUMMARY.md
+### Gitbook 阅读地址：
+https://muyinchen.gitbooks.io/spring-framework-5-0-0-m3/content/
 
 
