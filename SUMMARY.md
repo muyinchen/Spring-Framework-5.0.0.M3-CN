@@ -88,4 +88,5 @@
       * [3.15.3 通过便捷的方式访问底层资源](3.15-applicationcontext/3.15.3.md)
       * [3.15.4 快速对web应用的\`ApplicationContext\`实例化](3.15-applicationcontext/3.15.4-webapplicationcontext.md)
       * [3.15.5将Spring ApplicationContext作为JAVA EE RAR文件部署](3.15-applicationcontext/3.15.5spring-applicationcontextjava-ee-rar.md)
+    * [3.16 The BeanFactory](3.16-the-beanfactory.md)
 
