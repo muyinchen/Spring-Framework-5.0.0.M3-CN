@@ -102,4 +102,5 @@
       * [4.3.5 InputStreamResource](4.3-resource/4.3.5-inputstreamresource.md)
       * [4.3.6 ByteArrayResource](4.3-resource/4.3.6-bytearrayresource.md)
     * [4.4 ResourceLoader 接口](4.4-resourceloader.md)
+    * [4.5 ResourceLoaderAware 接口](4.5-resourceloaderaware.md)
 
