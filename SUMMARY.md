@@ -104,4 +104,6 @@
     * [4.4 ResourceLoader 接口](4.4-resourceloader.md)
     * [4.5 ResourceLoaderAware 接口](4.5-resourceloaderaware.md)
     * [4.6 Resources as dependencies](4.6-resources-as-dependencies.md)
+    * [4.7 应用上下文和资源路径](4.7.md)
+      * [4.7.1 构造应用上下文](4.7/4.7.1.md)
 
