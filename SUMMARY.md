@@ -91,4 +91,6 @@
     * [3.16 The BeanFactory](3.16-the-beanfactory.md)
       * [3.16.1 BeanFactory or ApplicationContext?](3.16-the-beanfactory/3.16.1-beanfactory-or-applicationcontext.md)
       * [3.16.2 Glue code and the evil singleton](3.16-the-beanfactory/3.16.2-glue-code-and-the-evil-singleton.md)
+  * 4.Resources
+    * [4.1 介绍](4.1.md)
 
