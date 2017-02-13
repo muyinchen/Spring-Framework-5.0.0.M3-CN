@@ -93,4 +93,5 @@
       * [3.16.2 Glue code and the evil singleton](3.16-the-beanfactory/3.16.2-glue-code-and-the-evil-singleton.md)
   * 4.Resources
     * [4.1 介绍](4.1.md)
+    * [4.2 Resource 接口](4.2-resource.md)
 
