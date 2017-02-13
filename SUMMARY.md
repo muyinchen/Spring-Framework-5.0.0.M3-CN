@@ -96,4 +96,5 @@
     * [4.2 Resource 接口](4.2-resource.md)
     * [4.3 内置的 Resource 实现](4.3-resource.md)
       * [4.3.1 UrlResource](4.3-resource/4.3.1-urlresource.md)
+      * [4.3.2 ClassPathResource](4.3-resource/4.3.2-classpathresource.md)
 
