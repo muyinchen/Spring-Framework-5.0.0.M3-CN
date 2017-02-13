@@ -100,4 +100,5 @@
       * [4.3.3 FileSystemResource](4.3-resource/4.3.3-filesystemresource.md)
       * [4.3.4 ServletContextResource](4.3-resource/4.3.4-servletcontextresource.md)
       * [4.3.5 InputStreamResource](4.3-resource/4.3.5-inputstreamresource.md)
+      * [4.3.6 ByteArrayResource](4.3-resource/4.3.6-bytearrayresource.md)
 
