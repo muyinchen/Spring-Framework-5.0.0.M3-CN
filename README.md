@@ -7,6 +7,8 @@ Chinese translation of Spring Framework 5.x Reference Documentation. The current
 [http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/](http://docs.spring.io/spring/docs/5.0.0.M4/spring-framework-reference/htmlsingle/)  
 本人会在文档内做版本间的对比，请关注里面的注即可，对比文档版本 `4.3.0.RELEASE`
 
+#### 2017.2.15：
+第四章 Resources 翻译完毕
 
 #### 2017.2.12：
 终于在十六将第三章搞完
