@@ -106,4 +106,5 @@
     * [4.6 Resources as dependencies](4.6-resources-as-dependencies.md)
     * [4.7 应用上下文和资源路径](4.7.md)
       * [4.7.1 构造应用上下文](4.7/4.7.1.md)
+      * [4.7.2 使用通配符构造应用上下文](4.7/4.7.2.md)
 
