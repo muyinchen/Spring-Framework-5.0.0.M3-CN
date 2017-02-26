@@ -110,4 +110,5 @@
       * [4.7.3 FileSystemResource 警告](4.7/4.7.3-filesystemresource.md)
   * [5.数据校验、数据绑定和类型转换](5.md)
     * [5.1 简介](5/5.1.md)
+    * [5.2 使用Spring的Validator接口来进行数据校验](5/5.2-springvalidator.md)
 
