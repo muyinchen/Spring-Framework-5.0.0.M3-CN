@@ -117,4 +117,5 @@
       * [5.4.2 Built-in PropertyEditor implementations](5/54-bean-manipulation-and-the-beanwrapper/542-built-in-propertyeditor-implementations.md)
     * [5.5 Spring Type Conversion](5/55-spring-type-conversion.md)
     * [5.6 Spring Field Formatting](5/56-spring-field-formatting.md)
+    * [5.7 Configuring a global date & time format](5/57-configuring-a-global-date-and-time-format.md)
 
