@@ -134,4 +134,6 @@
     * [7.5 Mixing aspect types](7aspect-oriented-programming-with-spring/75-mixing-aspect-types.md)
     * [7.6 Proxying mechanisms](7aspect-oriented-programming-with-spring/76-proxying-mechanisms.md)
     * [7.7 Programmatic creation of @AspectJ Proxies](7aspect-oriented-programming-with-spring/77-programmatic-creation-of-aspectj-proxies.md)
+    * [7.8 Using AspectJ with Spring applications](7aspect-oriented-programming-with-spring/78-using-aspectj-with-spring-applications.md)
+    * [7.9 Further Resources](7aspect-oriented-programming-with-spring/79-further-resources.md)
 
