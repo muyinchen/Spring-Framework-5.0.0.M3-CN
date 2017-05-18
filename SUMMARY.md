@@ -118,4 +118,5 @@
     * [5.5 Spring Type Conversion](5/55-spring-type-conversion.md)
     * [5.6 Spring Field Formatting](5/56-spring-field-formatting.md)
     * [5.7 Configuring a global date & time format](5/57-configuring-a-global-date-and-time-format.md)
+    * [5.8 Spring Validation](5/58-spring-validation.md)
 
