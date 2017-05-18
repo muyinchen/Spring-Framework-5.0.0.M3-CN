@@ -112,4 +112,5 @@
     * [5.1 简介](5/5.1.md)
     * [5.2 使用Spring的Validator接口来进行数据校验](5/5.2-springvalidator.md)
     * [5.3 通过错误编码得到错误信息](5/5.3.md)
+    * [5.4 Bean manipulation and the BeanWrapper](5/54-bean-manipulation-and-the-beanwrapper.md)
 
