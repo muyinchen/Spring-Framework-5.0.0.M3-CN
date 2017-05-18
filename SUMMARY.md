@@ -132,4 +132,5 @@
     * [7.3 Schema-based AOP support](7aspect-oriented-programming-with-spring/73-schema-based-aop-support.md)
     * [7.4 Choosing which AOP declaration style to use](7aspect-oriented-programming-with-spring/74-choosing-which-aop-declaration-style-to-use.md)
     * [7.5 Mixing aspect types](7aspect-oriented-programming-with-spring/75-mixing-aspect-types.md)
+    * [7.6 Proxying mechanisms](7aspect-oriented-programming-with-spring/76-proxying-mechanisms.md)
 
