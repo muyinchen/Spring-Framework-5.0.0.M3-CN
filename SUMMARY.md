@@ -130,4 +130,5 @@
     * [7.1 Introduction](7aspect-oriented-programming-with-spring/71-introduction.md)
     * [7.2 @AspectJ support](7aspect-oriented-programming-with-spring/72-aspectj-support.md)
     * [7.3 Schema-based AOP support](7aspect-oriented-programming-with-spring/73-schema-based-aop-support.md)
+    * [7.4 Choosing which AOP declaration style to use](7aspect-oriented-programming-with-spring/74-choosing-which-aop-declaration-style-to-use.md)
 
