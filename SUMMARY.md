@@ -128,4 +128,5 @@
     * [6.6 Classes used in the examples](6spring-expression-language-spel/66-classes-used-in-the-examples.md)
   * [7.Aspect Oriented Programming with Spring](7aspect-oriented-programming-with-spring.md)
     * [7.1 Introduction](7aspect-oriented-programming-with-spring/71-introduction.md)
+    * [7.2 @AspectJ support](7aspect-oriented-programming-with-spring/72-aspectj-support.md)
 
