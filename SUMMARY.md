@@ -115,4 +115,5 @@
     * [5.4 Bean manipulation and the BeanWrapper](5/54-bean-manipulation-and-the-beanwrapper.md)
       * [5.4.1 Setting and getting basic and nested properties](5/54-bean-manipulation-and-the-beanwrapper/541-setting-and-getting-basic-and-nested-properties.md)
       * [5.4.2 Built-in PropertyEditor implementations](5/54-bean-manipulation-and-the-beanwrapper/542-built-in-propertyeditor-implementations.md)
+    * [5.5 Spring Type Conversion](5/55-spring-type-conversion.md)
 
