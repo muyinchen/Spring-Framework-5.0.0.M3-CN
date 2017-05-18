@@ -124,4 +124,6 @@
     * [6.2 Feature Overview](6spring-expression-language-spel/62-feature-overview.md)
     * [6.3 Expression Evaluation using Spring’s Expression Interface](6spring-expression-language-spel/63-expression-evaluation-using-springs-expression-interface.md)
     * [6.4 Expression support for defining bean definitions](6spring-expression-language-spel/64-expression-support-for-defining-bean-definitions.md)
+    * [6.5 Language Reference](6spring-expression-language-spel/65-language-reference.md)
+    * [6.6 Classes used in the examples](6spring-expression-language-spel/66-classes-used-in-the-examples.md)
 
