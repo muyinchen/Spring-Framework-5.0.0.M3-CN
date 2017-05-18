@@ -133,4 +133,5 @@
     * [7.4 Choosing which AOP declaration style to use](7aspect-oriented-programming-with-spring/74-choosing-which-aop-declaration-style-to-use.md)
     * [7.5 Mixing aspect types](7aspect-oriented-programming-with-spring/75-mixing-aspect-types.md)
     * [7.6 Proxying mechanisms](7aspect-oriented-programming-with-spring/76-proxying-mechanisms.md)
+    * [7.7 Programmatic creation of @AspectJ Proxies](7aspect-oriented-programming-with-spring/77-programmatic-creation-of-aspectj-proxies.md)
 
