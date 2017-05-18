@@ -119,4 +119,8 @@
     * [5.6 Spring Field Formatting](5/56-spring-field-formatting.md)
     * [5.7 Configuring a global date & time format](5/57-configuring-a-global-date-and-time-format.md)
     * [5.8 Spring Validation](5/58-spring-validation.md)
+  * [6.Spring Expression Language \(SpEL\)](6spring-expression-language-spel.md)
+    * [6.1 Introduction](6spring-expression-language-spel/61-introduction.md)
+    * [6.2 Feature Overview](6spring-expression-language-spel/62-feature-overview.md)
+    * [6.3 Expression Evaluation using Spring’s Expression Interface](6spring-expression-language-spel/63-expression-evaluation-using-springs-expression-interface.md)
 
