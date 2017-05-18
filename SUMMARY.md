@@ -126,4 +126,6 @@
     * [6.4 Expression support for defining bean definitions](6spring-expression-language-spel/64-expression-support-for-defining-bean-definitions.md)
     * [6.5 Language Reference](6spring-expression-language-spel/65-language-reference.md)
     * [6.6 Classes used in the examples](6spring-expression-language-spel/66-classes-used-in-the-examples.md)
+  * [7.Aspect Oriented Programming with Spring](7aspect-oriented-programming-with-spring.md)
+    * [7.1 Introduction](7aspect-oriented-programming-with-spring/71-introduction.md)
 
