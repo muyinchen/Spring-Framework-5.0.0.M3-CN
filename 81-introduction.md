@@ -1,0 +1,3 @@
+## 8.1 Introduction
+
+The previous chapter described the Spring’s support for AOP using @AspectJ and schema-based aspect definitions. In this chapter we discuss the lower-level Spring AOP APIs and the AOP support used in Spring 1.2 applications. For new applications, we recommend the use of the Spring 2.0 and later AOP support described in the previous chapter, but when working with existing applications, or when reading books and articles, you may come across Spring 1.2 style examples. Spring 4.0 is backwards compatible with Spring 1.2 and everything described in this chapter is fully supported in Spring 4.0.

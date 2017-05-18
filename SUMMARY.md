@@ -136,4 +136,7 @@
     * [7.7 Programmatic creation of @AspectJ Proxies](7aspect-oriented-programming-with-spring/77-programmatic-creation-of-aspectj-proxies.md)
     * [7.8 Using AspectJ with Spring applications](7aspect-oriented-programming-with-spring/78-using-aspectj-with-spring-applications.md)
     * [7.9 Further Resources](7aspect-oriented-programming-with-spring/79-further-resources.md)
+  * 8.Spring AOP APIs
+    * [8.1 Introduction](81-introduction.md)
+    * [8.2 Pointcut API in Spring](82-pointcut-api-in-spring.md)
 
