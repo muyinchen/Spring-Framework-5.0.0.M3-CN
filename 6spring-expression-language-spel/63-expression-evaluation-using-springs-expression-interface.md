@@ -92,7 +92,7 @@ Expression exp = parser.parseExpression("name");
 String name = (String) exp.getValue(tesla);
 ```
 
-在这种情况下，目标对象`tesla`已经直接提供给`getValue`，表达式运算操作的基础动作即在内部创建和管理默认运算操作的上下文 - 它不需要提供。
+在这种情况下，目标对象`tesla`已经直接提供给`getValue`，表达式运算操作的基础动作即在内部创建和管理默认运算操作的上下文 - 它不需要被额外提供。
 
 The StandardEvaluationContext is relatively expensive to construct and during repeated usage it builds up cached state that enables subsequent expression evaluations to be performed more quickly. For this reason it is better to cache and reuse them where possible, rather than construct a new one for each expression evaluation.
 
