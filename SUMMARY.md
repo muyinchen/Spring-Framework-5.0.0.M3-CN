@@ -114,7 +114,7 @@
     * [5.3 通过错误编码得到错误信息](5/5.3.md)
     * [5.4 Bean操作和BeanWrapper](5/54-bean-manipulation-and-the-beanwrapper.md)
       * [5.4.1 设置并获取基本和嵌套属性](5/54-bean-manipulation-and-the-beanwrapper/541-setting-and-getting-basic-and-nested-properties.md)
-      * [5.4.2 Built-in PropertyEditor implementations](5/54-bean-manipulation-and-the-beanwrapper/542-built-in-propertyeditor-implementations.md)
+      * [5.4.2 内置PropertyEditor实现](5/54-bean-manipulation-and-the-beanwrapper/542-built-in-propertyeditor-implementations.md)
     * [5.5 Spring Type Conversion](5/55-spring-type-conversion.md)
     * [5.6 Spring Field Formatting](5/56-spring-field-formatting.md)
     * [5.7 Configuring a global date & time format](5/57-configuring-a-global-date-and-time-format.md)
@@ -140,4 +140,7 @@
     * [8.1 Introduction](81-introduction.md)
     * [8.2 Pointcut API in Spring](82-pointcut-api-in-spring.md)
     * [8.3 Advice API in Spring](83-advice-api-in-spring.md)
+* [Part III. Testing](part-iii-testing.md)
+  * [9.Introduction to Spring Testing](part-iii-testing/9introduction-to-spring-testing.md)
+  * [10.Unit Testing](part-iii-testing/10unit-testing.md)
 

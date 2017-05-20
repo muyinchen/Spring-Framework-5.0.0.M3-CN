@@ -1,0 +1,3 @@
+## 9. Introduction to Spring Testing
+
+Testing is an integral part of enterprise software development. This chapter focuses on the value-add of the IoC principle to [unit testing](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#unit-testing) and on the benefits of the Spring Framework’s support for [integration testing](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#integration-testing). *(A thorough treatment of testing in the enterprise is beyond the scope of this reference manual.)*
