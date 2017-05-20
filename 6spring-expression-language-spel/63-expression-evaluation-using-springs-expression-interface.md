@@ -1,8 +1,8 @@
-## 6.3 使用Spring表达式接口的表达式评估
+## 6.3 使用Spring表达式接口的表达式运算操作
 
 本节介绍了SpEL接口及其表达式语言的简单使用。完整的语言参考可以在“语言参考”一节中找到。
 
-以下代码介绍了SpEL API来评估文字字符串表达式“Hello World”。
+以下代码介绍了SpEL API来运算操作文字字符串表达式“Hello World”。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -14,7 +14,7 @@ String message = (String) exp.getValue();
 
 您最有可能使用的SpEL类和接口位于包 `org.springframework.expression` 及其子包和包`spel.support`
 
-接口`ExpressionParser`负责解析表达式字符串。 在此示例中，表达式字符串是由周围的单引号表示的字符串文字。接口`Expression`负责评估先前定义的表达式字符串。 当分别调用`parser.parseExpression`和`exp.getValue`时，有两个可以抛出的异常，`ParseException`和`EvaluationException`。
+接口`ExpressionParser`负责解析表达式字符串。 在此示例中，表达式字符串是由周围的单引号表示的字符串文字。接口`Expression`负责运算操作先前定义的表达式字符串。 当分别调用`parser.parseExpression`和`exp.getValue`时，有两个可以抛出的异常，`ParseException`和`EvaluationException`。
 
 SpEL支持各种功能，如调用方法，访问属性和调用构造函数。
 
@@ -60,7 +60,7 @@ String message = exp.getValue(String.class);
 
 注意使用通用方法`public（T）T getValue（Class <T> desiredResultType）`。 使用此方法不需要将表达式的值转换为所需的结果类型。 如果该值不能转换为类型`T`或使用注册的类型转换器转换，则将抛出`EvaluationException`。
 
-Spel的更常见的用法是提供一个针对特定对象实例（称为根对象）进行评估的表达式字符串。 这里有两个选项 ，并且选择哪个由反对当前被验证的表示式的对象是否在每次调用后而改变再验证表达式来决定。在以下示例中，我们从`Inventor`类的实例中检索`name`属性。
+Spel的更常见的用法是提供一个针对特定对象实例（称为根对象）进行运算操作的表达式字符串。 这里有两个选项 ，并且选择哪个由反对当前被验证的表示式的对象是否在每次调用后而改变再验证表达式来决定。在以下示例中，我们从`Inventor`类的实例中检索`name`属性。
 
 ```java
 // 创建并对日历对象设值
@@ -77,7 +77,7 @@ EvaluationContext context = new StandardEvaluationContext(tesla);
 String name = (String) exp.getValue(context);
 ```
 
-在最后一行，字符串变量name的值将被设置为“Nikola Tesla”。 `StandardEvaluationContext`类可以指定哪个对象的“name”属性将被评估。 如果根对象不太可能改变，这是使用的机制，可以在评估上下文中简单地设置一次。 如果根对象可能会重复更改，则可以在每次调用getValue时提供该对象，如下例所示：
+在最后一行，字符串变量name的值将被设置为“Nikola Tesla”。 `StandardEvaluationContext`类可以指定哪个对象的“name”属性将被运算操作。 如果根对象不太可能改变，这是使用的机制，可以在运算操作上下文中简单地设置一次。 如果根对象可能会重复更改，则可以在每次调用getValue时提供该对象，如下例所示：
 
 ```java
 // 创建并对日历对象设值
@@ -92,7 +92,7 @@ Expression exp = parser.parseExpression("name");
 String name = (String) exp.getValue(tesla);
 ```
 
-在这种情况下，目标对象`tesla`已经直接提供给`getValue`，表达式评估基础动作即在内部创建和管理默认评估的上下文 - 它不需要提供。
+在这种情况下，目标对象`tesla`已经直接提供给`getValue`，表达式运算操作的基础动作即在内部创建和管理默认运算操作的上下文 - 它不需要提供。
 
 The StandardEvaluationContext is relatively expensive to construct and during repeated usage it builds up cached state that enables subsequent expression evaluations to be performed more quickly. For this reason it is better to cache and reuse them where possible, rather than construct a new one for each expression evaluation.
 
