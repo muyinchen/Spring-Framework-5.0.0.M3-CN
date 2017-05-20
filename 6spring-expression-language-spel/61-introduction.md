@@ -1,10 +1,10 @@
-## 6.1 Introdu
+## 6.1 介绍
 
-The Spring Expression Language \(SpEL for short\) is a powerful expression language that supports querying and manipulating an object graph at runtime. The language syntax is similar to Unified EL but offers additional features, most notably method invocation and basic string templating functionality.
+The Spring Expression Language（简称SpEL）是一种强大的支持在运行时查询和操作对象图的表达式语言。语言语法类似于Unified EL，但提供了额外的功能，特别是方法调用和基本字符串模板功能。
 
-While there are several other Java expression languages available, OGNL, MVEL, and JBoss EL, to name a few, the Spring Expression Language was created to provide the Spring community with a single well supported expression language that can be used across all the products in the Spring portfolio. Its language features are driven by the requirements of the projects in the Spring portfolio, including tooling requirements for code completion support within the eclipse based Spring Tool Suite. That said, SpEL is based on a technology agnostic API allowing other expression language implementations to be integrated should the need arise.
+尽管还有其他几种Java表达式语言，比如OGNL，MVEL和JBoss EL，但SpEL只是为了向Spring社区提供一种支持良好的表达式语言，你可以在所有使用Spring框架的产品中使用SpEL。 其语言特性是由使用Spring框架的项目的需求所驱动的，包括Eclipse中基础Spring工具套件中的代码完成支持功能的工具要求。 也就是说，SpEL基于一种抽象实现的技术API，允许在需要时集成其他表达式语言来实现。
 
-While SpEL serves as the foundation for expression evaluation within the Spring portfolio, it is not directly tied to Spring and can be used independently. In order to be self contained, many of the examples in this chapter use SpEL as if it were an independent expression language. This requires creating a few bootstrapping infrastructure classes such as the parser. Most Spring users will not need to deal with this infrastructure and will instead only author expression strings for evaluation. An example of this typical use is the integration of SpEL into creating XML or annotated based bean definitions as shown in the section [Expression support for defining bean definitions.](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#expressions-beandef)
+虽然SpEL作为Spring产品组合中的表达式评估的基础，但它并不直接与Spring有关，可以独立使用。 为了自包含，本章中的很多例子都使用SpEL，就像它是一种独立的表达语言。 这就需要创建一些引导作用的基础实现类，如解析器。 大多数Spring用户将不需要处理这种基础实现类，并且只会将表达式字符串作为评估。 这个典型用途的一个例子是将Spel集成到创建XML或基于注释的bean定义中，如[表达式支持定义bean的定义所示](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#expressions-beandef)。
 
-This chapter covers the features of the expression language, its API, and its language syntax. In several places an Inventor and Inventor’s Society class are used as the target objects for expression evaluation. These class declarations and the data used to populate them are listed at the end of the chapter.
+本章将介绍表达式语言的特点及其API及其语言语法。 在好几个地方，使用Inventor和Inventor's Society类作为表达式评估的目标对象。 这些类声明和用于填充它们的数据在本章末尾列出。
 
