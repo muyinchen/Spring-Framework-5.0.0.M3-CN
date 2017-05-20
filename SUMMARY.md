@@ -143,4 +143,10 @@
 * [Part III. Testing](part-iii-testing.md)
   * [9.Introduction to Spring Testing](part-iii-testing/9introduction-to-spring-testing.md)
   * [10.Unit Testing](part-iii-testing/10unit-testing.md)
+  * [11.Integration Testing](part-iii-testing/11integration-testing.md)
+    * [11.1 Overview](part-iii-testing/11integration-testing/111-overview.md)
+    * [11.2 Goals of Integration Testing](part-iii-testing/11integration-testing/112-goals-of-integration-testing.md)
+    * [11.3 JDBC Testing Support](part-iii-testing/11integration-testing/113-jdbc-testing-support.md)
+    * [11.4 Annotations](part-iii-testing/11integration-testing/114-annotations.md)
+    * [11.5 Spring TestContext Framework](part-iii-testing/11integration-testing/115-spring-testcontext-framework.md)
 
