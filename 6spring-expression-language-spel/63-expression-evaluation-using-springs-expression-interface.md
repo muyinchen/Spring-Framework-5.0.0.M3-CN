@@ -113,7 +113,7 @@ boolean result = exp.getValue(context, Boolean.class); // evaluates to true
 
 运算表达式以解析属性，方法，字段并帮助执行类型转换时使用`EvaluationContext`接口。 开箱即用的实现`StandardEvaluationContext`，使用反射来操纵对象，并缓存`java.lang.reflect.Method`，`java.lang.reflect.Field`和`java.lang.reflect.Constructor`实例以提高性能。
 
-`StandardEvaluationContext`是您可以通过方法`setRootObject（）`或将根对象传递到构造函数中来指定要对其进行运算操作的根对象。 您还可以使用`setVariable（）`和`registerFunction（）`方法指定将在表达式中使用的变量和函数。 变量和函数的使用在语言参考部分变量和函数中有所描述。 `StandardEvaluationContext`还可以注册自定义`ConstructorResolvers`，`MethodResolvers`和`PropertyAccessors`，以扩展SpEL如何运算操作表达式。 请参考这些类的JavaDoc了解更多详细信息。 
+`StandardEvaluationContext`是您可以通过方法`setRootObject（）`或将根对象传递到构造函数中来指定要对其进行运算操作的根对象。 您还可以使用`setVariable（）`和`registerFunction（）`方法指定将在表达式中使用的变量和函数。 变量和函数的使用在语言参考部分变量和函数中有所描述。 `StandardEvaluationContext`还可以注册自定义`ConstructorResolvers`，`MethodResolvers`和`PropertyAccessors`，以扩展SpEL如何运算操作表达式。 请参考这些类的JavaDoc了解更多详细信息。
 
 #### 类型转换
 
@@ -185,13 +185,13 @@ Spring Framework 4.1包含一个基本的表达式编译器。 表达式通常�
 
 重要的是要明白，编译器可以运行几种模式，在枚举`（org.springframework.expression.spel.SpelCompilerMode）`中捕获。 模式如下：
 
-* `OFF` - The compiler is switched off; this is the default.
-* `IMMEDIATE` - In immediate mode the expressions are compiled as soon as possible. This is typically after the first interpreted evaluation. If the compiled expression fails \(typically due to a type changing, as described above\) then the caller of the expression evaluation will receive an exception.
-* `MIXED` - In mixed mode the expressions silently switch between interpreted and compiled mode over time. After some number of interpreted runs they will switch to compiled form and if something goes wrong with the compiled form \(like a type changing, as described above\) then the expression will automatically switch back to interpreted form again. Sometime later it may generate another compiled form and switch to it. Basically the exception that the user gets in `IMMEDIATE` mode is instead handled internally.
+* `OFF` - 编译器关闭; 这是默认值。
+* `IMMEDIATE` - 在即时模式下，表达式将尽快编译。 这通常是在第一次解释运算之后。 如果编译的表达式失败（通常是由于类型更改，如上所述）引起的，则表达式运算操作的调用者将收到异常。
+* `MIXED` - 在混合模式下，表达式随着时间的推移在解释模式和编译模式之间静默地切换。 经过一些解释运行后，它们将切换到编译模式，如果编译后的表单出现问题（如上所述改变类型），表达式将自动重新切换回解释模式。 稍后，它可能生成另一个编译表单并切换到它。 基本上，用户进入即时模式的异常是内部处理的。 
 
-`IMMEDIATE` mode exists because `MIXED` mode could cause issues for expressions that have side effects. If a compiled expression blows up after partially succeeding it may have already done something that has affected the state of the system. If this has happened the caller may not want it to silently re-run in interpreted mode since part of the expression may be running twice.
+存在IMMEDIATE模式，因为混合模式可能会导致具有副作用的表达式的问题。 如果一个编译的表达式在部分成功之后崩掉，它可能已经完成了影响系统状态的事情。 如果发生这种情况，调用者可能不希望它在解释模式下静默地重新运行，因为表达式的一部分可能运行两次。
 
-After selecting a mode, use the `SpelParserConfiguration` to configure the parser:
+选择模式后，使用`SpelParserConfiguration`配置解析器：
 
 ```java
 SpelParserConfiguration config = new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE,
@@ -206,18 +206,18 @@ MyMessage message = new MyMessage();
 Object payload = expr.getValue(message);
 ```
 
-When specifying the compiler mode it is also possible to specify a classloader \(passing null is allowed\). Compiled expressions will be defined in a child classloader created under any that is supplied. It is important to ensure if a classloader is specified it can see all the types involved in the expression evaluation process. If none is specified then a default classloader will be used \(typically the context classloader for the thread that is running during expression evaluation\).
+当指定编译器模式时，也可以指定一个类加载器（允许传递null）。 编译表达式将在任何提供的子类加载器中被定义。 重要的是确保是否指定了类加载器，它可以看到表达式运算操作过程中涉及的所有类型。 如果没有指定，那么将使用默认的类加载器（通常是在表达式计算期间运行的线程的上下文类加载器）。
 
-The second way to configure the compiler is for use when SpEL is embedded inside some other component and it may not be possible to configure via a configuration object. In these cases it is possible to use a system property. The property `spring.expression.compiler.mode` can be set to one of the `SpelCompilerMode` enum values \(`off`, `immediate`, or `mixed`\).
+配置编译器的第二种方法是将SpEL嵌入其他组件内部使用，并且可能无法通过配置对象进行配置。 在这些情况下，可以使用系统属性。 属性`spring.expression.compiler.mode`可以设置为`SpelCompilerMode`枚举值之一（关闭，即时或混合）。
 
-#### Compiler limitations
+#### 编译器限制
 
-With Spring Framework 4.1 the basic compilation framework is in place. However, the framework does not yet support compiling every kind of expression. The initial focus has been on the common expressions that are likely to be used in performance critical contexts. These kinds of expression cannot be compiled at the moment:
+虽然Spring Framework 4.1的基本编译框架已经存在， 但是，框架还不支持编译各种表达式。 最初的重点是在可能在性能要求高的关键环境中使用的常见表达式。 这些表达方式目前无法编译：
 
-* expressions involving assignment
-* expressions relying on the conversion service
-* expressions using custom resolvers or accessors
-* expressions using selection or projection
+* expressions involving assignment\(涉及转让的表达\)
+* expressions relying on the conversion service\(依赖转换服务的表达式\)
+* expressions using custom resolvers or accessors\(使用自定义解析器或访问器的表达式\)
+* expressions using selection or projection\(使用选择或投影的表达式\)
 
-More and more types of expression will be compilable in the future.
+越来越多的类型的表达式将在未来可编译。
 
