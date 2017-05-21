@@ -94,32 +94,32 @@ String name = (String) exp.getValue(tesla);
 
 在这种情况下，目标对象`tesla`已经直接提供给`getValue`，表达式运算操作的基础动作即在内部创建和管理默认运算操作的上下文 - 它不需要被额外提供。
 
-The StandardEvaluationContext is relatively expensive to construct and during repeated usage it builds up cached state that enables subsequent expression evaluations to be performed more quickly. For this reason it is better to cache and reuse them where possible, rather than construct a new one for each expression evaluation.
+`StandardEvaluationContext`构建起来代价相对昂贵，并在重复使用时构建高速缓存的状态，使得能够更快地执行后续的表达式运算操作。 因此，最好在可能的情况下缓存和重新使用它们，而不是为每个表达式运算操作构建一个新的。
 
-In some cases it can be desirable to use a configured evaluation context and yet still supply a different root object on each call to `getValue`. `getValue` allows both to be specified on the same call. In these situations the root object passed on the call is considered to override any \(which maybe null\) specified on the evaluation context.
+在某些情况下，可能需要使用配置的运算操作上下文，但在每次调用`getValue`时仍会提供不同的根对象。 `getValue`允许在同一个调用中指定两者。 在这些情况下，传递给该调用的根对象被认为覆盖在任何（可能为null）指定的运算操作的上下文中。
 
 | ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | --- |
-| In standalone usage of SpEL there is a need to create the parser, parse expressions and perhaps provide evaluation contexts and a root context object. However, more common usage is to provide only the SpEL expression string as part of a configuration file, for example for Spring bean or Spring Web Flow definitions. In this case, the parser, evaluation context, root object and any predefined variables are all set up implicitly, requiring the user to specify nothing other than the expressions. |
+| 在独立使用SpEL中，需要创建解析器，解析表达式，并可能提供运算操作上下文和根上下文对象。 但是，更常见的用法是仅将SpEL表达式字符串作为配置文件的一部分，例如Spring bean或Spring Web Flow定义。 在这种情况下，解析器，运算操作上下文，根对象和任何预定义的变量都是隐式设置的，要求用户除表达式之外不要指定。 |
 
-As a final introductory example, the use of a boolean operator is shown using the Inventor object in the previous example.
+作为最后的介绍性示例，使用上一个示例中的Inventor对象来显示布尔运算符的使用。
 
 ```java
 Expression exp = parser.parseExpression("name == 'Nikola Tesla'");
 boolean result = exp.getValue(context, Boolean.class); // evaluates to true
 ```
 
-### 6.3.1 The EvaluationContext interface
+### 6.3.1 EvaluationContext 接口
 
-The interface `EvaluationContext` is used when evaluating an expression to resolve properties, methods, fields, and to help perform type conversion. The out-of-the-box implementation, `StandardEvaluationContext`, uses reflection to manipulate the object, caching `java.lang.reflect.Method`, `java.lang.reflect.Field`, and `java.lang.reflect.Constructor` instances for increased performance.
+运算表达式以解析属性，方法，字段并帮助执行类型转换时使用`EvaluationContext`接口。 开箱即用的实现`StandardEvaluationContext`，使用反射来操纵对象，并缓存`java.lang.reflect.Method`，`java.lang.reflect.Field`和`java.lang.reflect.Constructor`实例以提高性能。
 
-The `StandardEvaluationContext` is where you may specify the root object to evaluate against via the method `setRootObject()` or passing the root object into the constructor. You can also specify variables and functions that will be used in the expression using the methods `setVariable()` and `registerFunction()`. The use of variables and functions are described in the language reference sections [Variables](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#expressions-ref-variables) and [Functions](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#expressions-ref-functions). The `StandardEvaluationContext` is also where you can register custom `ConstructorResolver`s, `MethodResolver`s, and `PropertyAccessor`s to extend how SpEL evaluates expressions. Please refer to the JavaDoc of these classes for more details.
+`StandardEvaluationContext`是您可以通过方法`setRootObject（）`或将根对象传递到构造函数中来指定要对其进行运算操作的根对象。 您还可以使用`setVariable（）`和`registerFunction（）`方法指定将在表达式中使用的变量和函数。 变量和函数的使用在语言参考部分变量和函数中有所描述。 `StandardEvaluationContext`还可以注册自定义`ConstructorResolvers`，`MethodResolvers`和`PropertyAccessors`，以扩展SpEL如何运算操作表达式。 请参考这些类的JavaDoc了解更多详细信息。 
 
-#### Type Conversion
+#### 类型转换
 
-By default SpEL uses the conversion service available in Spring core \( `org.springframework.core.convert.ConversionService`\). This conversion service comes with many converters built in for common conversions but is also fully extensible so custom conversions between types can be added. Additionally it has the key capability that it is generics aware. This means that when working with generic types in expressions, SpEL will attempt conversions to maintain type correctness for any objects it encounters.
+默认情况下，SpEL使用Spring核心`（org.springframework.core.convert.ConversionService）`中提供的转换服务。 此转换服务附带许多转换器，内置于常用转换，但也可完全扩展，因此可以添加类型之间的自定义转换。 此外，它具有泛型感知的关键功能。 这意味着在使用表达式中的泛型类型时，SpEL将尝试转换以维护遇到的任何对象的类型正确性。
 
-What does this mean in practice? Suppose assignment, using `setValue()`, is being used to set a `List` property. The type of the property is actually `List<Boolean>`. SpEL will recognize that the elements of the list need to be converted to `Boolean` before being placed in it. A simple example:
+这在实践中意味着什么？ 假设使用`setValue（）`的赋值被用于设置`List`属性。 属性的类型实际上是`List <Boolean>`。 Spel将会认识到列表的元素需要在被放置在其中之前被转换为布尔值。 一个简单的例子：
 
 ```java
 class Simple {
@@ -132,26 +132,25 @@ simple.booleanList.add(true);
 
 StandardEvaluationContext simpleContext = new StandardEvaluationContext(simple);
 
-// false is passed in here as a string. SpEL and the conversion service will
-// correctly recognize that it needs to be a Boolean and convert it
+// false允许作为字符串， SpEL和转换服务将正确识别它需要是一个布尔值并对其进行转换
 parser.parseExpression("booleanList[0]").setValue(simpleContext, "false");
 
-// b will be false
+// b为布尔值false
 Boolean b = simple.booleanList.get(0);
 ```
 
-### 6.3.2 Parser configuration
+### 6.3.2 解析器配置
 
-It is possible to configure the SpEL expression parser using a parser configuration object \(`org.springframework.expression.spel.SpelParserConfiguration`\). The configuration object controls the behavior of some of the expression components. For example, if indexing into an array or collection and the element at the specified index is `null` it is possible to automatically create the element. This is useful when using expressions made up of a chain of property references. If indexing into an array or list and specifying an index that is beyond the end of the current size of the array or list it is possible to automatically grow the array or list to accommodate that index.
+可以使用解析器配置对象`（org.springframework.expression.spel.SpelParserConfiguration）`来配置SpEL表达式解析器。 该配置对象控制一些表达式组件的行为。 例如，如果索引到数组或集合中，并且指定索引处的元素为空，其将自动创建元素。 当使用由一组属性引用组成的表达式时，这是非常有用的。 如果索引到数组或列表中，并指定超出数组或列表的当前大小的结尾的索引，其将自动提高数组或列表大小以适应该索引。
 
 ```java
 class Demo {
     public List<String> list;
 }
 
-// Turn on:
-// - auto null reference initialization
-// - auto collection growing
+// 开启如下功能:
+// - 空引用自动初始化
+// - 集合大小自动增长
 SpelParserConfiguration config = new SpelParserConfiguration(true,true);
 
 ExpressionParser parser = new SpelExpressionParser(config);
@@ -162,29 +161,29 @@ Demo demo = new Demo();
 
 Object o = expression.getValue(demo);
 
-// demo.list will now be a real collection of 4 entries
-// Each entry is a new empty String
+// demo.list现在被实例化为拥有四个元素的集合
+// 每个元素都是一个新的空字符串
 ```
 
-It is also possible to configure the behaviour of the SpEL expression compiler.
+还可以配置SpEL表达式编译器的行为。
 
-### 6.3.3 SpEL compilation
+### 6.3.3 SpEL编译
 
-Spring Framework 4.1 includes a basic expression compiler. Expressions are usually interpreted which provides a lot of dynamic flexibility during evaluation but does not provide the optimum performance. For occasional expression usage this is fine, but when used by other components like Spring Integration, performance can be very important and there is no real need for the dynamism.
+Spring Framework 4.1包含一个基本的表达式编译器。 表达式通常因为在运算操作过程中提供了大量的动态灵活性被解释，但不能提供最佳性能。 对于偶尔的表达式使用这是很好的，但是当被其他并不真正需要动态灵活性的组件（如Spring Integration）使用时，性能可能非常重要。
 
-The new SpEL compiler is intended to address this need. The compiler will generate a real Java class on the fly during evaluation that embodies the expression behavior and use that to achieve much faster expression evaluation. Due to the lack of typing around expressions the compiler uses information gathered during the interpreted evaluations of an expression when performing compilation. For example, it does not know the type of a property reference purely from the expression but during the first interpreted evaluation it will find out what it is. Of course, basing the compilation on this information could cause trouble later if the types of the various expression elements change over time. For this reason compilation is best suited to expressions whose type information is not going to change on repeated evaluations.
+新的SpEL编译器旨在满足这一需求。 编译器将在体现了表达行为的运算操作期间即时生成一个真正的Java类，并使用它来实现更快的表达式求值。 由于缺少对表达式按类型归类，编译器在执行编译时会使用在表达式解释运算期间收集的信息来编译。 例如，它不仅仅是从表达式中知道属性引用的类型，而是在第一个解释运算过程中会发现它是什么。 当然，如果各种表达式元素的类型随着时间的推移而变化，那么基于此信息的编译可能会导致问题产生。 因此，编译最适合于重复运算操作时类型信息不会改变的表达式。
 
-For a basic expression like this:
+对于这样的基本表达式：
 
 `someArray[0].someProperty.someOtherProperty < 0.1`
 
-which involves array access, some property derefencing and numeric operations, the performance gain can be very noticeable. In an example micro benchmark run of 50000 iterations, it was taking 75ms to evaluate using only the interpreter and just 3ms using the compiled version of the expression.
+这涉及到数组访问，某些属性的取消和数字操作，性能增益可以非常显着。 在50000次迭代的微型基准运行示例中，只使用解释器需要75ms，而使用编译版本的表达式仅需3ms。
 
-#### Compiler configuration
+#### 编译器配置
 
-The compiler is not turned on by default, but there are two ways to turn it on. It can be turned on using the parser configuration process discussed earlier or via a system property when SpEL usage is embedded inside another component. This section discusses both of these options.
+默认情况下，编译器未打开，但有两种方法可以打开它。 可以使用先前讨论的解析器配置过程或者当将SpEL使用嵌入到另一个组件中时通过系统属性打开它。 本节讨论这两个选项。
 
-Is is important to understand that there are a few modes the compiler can operate in, captured in an enum \(`org.springframework.expression.spel.SpelCompilerMode`\). The modes are as follows:
+重要的是要明白，编译器可以运行几种模式，在枚举`（org.springframework.expression.spel.SpelCompilerMode）`中捕获。 模式如下：
 
 * `OFF` - The compiler is switched off; this is the default.
 * `IMMEDIATE` - In immediate mode the expressions are compiled as soon as possible. This is typically after the first interpreted evaluation. If the compiled expression fails \(typically due to a type changing, as described above\) then the caller of the expression evaluation will receive an exception.
