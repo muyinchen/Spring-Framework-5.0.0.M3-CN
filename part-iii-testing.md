@@ -1,3 +1,6 @@
-# Part III. Testing
+# Part III. 测试
 
-The adoption of the test-driven-development (TDD) approach to software development is certainly advocated by the Spring team, and so coverage of Spring’s support for integration testing is covered (alongside best practices for unit testing). The Spring team has found that the correct use of IoC certainly does make both unit and integration testing easier (in that the presence of setter methods and appropriate constructors on classes makes them easier to wire together in a test without having to set up service locator registries and suchlike)… the chapter dedicated solely to testing will hopefully convince you of this as well.
+作为 Spring 的开发团队，我们鼓励在开发活动中引入测试驱动开发（TDD，Test-Driveng-Development）的行为，因此本文档接下来将涵盖 Spring 框架对集成测试的支持（以及 Spring 下单元测试的最佳实践）。
+
+Spring 开发团队发现对控制反转（IoC）的正确运用可以使针对代码编写单元测试与集成测试变得更为容易（setter方法的存在，以及类里面恰当的构造器，使得测试代码在无需类似服务工厂等辅助工具的前提下，也能够方便地对各个类进行调用）。我们希望通过整整一章对 Spring 框架下测试相关主题的讲解，让读者也能对我们的以上发现表示赞同。
+
