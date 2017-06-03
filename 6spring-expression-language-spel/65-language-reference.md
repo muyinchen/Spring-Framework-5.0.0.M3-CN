@@ -132,11 +132,11 @@ boolean isMember = parser.parseExpression("isMember('Mihajlo Pupin')").getValue(
         societyContext, Boolean.class);
 ```
 
-### 6.5.7 Operators
+### 6.5.7 运算符
 
-#### Relational operators
+#### 关系运算符
 
-The relational operators; equal, not equal, less than, less than or equal, greater than, and greater than or equal are supported using standard operator notation.
+关系运算符 小于，小于或等于，大于，大于或等于相等，不等于，使用标准运算符符号支持。The relational operators; equal, not equal, less than, less than or equal, greater than, and greater than or equal are supported using standard operator notation.
 
 ```java
 // evaluates to true
