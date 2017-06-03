@@ -136,7 +136,7 @@ boolean isMember = parser.parseExpression("isMember('Mihajlo Pupin')").getValue(
 
 #### 关系运算符
 
-关系运算符 小于，小于或等于，大于，大于或等于相等，不等于，使用标准运算符符号支持。The relational operators; equal, not equal, less than, less than or equal, greater than, and greater than or equal are supported using standard operator notation.
+关系运算符 小于，小于等于，大于，大于等于，等于，不等于，使用标准运算符符号表示。
 
 ```java
 // evaluates to true
@@ -151,9 +151,9 @@ boolean trueValue = parser.parseExpression("'black' < 'block'").getValue(Boolean
 
 | ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | --- |
-| Greater/less-than comparisons against `null` follow a simple rule: `null` is treated as nothing here \(i.e. NOT as zero\). As a consequence, any other value is always greater than `null` \(`X > null` is always `true`\) and no other value is ever less than nothing \(`X < null` is always `false`\).If you prefer numeric comparisons instead, please avoid number-based `null` comparisons in favor of comparisons against zero \(e.g. `X > 0` or `X < 0`\). |
+| 大于/小于与null的比较遵循一个简单的规则：null在这里被视为没有（不是0）。 因此，任何其他值始终大于null（X&gt; null始终为真），并且没有其他值比它小（X &lt;null始终为false）。如果您更喜欢数字比较，请避免基于数字的null比较，这有利于与零比较（例如X&gt; 0或X &lt;0）。 |
 
-In addition to standard relational operators SpEL supports the `instanceof` and regular expression based `matches` operator.
+除标准关系运算符外，SpEL还支持`instanceof` 和基于正则表达式的匹配运算符。
 
 ```java
 // evaluates to false
@@ -171,13 +171,13 @@ boolean falseValue = parser.parseExpression(
 
 | ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | --- |
-| Be careful with primitive types as they are immediately boxed up to the wrapper type, so `1 instanceof T(int)` evaluates to `false` while `1 instanceof T(Integer)` evaluates to `true`, as expected. |
+| 请谨慎使用原始类型，因为它们会立即包装到包装器类型中，因此，如果预期的话，`1 instanceof T(int)`将计算为false，而`1 instanceof T(Integer)`的计算结果为true。 |
 
-Each symbolic operator can also be specified as a purely alphabetic equivalent. This avoids problems where the symbols used have special meaning for the document type in which the expression is embedded \(eg. an XML document\). The textual equivalents are shown here: `lt` \(`<`\), `gt` \(`>`\), `le` \(`⇐`\), `ge` \(`>=`\), `eq` \(`==`\), `ne` \(`!=`\), `div` \(`/`\), `mod` \(`%`\), `not` \(`!`\). These are case insensitive.
+每个符号操作符也可以被指定为纯粹的字母等价物。 这避免了所使用的符号对嵌入表达式的文档类型（例如XML文档）具有特殊含义的问题。 文本等价物如下所示：lt（&lt;），gt（&gt;），le（⇐），ge（&gt; =），eq（==），ne（！=），div（/），mod（％） not（！）。 这些不区分大小写。
 
-#### Logical operators
+#### 逻辑运算符
 
-The logical operators that are supported are and, or, and not. Their use is demonstrated below.
+支持的逻辑运算符是and, or, and not。 它们的用途如下所示。
 
 ```java
 // -- AND --
@@ -208,9 +208,9 @@ String expression = "isMember('Nikola Tesla') and !isMember('Mihajlo Pupin')";
 boolean falseValue = parser.parseExpression(expression).getValue(societyContext, Boolean.class);
 ```
 
-#### Mathematical operators
+#### 算术运算符
 
-The addition operator can be used on both numbers and strings. Subtraction, multiplication and division can be used only on numbers. Other mathematical operators supported are modulus \(%\) and exponential power \(^\). Standard operator precedence is enforced. These operators are demonstrated below.
+加法运算符可以用于数字和字符串。 减法，乘法和除法只能用于数字。 支持的其他算术运算符是模数（％）和指数幂（^）。 执行标准运算符优先级。 这些操作符将在下面展示。
 
 ```java
 // Addition
@@ -243,9 +243,9 @@ int one = parser.parseExpression("8 / 5 % 2").getValue(Integer.class); // 1
 int minusTwentyOne = parser.parseExpression("1+2-3*8").getValue(Integer.class); // -21
 ```
 
-### 6.5.8 Assignment
+### 6.5.8 赋值
 
-Setting of a property is done by using the assignment operator. This would typically be done within a call to `setValue` but can also be done inside a call to `getValue`.
+通过使用赋值运算符来完成属性的设置。 这通常在调用`setValue`之前完成，但也可以在对`getValue`的调用中完成。
 
 ```java
 Inventor inventor = new Inventor();
@@ -259,9 +259,9 @@ String aleks = parser.parseExpression(
         "Name = 'Alexandar Seovic'").getValue(inventorContext, String.class);
 ```
 
-### 6.5.9 Types
+### 6.5.9 类型运算符
 
-The special `T` operator can be used to specify an instance of java.lang.Class \(the _type_\). Static methods are invoked using this operator as well. The`StandardEvaluationContext` uses a `TypeLocator` to find types and the `StandardTypeLocator` \(which can be replaced\) is built with an understanding of the java.lang package. This means T\(\) references to types within java.lang do not need to be fully qualified, but all other type references must be.
+特殊的T运算符可用于指定`java.lang.Class`（类型）的实例。 也可以使用此运算符调用静态方法。`TheStandardEvaluationContext`使用`TypeLocator`来查找类型，并且可以使用对`java.lang`包的理解来构建`StandardTypeLocator`（可以被替换）。 这意味着对`java.lang`中的类型的引用`T（）`不需要是完全限定的，但是所有其他类型引用必须是。
 
 ```java
 Class dateClass = parser.parseExpression("T(java.util.Date)").getValue(Class.class);
