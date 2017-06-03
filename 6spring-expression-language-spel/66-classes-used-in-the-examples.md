@@ -1,4 +1,4 @@
-## 6.6 Classes used in the examples
+## 6.6 示例中使用的类
 
 Inventor.java
 
@@ -10,67 +10,67 @@ import java.util.GregorianCalendar;
 
 public class Inventor {
 
-	private String name;
-	private String nationality;
-	private String[] inventions;
-	private Date birthdate;
-	private PlaceOfBirth placeOfBirth;
+    private String name;
+    private String nationality;
+    private String[] inventions;
+    private Date birthdate;
+    private PlaceOfBirth placeOfBirth;
 
-	public Inventor(String name, String nationality) {
-		GregorianCalendar c= new GregorianCalendar();
-		this.name = name;
-		this.nationality = nationality;
-		this.birthdate = c.getTime();
-	}
+    public Inventor(String name, String nationality) {
+        GregorianCalendar c= new GregorianCalendar();
+        this.name = name;
+        this.nationality = nationality;
+        this.birthdate = c.getTime();
+    }
 
-	public Inventor(String name, Date birthdate, String nationality) {
-		this.name = name;
-		this.nationality = nationality;
-		this.birthdate = birthdate;
-	}
+    public Inventor(String name, Date birthdate, String nationality) {
+        this.name = name;
+        this.nationality = nationality;
+        this.birthdate = birthdate;
+    }
 
-	public Inventor() {
-	}
+    public Inventor() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getNationality() {
-		return nationality;
-	}
+    public String getNationality() {
+        return nationality;
+    }
 
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
 
-	public Date getBirthdate() {
-		return birthdate;
-	}
+    public Date getBirthdate() {
+        return birthdate;
+    }
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
 
-	public PlaceOfBirth getPlaceOfBirth() {
-		return placeOfBirth;
-	}
+    public PlaceOfBirth getPlaceOfBirth() {
+        return placeOfBirth;
+    }
 
-	public void setPlaceOfBirth(PlaceOfBirth placeOfBirth) {
-		this.placeOfBirth = placeOfBirth;
-	}
+    public void setPlaceOfBirth(PlaceOfBirth placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
 
-	public void setInventions(String[] inventions) {
-		this.inventions = inventions;
-	}
+    public void setInventions(String[] inventions) {
+        this.inventions = inventions;
+    }
 
-	public String[] getInventions() {
-		return inventions;
-	}
+    public String[] getInventions() {
+        return inventions;
+    }
 }
 ```
 
@@ -81,33 +81,33 @@ package org.spring.samples.spel.inventor;
 
 public class PlaceOfBirth {
 
-	private String city;
-	private String country;
+    private String city;
+    private String country;
 
-	public PlaceOfBirth(String city) {
-		this.city=city;
-	}
+    public PlaceOfBirth(String city) {
+        this.city=city;
+    }
 
-	public PlaceOfBirth(String city, String country) {
-		this(city);
-		this.country = country;
-	}
+    public PlaceOfBirth(String city, String country) {
+        this(city);
+        this.country = country;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String s) {
-		this.city = s;
-	}
+    public void setCity(String s) {
+        this.city = s;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
 }
 ```
@@ -121,38 +121,41 @@ import java.util.*;
 
 public class Society {
 
-	private String name;
+    private String name;
 
-	public static String Advisors = "advisors";
-	public static String President = "president";
+    public static String Advisors = "advisors";
+    public static String President = "president";
 
-	private List<Inventor> members = new ArrayList<Inventor>();
-	private Map officers = new HashMap();
+    private List<Inventor> members = new ArrayList<Inventor>();
+    private Map officers = new HashMap();
 
-	public List getMembers() {
-		return members;
-	}
+    public List getMembers() {
+        return members;
+    }
 
-	public Map getOfficers() {
-		return officers;
-	}
+    public Map getOfficers() {
+        return officers;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean isMember(String name) {
-		for (Inventor inventor : members) {
-			if (inventor.getName().equals(name)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isMember(String name) {
+        for (Inventor inventor : members) {
+            if (inventor.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 ```
+
+
+
