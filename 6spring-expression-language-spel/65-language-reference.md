@@ -1,10 +1,10 @@
 ## 6.5 语言参考
 
-### 6.5.1 文字表达式
+### 6.5.1 字面常量表达式
 
-支持的文字表达式的类型是字符串，数值（int，real，hex），boolean和null。 字符串由单引号分隔。 要将一个单引号本身放在字符串中，请使用两个单引号。
+支持的字面常量表达式的类型是字符串，数值（int，real，hex），boolean和null。 字符串由单引号分隔。 要将一个单引号本身放在字符串中，请使用两个单引号。
 
-以下列表显示了文字的简单用法。 通常，它们不会像这样使用，而是作为更复杂表达式的一部分，例如在逻辑比较运算符的一侧使用文字。
+以下列表显示了字面常量的简单用法。 通常，它们不会像这样使用，而是作为更复杂表达式的一部分，例如在逻辑比较运算符的一侧使用字面常量。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -60,7 +60,7 @@ String invention = parser.parseExpression("Members[0].Inventions[6]").getValue(
         societyContext, String.class);
 ```
 
-map映射的内容是通过在括号内指定文字键值得到的。 在这种情况下，因为Officers映射的键是字符串，我们可以指定字符串文字。
+map映射的内容是通过在括号内指定字面常量键值得到的。 在这种情况下，因为Officers映射的键是字符串，我们可以指定字符串字面常量。
 
 ```java
 // Officer's Dictionary
@@ -88,7 +88,7 @@ List numbers = (List) parser.parseExpression("{1,2,3,4}").getValue(context);
 List listOfLists = (List) parser.parseExpression("{{'a','b'},{'x','y'}}").getValue(context);
 ```
 
-`{}`本身就是一个空列表。 出于性能原因，如果列表本身完全由固定文字组成，则会创建一个常量列表来表示表达式，而不是在每个运算操作上构建一个新列表。
+`{}`本身就是一个空列表。 出于性能原因，如果列表本身完全由固定字面常量组成，则会创建一个常量列表来表示表达式，而不是在每个运算操作上构建一个新列表。
 
 ### 6.5.4 内联映射
 
@@ -101,7 +101,7 @@ Map inventorInfo = (Map) parser.parseExpression("{name:'Nikola',dob:'10-July-185
 Map mapOfMaps = (Map) parser.parseExpression("{name:{first:'Nikola',last:'Tesla'},dob:{day:10,month:'July',year:1856}}").getValue(context);
 ```
 
-`{：}`本身就是一个空的Map映射。 出于性能原因，如果Map映射本身由固定文字或其他嵌套常量结构（List列表或Map映射）组成，则会创建一个常量Map映射来表示表达式，而不是在每个运算操作上构建一个新的Map映射。 引用Map映射键是可选的，上面的示例不使用引用的键。
+`{：}`本身就是一个空的Map映射。 出于性能原因，如果Map映射本身由固定字面常量或其他嵌套常量结构（List列表或Map映射）组成，则会创建一个常量Map映射来表示表达式，而不是在每个运算操作上构建一个新的Map映射。 引用Map映射键是可选的，上面的示例不使用引用的键。
 
 ### 6.5.5 阵列构造
 
@@ -121,7 +121,7 @@ int[][] numbers3 = (int[][]) parser.parseExpression("new int[4][5]").getValue(co
 
 ### 6.5.6 方法
 
-使用典型的Java编程语法调用方法。 您也可以调用文字的方法。
+使用典型的Java编程语法调用方法。 您也可以调用字面常量的方法。
 
 ```java
 // string literal, evaluates to "bc"
