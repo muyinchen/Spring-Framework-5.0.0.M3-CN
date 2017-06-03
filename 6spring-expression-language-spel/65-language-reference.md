@@ -1,10 +1,10 @@
-## 6.5 Language Reference
+## 6.5 语言参考
 
-### 6.5.1 Literal expressions
+### 6.5.1 文字表达式
 
-The types of literal expressions supported are strings, numeric values (int, real, hex), boolean and null. Strings are delimited by single quotes. To put a single quote itself in a string, use two single quote characters.
+支持的文字表达式的类型是字符串，数值（int，real，hex），boolean和null。 字符串由单引号分隔。 要将一个单引号本身放在字符串中，请使用两个单引号。
 
-The following listing shows simple usage of literals. Typically they would not be used in isolation like this but rather as part of a more complex expression, for example using a literal on one side of a logical comparison operator.
+以下列表显示了文字的简单用法。 通常，它们不会像这样使用，而是作为更复杂表达式的一部分，例如在逻辑比较运算符的一侧使用文字。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -22,11 +22,11 @@ boolean trueValue = (Boolean) parser.parseExpression("true").getValue();
 Object nullValue = parser.parseExpression("null").getValue();
 ```
 
-Numbers support the use of the negative sign, exponential notation, and decimal points. By default real numbers are parsed using Double.parseDouble().
+数字支持使用负号，指数符号和小数点。 默认情况下，使用Double.parseDouble（）解析实数。
 
 ### 6.5.2 Properties, Arrays, Lists, Maps, Indexers
 
-Navigating with property references is easy: just use a period to indicate a nested property value. The instances of the `Inventor` class, pupin, and tesla, were populated with data listed in the section [Classes used in the examples](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#expressions-example-classes). To navigate "down" and get Tesla’s year of birth and Pupin’s city of birth the following expressions are used.
+使用属性引用进行导航很简单：只需使用句点来指示嵌套的属性值。 `Inventor`类，`pupin`和`tesla`的实例使用示例中使用的类中列出的数据进行填充。 为了导航“down”，并获得Tesla的出生年份和Pupin的出生城市，使用以下表达式。
 
 ```java
 // evals to 1856
@@ -35,7 +35,7 @@ int year = (Integer) parser.parseExpression("Birthdate.Year + 1900").getValue(co
 String city = (String) parser.parseExpression("placeOfBirth.City").getValue(context);
 ```
 
-Case insensitivity is allowed for the first letter of property names. The contents of arrays and lists are obtained using square bracket notation.
+属性名称的第一个字母不区分大小写。 数组和列表的内容使用方括号表示法获得。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -45,41 +45,41 @@ StandardEvaluationContext teslaContext = new StandardEvaluationContext(tesla);
 
 // evaluates to "Induction motor"
 String invention = parser.parseExpression("inventions[3]").getValue(
-		teslaContext, String.class);
+        teslaContext, String.class);
 
 // Members List
 StandardEvaluationContext societyContext = new StandardEvaluationContext(ieee);
 
 // evaluates to "Nikola Tesla"
 String name = parser.parseExpression("Members[0].Name").getValue(
-		societyContext, String.class);
+        societyContext, String.class);
 
 // List and Array navigation
 // evaluates to "Wireless communication"
 String invention = parser.parseExpression("Members[0].Inventions[6]").getValue(
-		societyContext, String.class);
+        societyContext, String.class);
 ```
 
-The contents of maps are obtained by specifying the literal key value within the brackets. In this case, because keys for the Officers map are strings, we can specify string literals.
+map映射的内容是通过在括号内指定文字键值得到的。 在这种情况下，因为Officers映射的键是字符串，我们可以指定字符串文字。
 
 ```java
 // Officer's Dictionary
 
 Inventor pupin = parser.parseExpression("Officers['president']").getValue(
-		societyContext, Inventor.class);
+        societyContext, Inventor.class);
 
 // evaluates to "Idvor"
 String city = parser.parseExpression("Officers['president'].PlaceOfBirth.City").getValue(
-		societyContext, String.class);
+        societyContext, String.class);
 
 // setting values
 parser.parseExpression("Officers['advisors'][0].PlaceOfBirth.Country").setValue(
-		societyContext, "Croatia");
+        societyContext, "Croatia");
 ```
 
-### 6.5.3 Inline lists
+### 6.5.3 内联列表
 
-Lists can be expressed directly in an expression using `{}` notation.
+List列表可以使用`{}`表示法直接在表达式中表示。
 
 ```java
 // evaluates to a Java list containing the four numbers
@@ -88,11 +88,11 @@ List numbers = (List) parser.parseExpression("{1,2,3,4}").getValue(context);
 List listOfLists = (List) parser.parseExpression("{{'a','b'},{'x','y'}}").getValue(context);
 ```
 
-`{}` by itself means an empty list. For performance reasons, if the list is itself entirely composed of fixed literals then a constant list is created to represent the expression, rather than building a new list on each evaluation.
+`{}`本身就是一个空列表。 出于性能原因，如果列表本身完全由固定文字组成，则会创建一个常量列表来表示表达式，而不是在每个运算操作上构建一个新列表。
 
-### 6.5.4 Inline Maps
+### 6.5.4 内联映射
 
-Maps can also be expressed directly in an expression using `{key:value}` notation.
+也可以使用`{key：value}`表示法直接在表达式中表示Map映射。
 
 ```java
 // evaluates to a Java map containing the two entries
@@ -101,11 +101,11 @@ Map inventorInfo = (Map) parser.parseExpression("{name:'Nikola',dob:'10-July-185
 Map mapOfMaps = (Map) parser.parseExpression("{name:{first:'Nikola',last:'Tesla'},dob:{day:10,month:'July',year:1856}}").getValue(context);
 ```
 
-`{:}` by itself means an empty map. For performance reasons, if the map is itself composed of fixed literals or other nested constant structures (lists or maps) then a constant map is created to represent the expression, rather than building a new map on each evaluation. Quoting of the map keys is optional, the examples above are not using quoted keys.
+`{：}`本身就是一个空的Map映射。 出于性能原因，如果Map映射本身由固定文字或其他嵌套常量结构（List列表或Map映射）组成，则会创建一个常量Map映射来表示表达式，而不是在每个运算操作上构建一个新的Map映射。 引用Map映射键是可选的，上面的示例不使用引用的键。
 
-### 6.5.5 Array construction
+### 6.5.5 阵列构造
 
-Arrays can be built using the familiar Java syntax, optionally supplying an initializer to have the array populated at construction time.
+可以使用熟悉的Java语法构建数组，可选择提供一个初始化器，以便在构建时填充数组。
 
 ```java
 int[] numbers1 = (int[]) parser.parseExpression("new int[4]").getValue(context);
@@ -117,11 +117,11 @@ int[] numbers2 = (int[]) parser.parseExpression("new int[]{1,2,3}").getValue(con
 int[][] numbers3 = (int[][]) parser.parseExpression("new int[4][5]").getValue(context);
 ```
 
-It is not currently allowed to supply an initializer when constructing a multi-dimensional array.
+当构造多维数组时，它当前不允许提供初始化器。
 
-### 6.5.6 Methods
+### 6.5.6 方法
 
-Methods are invoked using typical Java programming syntax. You may also invoke methods on literals. Varargs are also supported.
+使用典型的Java编程语法调用方法。 您也可以调用文字的方法。
 
 ```java
 // string literal, evaluates to "bc"
@@ -129,7 +129,7 @@ String c = parser.parseExpression("'abc'.substring(2, 3)").getValue(String.class
 
 // evaluates to true
 boolean isMember = parser.parseExpression("isMember('Mihajlo Pupin')").getValue(
-		societyContext, Boolean.class);
+        societyContext, Boolean.class);
 ```
 
 ### 6.5.7 Operators
@@ -149,31 +149,31 @@ boolean falseValue = parser.parseExpression("2 < -5.0").getValue(Boolean.class);
 boolean trueValue = parser.parseExpression("'black' < 'block'").getValue(Boolean.class);
 ```
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
-| ---------------------------------------- |
-| Greater/less-than comparisons against `null` follow a simple rule: `null` is treated as nothing here (i.e. NOT as zero). As a consequence, any other value is always greater than `null` (`X > null` is always `true`) and no other value is ever less than nothing (`X < null` is always `false`).If you prefer numeric comparisons instead, please avoid number-based `null` comparisons in favor of comparisons against zero (e.g. `X > 0` or `X < 0`). |
+| ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| --- |
+| Greater/less-than comparisons against `null` follow a simple rule: `null` is treated as nothing here \(i.e. NOT as zero\). As a consequence, any other value is always greater than `null` \(`X > null` is always `true`\) and no other value is ever less than nothing \(`X < null` is always `false`\).If you prefer numeric comparisons instead, please avoid number-based `null` comparisons in favor of comparisons against zero \(e.g. `X > 0` or `X < 0`\). |
 
 In addition to standard relational operators SpEL supports the `instanceof` and regular expression based `matches` operator.
 
 ```java
 // evaluates to false
 boolean falseValue = parser.parseExpression(
-		"'xyz' instanceof T(Integer)").getValue(Boolean.class);
+        "'xyz' instanceof T(Integer)").getValue(Boolean.class);
 
 // evaluates to true
 boolean trueValue = parser.parseExpression(
-		"'5.00' matches '\^-?\\d+(\\.\\d{2})?$'").getValue(Boolean.class);
+        "'5.00' matches '\^-?\\d+(\\.\\d{2})?$'").getValue(Boolean.class);
 
 //evaluates to false
 boolean falseValue = parser.parseExpression(
-		"'5.0067' matches '\^-?\\d+(\\.\\d{2})?$'").getValue(Boolean.class);
+        "'5.0067' matches '\^-?\\d+(\\.\\d{2})?$'").getValue(Boolean.class);
 ```
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
-| ---------------------------------------- |
+| ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| --- |
 | Be careful with primitive types as they are immediately boxed up to the wrapper type, so `1 instanceof T(int)` evaluates to `false` while `1 instanceof T(Integer)` evaluates to `true`, as expected. |
 
-Each symbolic operator can also be specified as a purely alphabetic equivalent. This avoids problems where the symbols used have special meaning for the document type in which the expression is embedded (eg. an XML document). The textual equivalents are shown here: `lt` (`<`), `gt` (`>`), `le` (`⇐`), `ge` (`>=`), `eq` (`==`), `ne` (`!=`), `div` (`/`), `mod` (`%`), `not` (`!`). These are case insensitive.
+Each symbolic operator can also be specified as a purely alphabetic equivalent. This avoids problems where the symbols used have special meaning for the document type in which the expression is embedded \(eg. an XML document\). The textual equivalents are shown here: `lt` \(`<`\), `gt` \(`>`\), `le` \(`⇐`\), `ge` \(`>=`\), `eq` \(`==`\), `ne` \(`!=`\), `div` \(`/`\), `mod` \(`%`\), `not` \(`!`\). These are case insensitive.
 
 #### Logical operators
 
@@ -210,14 +210,14 @@ boolean falseValue = parser.parseExpression(expression).getValue(societyContext,
 
 #### Mathematical operators
 
-The addition operator can be used on both numbers and strings. Subtraction, multiplication and division can be used only on numbers. Other mathematical operators supported are modulus (%) and exponential power (^). Standard operator precedence is enforced. These operators are demonstrated below.
+The addition operator can be used on both numbers and strings. Subtraction, multiplication and division can be used only on numbers. Other mathematical operators supported are modulus \(%\) and exponential power \(^\). Standard operator precedence is enforced. These operators are demonstrated below.
 
 ```java
 // Addition
 int two = parser.parseExpression("1 + 1").getValue(Integer.class); // 2
 
 String testString = parser.parseExpression(
-		"'test' + ' ' + 'string'").getValue(String.class); // 'test string'
+        "'test' + ' ' + 'string'").getValue(String.class); // 'test string'
 
 // Subtraction
 int four = parser.parseExpression("1 - -3").getValue(Integer.class); // 4
@@ -256,12 +256,12 @@ parser.parseExpression("Name").setValue(inventorContext, "Alexander Seovic2");
 // alternatively
 
 String aleks = parser.parseExpression(
-		"Name = 'Alexandar Seovic'").getValue(inventorContext, String.class);
+        "Name = 'Alexandar Seovic'").getValue(inventorContext, String.class);
 ```
 
 ### 6.5.9 Types
 
-The special `T` operator can be used to specify an instance of java.lang.Class (the *type*). Static methods are invoked using this operator as well. The`StandardEvaluationContext` uses a `TypeLocator` to find types and the `StandardTypeLocator` (which can be replaced) is built with an understanding of the java.lang package. This means T() references to types within java.lang do not need to be fully qualified, but all other type references must be.
+The special `T` operator can be used to specify an instance of java.lang.Class \(the _type_\). Static methods are invoked using this operator as well. The`StandardEvaluationContext` uses a `TypeLocator` to find types and the `StandardTypeLocator` \(which can be replaced\) is built with an understanding of the java.lang package. This means T\(\) references to types within java.lang do not need to be fully qualified, but all other type references must be.
 
 ```java
 Class dateClass = parser.parseExpression("T(java.util.Date)").getValue(Class.class);
@@ -269,23 +269,23 @@ Class dateClass = parser.parseExpression("T(java.util.Date)").getValue(Class.cla
 Class stringClass = parser.parseExpression("T(String)").getValue(Class.class);
 
 boolean trueValue = parser.parseExpression(
-		"T(java.math.RoundingMode).CEILING < T(java.math.RoundingMode).FLOOR")
-		.getValue(Boolean.class);
+        "T(java.math.RoundingMode).CEILING < T(java.math.RoundingMode).FLOOR")
+        .getValue(Boolean.class);
 ```
 
 ### 6.5.10 Constructors
 
-Constructors can be invoked using the new operator. The fully qualified class name should be used for all but the primitive type and String (where int, float, etc, can be used).
+Constructors can be invoked using the new operator. The fully qualified class name should be used for all but the primitive type and String \(where int, float, etc, can be used\).
 
 ```java
 Inventor einstein = p.parseExpression(
-		"new org.spring.samples.spel.inventor.Inventor('Albert Einstein', 'German')")
-		.getValue(Inventor.class);
+        "new org.spring.samples.spel.inventor.Inventor('Albert Einstein', 'German')")
+        .getValue(Inventor.class);
 
 //create new inventor instance within add method of List
 p.parseExpression(
-		"Members.add(new org.spring.samples.spel.inventor.Inventor(
-			'Albert Einstein', 'German'))").getValue(societyContext);
+        "Members.add(new org.spring.samples.spel.inventor.Inventor(
+            'Albert Einstein', 'German'))").getValue(societyContext);
 ```
 
 ### 6.5.11 Variables
@@ -302,9 +302,9 @@ parser.parseExpression("Name = #newName").getValue(context);
 System.out.println(tesla.getName()) // "Mike Tesla"
 ```
 
-#### The #this and #root variables
+#### The \#this and \#root variables
 
-The variable #this is always defined and refers to the current evaluation object (against which unqualified references are resolved). The variable #root is always defined and refers to the root context object. Although #this may vary as components of an expression are evaluated, #root always refers to the root.
+The variable \#this is always defined and refers to the current evaluation object \(against which unqualified references are resolved\). The variable \#root is always defined and refers to the root context object. Although \#this may vary as components of an expression are evaluated, \#root always refers to the root.
 
 ```java
 // create an array of integers
@@ -319,7 +319,7 @@ context.setVariable("primes",primes);
 // all prime numbers > 10 from the list (using selection ?{...})
 // evaluates to [11, 13, 17]
 List<Integer> primesGreaterThanTen = (List<Integer>) parser.parseExpression(
-		"#primes.?[#this>10]").getValue(context);
+        "#primes.?[#this>10]").getValue(context);
 ```
 
 ### 6.5.12 Functions
@@ -335,13 +335,13 @@ A reference to a Java Method provides the implementation of the function. For ex
 ```java
 public abstract class StringUtils {
 
-	public static String reverseString(String input) {
-		StringBuilder backwards = new StringBuilder();
-		for (int i = 0; i < input.length(); i++)
-			backwards.append(input.charAt(input.length() - 1 - i));
-		}
-		return backwards.toString();
-	}
+    public static String reverseString(String input) {
+        StringBuilder backwards = new StringBuilder();
+        for (int i = 0; i < input.length(); i++)
+            backwards.append(input.charAt(input.length() - 1 - i));
+        }
+        return backwards.toString();
+    }
 }
 ```
 
@@ -352,15 +352,15 @@ ExpressionParser parser = new SpelExpressionParser();
 StandardEvaluationContext context = new StandardEvaluationContext();
 
 context.registerFunction("reverseString",
-	StringUtils.class.getDeclaredMethod("reverseString", new Class[] { String.class }));
+    StringUtils.class.getDeclaredMethod("reverseString", new Class[] { String.class }));
 
 String helloWorldReversed = parser.parseExpression(
-	"#reverseString('hello')").getValue(context, String.class);
+    "#reverseString('hello')").getValue(context, String.class);
 ```
 
 ### 6.5.13 Bean references
 
-If the evaluation context has been configured with a bean resolver it is possible to lookup beans from an expression using the (@) symbol.
+If the evaluation context has been configured with a bean resolver it is possible to lookup beans from an expression using the \(@\) symbol.
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -371,7 +371,7 @@ context.setBeanResolver(new MyBeanResolver());
 Object bean = parser.parseExpression("@foo").getValue(context);
 ```
 
-To access a factory bean itself, the bean name should instead be prefixed with a (&) symbol.
+To access a factory bean itself, the bean name should instead be prefixed with a \(&\) symbol.
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -382,13 +382,13 @@ context.setBeanResolver(new MyBeanResolver());
 Object bean = parser.parseExpression("&foo").getValue(context);
 ```
 
-### 6.5.14 Ternary Operator (If-Then-Else)
+### 6.5.14 Ternary Operator \(If-Then-Else\)
 
 You can use the ternary operator for performing if-then-else conditional logic inside the expression. A minimal example is:
 
 ```java
 String falseString = parser.parseExpression(
-		"false ? 'trueExp' : 'falseExp'").getValue(String.class);
+        "false ? 'trueExp' : 'falseExp'").getValue(String.class);
 ```
 
 In this case, the boolean false results in returning the string value 'falseExp'. A more realistic example is shown below.
@@ -398,10 +398,10 @@ parser.parseExpression("Name").setValue(societyContext, "IEEE");
 societyContext.setVariable("queryName", "Nikola Tesla");
 
 expression = "isMember(#queryName)? #queryName + ' is a member of the ' " +
-		"+ Name + ' Society' : #queryName + ' is not a member of the ' + Name + ' Society'";
+        "+ Name + ' Society' : #queryName + ' is not a member of the ' + Name + ' Society'";
 
 String queryResultString = parser.parseExpression(expression)
-		.getValue(societyContext, String.class);
+        .getValue(societyContext, String.class);
 // queryResultString = "Nikola Tesla is a member of the IEEE Society"
 ```
 
@@ -467,8 +467,8 @@ city = parser.parseExpression("PlaceOfBirth?.City").getValue(context, String.cla
 System.out.println(city); // null - does not throw NullPointerException!!!
 ```
 
-| ![[Note]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
-| ---------------------------------------- |
+| ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
+| --- |
 | The Elvis operator can be used to apply default values in expressions, e.g. in an `@Value` expression:`@Value("#{systemProperties['pop3.port'] ?: 25}")`This will inject a system property `pop3.port` if it is defined or 25 if not. |
 
 ### 6.5.17 Collection Selection
@@ -479,10 +479,10 @@ Selection uses the syntax `.?[selectionExpression]`. This will filter the collec
 
 ```java
 List<Inventor> list = (List<Inventor>) parser.parseExpression(
-		"Members.?[Nationality == 'Serbian']").getValue(societyContext);
+        "Members.?[Nationality == 'Serbian']").getValue(societyContext);
 ```
 
-Selection is possible upon both lists and maps. In the former case the selection criteria is evaluated against each individual list element whilst against a map the selection criteria is evaluated against each map entry (objects of the Java type `Map.Entry`). Map entries have their key and value accessible as properties for use in the selection.
+Selection is possible upon both lists and maps. In the former case the selection criteria is evaluated against each individual list element whilst against a map the selection criteria is evaluated against each map entry \(objects of the Java type `Map.Entry`\). Map entries have their key and value accessible as properties for use in the selection.
 
 This expression will return a new map consisting of those elements of the original map where the entry value is less than 27.
 
@@ -501,7 +501,7 @@ Projection allows a collection to drive the evaluation of a sub-expression and t
 List placesOfBirth = (List)parser.parseExpression("Members.![placeOfBirth.city]");
 ```
 
-A map can also be used to drive projection and in this case the projection expression is evaluated against each entry in the map (represented as a Java `Map.Entry`). The result of a projection across a map is a list consisting of the evaluation of the projection expression against each map entry.
+A map can also be used to drive projection and in this case the projection expression is evaluated against each entry in the map \(represented as a Java `Map.Entry`\). The result of a projection across a map is a list consisting of the evaluation of the projection expression against each map entry.
 
 ### 6.5.19 Expression templating
 
@@ -509,27 +509,30 @@ Expression templates allow a mixing of literal text with one or more evaluation 
 
 ```java
 String randomPhrase = parser.parseExpression(
-		"random number is #{T(java.lang.Math).random()}",
-		new TemplateParserContext()).getValue(String.class);
+        "random number is #{T(java.lang.Math).random()}",
+        new TemplateParserContext()).getValue(String.class);
 
 // evaluates to "random number is 0.7038186818312008"
 ```
 
-The string is evaluated by concatenating the literal text 'random number is ' with the result of evaluating the expression inside the #{ } delimiter, in this case the result of calling that random() method. The second argument to the method `parseExpression()` is of the type `ParserContext`. The `ParserContext` interface is used to influence how the expression is parsed in order to support the expression templating functionality. The definition of `TemplateParserContext` is shown below.
+The string is evaluated by concatenating the literal text 'random number is ' with the result of evaluating the expression inside the \#{ } delimiter, in this case the result of calling that random\(\) method. The second argument to the method `parseExpression()` is of the type `ParserContext`. The `ParserContext` interface is used to influence how the expression is parsed in order to support the expression templating functionality. The definition of `TemplateParserContext` is shown below.
 
 ```java
 public class TemplateParserContext implements ParserContext {
 
-	public String getExpressionPrefix() {
-		return "#{";
-	}
+    public String getExpressionPrefix() {
+        return "#{";
+    }
 
-	public String getExpressionSuffix() {
-		return "}";
-	}
+    public String getExpressionSuffix() {
+        return "}";
+    }
 
-	public boolean isTemplate() {
-		return true;
-	}
+    public boolean isTemplate() {
+        return true;
+    }
 }
 ```
+
+
+
