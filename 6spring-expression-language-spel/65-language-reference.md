@@ -273,9 +273,9 @@ boolean trueValue = parser.parseExpression(
         .getValue(Boolean.class);
 ```
 
-### 6.5.10 Constructors
+### 6.5.10 构造函数
 
-Constructors can be invoked using the new operator. The fully qualified class name should be used for all but the primitive type and String \(where int, float, etc, can be used\).
+可以使用新的运算符调用构造函数。 除了原始类型和字符串（可以使用int，float等）之外，所有标准类名称都应该被使用。
 
 ```java
 Inventor einstein = p.parseExpression(
@@ -288,9 +288,9 @@ p.parseExpression(
             'Albert Einstein', 'German'))").getValue(societyContext);
 ```
 
-### 6.5.11 Variables
+### 6.5.11 变量
 
-Variables can be referenced in the expression using the syntax `#variableName`. Variables are set using the method setVariable on the `StandardEvaluationContext`.
+可以使用语法`#variableName`在表达式中引用变量。 使用`StandardEvaluationContext`上的`setVariable`方法设置变量。
 
 ```java
 Inventor tesla = new Inventor("Nikola Tesla", "Serbian");
@@ -302,9 +302,9 @@ parser.parseExpression("Name = #newName").getValue(context);
 System.out.println(tesla.getName()) // "Mike Tesla"
 ```
 
-#### The \#this and \#root variables
+#### \#this 和 \#root 变量
 
-The variable \#this is always defined and refers to the current evaluation object \(against which unqualified references are resolved\). The variable \#root is always defined and refers to the root context object. Although \#this may vary as components of an expression are evaluated, \#root always refers to the root.
+变量\#this始终被定义，并且引用当前的运算操作对象（针对被解析的那个非限定引用）。 变量\#root始终被定义，并引用根上下文对象。 虽然\#this可能因为表达式的组件被运算操作而变化，但是\#root总是引用根。
 
 ```java
 // create an array of integers
@@ -322,15 +322,15 @@ List<Integer> primesGreaterThanTen = (List<Integer>) parser.parseExpression(
         "#primes.?[#this>10]").getValue(context);
 ```
 
-### 6.5.12 Functions
+### 6.5.12 功能
 
-You can extend SpEL by registering user defined functions that can be called within the expression string. The function is registered with the `StandardEvaluationContext` using the method.
+您可以通过注册能够在表达式字符串中调用的用户定义的函数来扩展SpEL。 该功能通过方法使用`StandardEvaluationContext`进行注册。
 
 ```java
 public void registerFunction(String name, Method m)
 ```
 
-A reference to a Java Method provides the implementation of the function. For example, a utility method to reverse a string is shown below.
+对Java方法的引用提供了该函数的实现。 例如，一个反转字符串的实用方法如下所示。
 
 ```java
 public abstract class StringUtils {
@@ -345,7 +345,7 @@ public abstract class StringUtils {
 }
 ```
 
-This method is then registered with the evaluation context and can be used within an expression string.
+然后将该方法注册到运算操作的上下文中，并可在表达式字符串中使用。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -358,9 +358,9 @@ String helloWorldReversed = parser.parseExpression(
     "#reverseString('hello')").getValue(context, String.class);
 ```
 
-### 6.5.13 Bean references
+### 6.5.13 Bean引用
 
-If the evaluation context has been configured with a bean resolver it is possible to lookup beans from an expression using the \(@\) symbol.
+如果使用bean解析器配置了运算操作上下文，则可以使用（@）符号从表达式中查找bean。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -371,7 +371,7 @@ context.setBeanResolver(new MyBeanResolver());
 Object bean = parser.parseExpression("@foo").getValue(context);
 ```
 
-To access a factory bean itself, the bean name should instead be prefixed with a \(&\) symbol.
+要访问工厂bean本身，bean名称应改为带有（＆）符号的前缀。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -382,16 +382,16 @@ context.setBeanResolver(new MyBeanResolver());
 Object bean = parser.parseExpression("&foo").getValue(context);
 ```
 
-### 6.5.14 Ternary Operator \(If-Then-Else\)
+### 6.5.14 三元运算符 \(If-Then-Else\)
 
-You can use the ternary operator for performing if-then-else conditional logic inside the expression. A minimal example is:
+您可以使用三元运算符在表达式中执行if-then-else条件逻辑。 一个最小的例子是：
 
 ```java
 String falseString = parser.parseExpression(
         "false ? 'trueExp' : 'falseExp'").getValue(String.class);
 ```
 
-In this case, the boolean false results in returning the string value 'falseExp'. A more realistic example is shown below.
+在这种情况下，布尔值false会返回字符串值“falseExp”。 一个更现实的例子如下所示。
 
 ```java
 parser.parseExpression("Name").setValue(societyContext, "IEEE");
@@ -405,18 +405,18 @@ String queryResultString = parser.parseExpression(expression)
 // queryResultString = "Nikola Tesla is a member of the IEEE Society"
 ```
 
-Also see the next section on the Elvis operator for an even shorter syntax for the ternary operator.
+另请参阅Elvis操作员的下一部分，为三元运算符提供更短的语法。
 
-### 6.5.15 The Elvis Operator
+### 6.5.15 Elvis操作符
 
-The Elvis operator is a shortening of the ternary operator syntax and is used in the [Groovy](http://www.groovy-lang.org/operators.html#_elvis_operator) language. With the ternary operator syntax you usually have to repeat a variable twice, for example:
+Elvis操作符缩短了三元操作符语法，并以Groovy语言使用。 通过三元运算符语法，您通常必须重复一次变量两次，例如：
 
 ```java
 String name = "Elvis Presley";
 String displayName = name != null ? name : "Unknown";
 ```
 
-Instead you can use the Elvis operator, named for the resemblance to Elvis' hair style.
+相反，您可以使用Elvis操作符，命名与Elvis的发型相似。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -426,7 +426,7 @@ String name = parser.parseExpression("name?:'Unknown'").getValue(String.class);
 System.out.println(name); // 'Unknown'
 ```
 
-Here is a more complex example.
+这里是一个更复杂的例子。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -445,9 +445,9 @@ name = parser.parseExpression("Name?:'Elvis Presley'").getValue(context, String.
 System.out.println(name); // Elvis Presley
 ```
 
-### 6.5.16 Safe Navigation operator
+### 6.5.16 安全导航运算符
 
-The Safe Navigation operator is used to avoid a `NullPointerException` and comes from the [Groovy](http://www.groovy-lang.org/operators.html#_safe_navigation_operator) language. Typically when you have a reference to an object you might need to verify that it is not null before accessing methods or properties of the object. To avoid this, the safe navigation operator will simply return null instead of throwing an exception.
+安全导航运算符用于避免`NullPointerException`并来自Groovy语言。 通常当您对对象的引用时，您可能需要在访问对象的方法或属性之前验证它不为空。 为了避免这种情况，安全导航运算符将简单地返回null而不是抛出异常。
 
 ```java
 ExpressionParser parser = new SpelExpressionParser();
@@ -469,39 +469,39 @@ System.out.println(city); // null - does not throw NullPointerException!!!
 
 | ![\[Note\]](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | --- |
-| The Elvis operator can be used to apply default values in expressions, e.g. in an `@Value` expression:`@Value("#{systemProperties['pop3.port'] ?: 25}")`This will inject a system property `pop3.port` if it is defined or 25 if not. |
+| Elvis操作符可用于在表达式中设置默认值，例如 在@Value表达式中：`@Value("#{systemProperties['pop3.port'] ?: 25}")`这将注入系统属性`pop3.port`（如果已定义）或25（如果未定义）。 |
 
-### 6.5.17 Collection Selection
+### 6.5.17 集合选择
 
-Selection is a powerful expression language feature that allows you to transform some source collection into another by selecting from its entries.
+选择是强大的表达式语言功能，允许您通过从其条目中选择将一些源集合转换为另一个。
 
-Selection uses the syntax `.?[selectionExpression]`. This will filter the collection and return a new collection containing a subset of the original elements. For example, selection would allow us to easily get a list of Serbian inventors:
+选择使用语法`.?[selectionExpression]`。 这将过滤收集并返回一个包含原始元素子集的新集合。 例如，选择将使我们能够轻松得到Serbian发明家名单：
 
 ```java
 List<Inventor> list = (List<Inventor>) parser.parseExpression(
         "Members.?[Nationality == 'Serbian']").getValue(societyContext);
 ```
 
-Selection is possible upon both lists and maps. In the former case the selection criteria is evaluated against each individual list element whilst against a map the selection criteria is evaluated against each map entry \(objects of the Java type `Map.Entry`\). Map entries have their key and value accessible as properties for use in the selection.
+list列表和map映射都可以进行选择。 在前一种情况下，根据每个单独列表元素，同时针对map映射，根据每个map映射条目（Java类型`Map.Entry`的对象）运算操作作为选择标准。 map映射条目的键和值可以作为选择中使用的属性访问。
 
-This expression will return a new map consisting of those elements of the original map where the entry value is less than 27.
+此表达式将返回一个由原始map映射的元素组成的新map映射，其中条目值小于27。
 
 ```java
 Map newMap = parser.parseExpression("map.?[value<27]").getValue();
 ```
 
-In addition to returning all the selected elements, it is possible to retrieve just the first or the last value. To obtain the first entry matching the selection the syntax is `^[…]`whilst to obtain the last matching selection the syntax is `$[…]`.
+除了返回所有选定的元素之外，还可以检索第一个或最后一个值。 要获得与选择匹配的第一个条目，语法为`^[…]`，同时获取最后匹配的选择，语法为`$[…]`。
 
-### 6.5.18 Collection Projection
+### 6.5.18 集合投影
 
-Projection allows a collection to drive the evaluation of a sub-expression and the result is a new collection. The syntax for projection is `![projectionExpression]`. Most easily understood by example, suppose we have a list of inventors but want the list of cities where they were born. Effectively we want to evaluate 'placeOfBirth.city' for every entry in the inventor list. Using projection:
+投影允许集合驱动子表达式的运算操作，结果是一个新的集合。 投影的语法是`![projectionExpression]`。 最容易理解的例子，假设我们有一个发明家的名单，但希望得到他们出生的城市的名单。 有效地，我们要对发明人列表中的每个条目进行“placeOfBirth.city”运算操作。 使用投影：
 
 ```java
 // returns ['Smiljan', 'Idvor' ]
 List placesOfBirth = (List)parser.parseExpression("Members.![placeOfBirth.city]");
 ```
 
-A map can also be used to drive projection and in this case the projection expression is evaluated against each entry in the map \(represented as a Java `Map.Entry`\). The result of a projection across a map is a list consisting of the evaluation of the projection expression against each map entry.
+map映射也可以用于驱动投影，在这种情况下，投影表达式将针对map映射中的每个条目进行运算操作（表示为Java `Map.Entry`）。 跨map映射投影的结果是由对每个map映射条目的投影表达式的运算操作组成的列表。
 
 ### 6.5.19 Expression templating
 
