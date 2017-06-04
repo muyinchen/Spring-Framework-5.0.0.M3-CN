@@ -503,9 +503,9 @@ List placesOfBirth = (List)parser.parseExpression("Members.![placeOfBirth.city]"
 
 map映射也可以用于驱动投影，在这种情况下，投影表达式将针对map映射中的每个条目进行运算操作（表示为Java `Map.Entry`）。 跨map映射投影的结果是由对每个map映射条目的投影表达式的运算操作组成的列表。
 
-### 6.5.19 Expression templating
+### 6.5.19 表达式模板
 
-Expression templates allow a mixing of literal text with one or more evaluation blocks. Each evaluation block is delimited with prefix and suffix characters that you can define, a common choice is to use `#{ }` as the delimiters. For example,
+表达式模板允许文字文本与一个或多个运算操作块进行混合。 每个运算操作块都用您可以定义的前缀和后缀字符进行分隔，常用的选择是使用`#{ }`作为分隔符。 例如，
 
 ```java
 String randomPhrase = parser.parseExpression(
@@ -515,7 +515,7 @@ String randomPhrase = parser.parseExpression(
 // evaluates to "random number is 0.7038186818312008"
 ```
 
-The string is evaluated by concatenating the literal text 'random number is ' with the result of evaluating the expression inside the \#{ } delimiter, in this case the result of calling that random\(\) method. The second argument to the method `parseExpression()` is of the type `ParserContext`. The `ParserContext` interface is used to influence how the expression is parsed in order to support the expression templating functionality. The definition of `TemplateParserContext` is shown below.
+字符串通过连接文本文本'random number is'与运算操作＃{}分隔符中的表达式的结果进行运算操作，在这种情况下是调用random（）方法的结果。 `parseExpression（）`方法的第二个参数是`ParserContext`类型。 `ParserContext`接口用于决定表达式如何被解析以支持表达式模板功能。 `TemplateParserContext`的定义如下所示。
 
 ```java
 public class TemplateParserContext implements ParserContext {
