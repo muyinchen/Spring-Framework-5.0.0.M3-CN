@@ -1,12 +1,14 @@
-## 11. Integration Testing
+## 11. **集成测试**
 
-## 11.1 Overview
+## 11.1 **概述**
 
-It is important to be able to perform some integration testing without requiring deployment to your application server or connecting to other enterprise infrastructure. This will enable you to test things such as:
+能够在不需要部署到应用服务器或连接到其它企业基础服务的前提下做一些集成测试是很重要的。这将使你能够测试以下内容：
 
-- The correct wiring of your Spring IoC container contexts.
-- Data access using JDBC or an ORM tool. This would include such things as the correctness of SQL statements, Hibernate queries, JPA entity mappings, etc.
+* Spring IoC容器上下文的正确装配。
 
-The Spring Framework provides first-class support for integration testing in the `spring-test` module. The name of the actual JAR file might include the release version and might also be in the long `org.springframework.test` form, depending on where you get it from (see the [section on Dependency Management](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#dependency-management) for an explanation). This library includes the `org.springframework.test` package, which contains valuable classes for integration testing with a Spring container. This testing does not rely on an application server or other deployment environment. Such tests are slower to run than unit tests but much faster than the equivalent Selenium tests or remote tests that rely on deployment to an application server.
+* 使用JDBC或其它ORM工具访问数据。这将包括SQL语句、Hibernate查询和JPA实体映射的正确性等等这些内容。
 
-In Spring 2.5 and later, unit and integration testing support is provided in the form of the annotation-driven [Spring TestContext Framework](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#testcontext-framework). The TestContext framework is agnostic of the actual testing framework in use, thus allowing instrumentation of tests in various environments including JUnit, TestNG, and so on.
+Spring Framework在`spring-test`模块中为集成测试提供了强有力的支持。该Jar包的实际名字可能会包含发布版本号而且可能是`org.springframework.test`这样长的形式，这取决于你是从哪获得的（请参阅[section on Dependency Management](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/overview.html#dependency-management)中的解释）。这个库包括了`org.springframework.test`包，其中包含了使用Spring容器进行集成测试的重要的类。这个测试不信赖于应用服务器和其它的发布环境。这些测试会比单元测试稍慢但比同类型的Selenium测试或信赖于发布到应用服务器的远程测试要快得多。
+
+在Spring2.5及之后的版本，单元和集成测试支持是以注解驱动[Spring TestContext框架](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/integration-testing.html#testcontext-framework)这样的形式提供的。TestContext框架对实际使用的测试框架是不可知的的，因此可以使用包括 JUnit, TestNG等等许多测试手段。
+
