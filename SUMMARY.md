@@ -146,7 +146,7 @@
   * [11.集成测试](part-iii-testing/11integration-testing.md)
     * [11.1  概述](part-iii-testing/11integration-testing/111-overview.md)
     * [11.2 集成测试的目标](part-iii-testing/11integration-testing/112-goals-of-integration-testing.md)
-    * [11.3 JDBC Testing Support](part-iii-testing/11integration-testing/113-jdbc-testing-support.md)
-    * [11.4 Annotations](part-iii-testing/11integration-testing/114-annotations.md)
+    * [11.3 JDBC测试支持](part-iii-testing/11integration-testing/113-jdbc-testing-support.md)
+    * [11.4 注解](part-iii-testing/11integration-testing/114-annotations.md)
     * [11.5 Spring TestContext Framework](part-iii-testing/11integration-testing/115-spring-testcontext-framework.md)
 
