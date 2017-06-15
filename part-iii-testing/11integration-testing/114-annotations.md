@@ -259,10 +259,6 @@ public void testProcessWithoutRollback() {
 
 #### @Rollback
 
-`@Rollback` indicates whether the transaction for a transactional test method should be _rolled back_ after the test method has completed. If `true`, the transaction is rolled back; otherwise, the transaction is committed \(see also `@Commit`\). Rollback semantics for integration tests in the Spring TestContext Framework default to `true` even if`@Rollback` is not explicitly declared.
-
-When declared as a class-level annotation, `@Rollback` defines the default rollback semantics for all test methods within the test class hierarchy. When declared as a method-level annotation, `@Rollback` defines rollback semantics for the specific test method, potentially overriding class-level `@Rollback` or `@Commit` semantics.
-
 `@Rollback`指明当测试方法执行完毕的时候是否对事务性方法中的事务进行回滚。如果为`true`,则进行回滚；否则，则提交（请参加`@Commit`）。在Spring TestContext框架中，集成测试默认的`@Rollback`语义为`true`，即使你不显示的指定它。
 
 当声明为类级别注解时，`@Rollback`为测试类层次结构中的所有测试方法定义了默认回滚语义。 当被声明为方法级别的注解，则`@Rollback`为特定的方法指定回滚语义，并覆盖类级别的`@Rollback`和`@Commit`语义。
@@ -399,26 +395,26 @@ public class CustomProfileValueSourceTests {
 
 #### @Timed
 
-`@Timed` indicates that the annotated test method must finish execution in a specified time period \(in milliseconds\). If the text execution time exceeds the specified time period, the test fails.
+`@Timed`用于指明被注解的测试必须在指定的时限（毫秒）内结束。如果测试超过指定时限，就当作测试失败。
 
-The time period includes execution of the test method itself, any repetitions of the test \(see `@Repeat`\), as well as any _set up_ or _tear down_ of the test fixture.
+时限包括测试方法本身所耗费的时间，包括任何重复（请查看`@Repeat`）及任意初始化和销毁所用的时间。
 
-```
+```java
 @Timed(millis=1000)
 public void testProcessWithOneSecondTimeout() {
     // some logic that should not take longer than 1 second to execute
 }
 ```
 
-Spring’s `@Timed` annotation has different semantics than JUnit 4’s `@Test(timeout=…)` support. Specifically, due to the manner in which JUnit 4 handles test execution timeouts \(that is, by executing the test method in a separate `Thread`\), `@Test(timeout=…)` preemptively fails the test if the test takes too long. Spring’s `@Timed`, on the other hand, does not preemptively fail the test but rather waits for the test to complete before failing.
+Spring的`@Timed`注解与JUnit 4的`@Test(timeout=…​)`支持相比具有不同的语义。确切地说，由于在JUnit 4中处理方法执行超时的方式（也就是，在独立纯程中执行该测试方法），如果一个测试方法执行时间太长，`@Test(timeout=…​)`将直接判定该测试失败。而Spring的`@Timed`则不直接判定失败而是等待测试完成。
 
 #### @Repeat
 
-`@Repeat` indicates that the annotated test method must be executed repeatedly. The number of times that the test method is to be executed is specified in the annotation.
+`@Repeat`指明该测试方法需被重复执行。注解指定该测试方法被重复的次数。
 
-The scope of execution to be repeated includes execution of the test method itself as well as any _set up_ or _tear down_ of the test fixture.
+重复的范围包括该测试方法自身也包括相应的初始化和销毁方法。
 
-```
+```java
 @Repeat(10)
 @Test
 public void testProcessRepeatedly() {
@@ -428,9 +424,9 @@ public void testProcessRepeatedly() {
 
 ### 11.4.4 Meta-Annotation Support for Testing
 
-It is possible to use most test-related annotations as [meta-annotations](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#beans-meta-annotations) in order to create custom _composed annotations_ and reduce configuration duplication across a test suite.
+可以将大部分测试相关的注解当作[meta-annotations](http://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle/#beans-meta-annotations)使用，以创建自定义组合注解来减少测试集中的重复配置。
 
-Each of the following may be used as meta-annotations in conjunction with the [TestContext framework](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#testcontext-framework).
+下面的每个都可以在[TestContext](http://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle/#testcontext-framework)框架中被当作meta-annotations使用。
 
 * `@BootstrapWith`
 * `@ContextConfiguration`
@@ -453,9 +449,9 @@ Each of the following may be used as meta-annotations in conjunction with the [T
 * `@IfProfileValue`
 * `@ProfileValueSourceConfiguration`
 
-For example, if we discover that we are repeating the following configuration across our JUnit 4 based test suite…
+例如，如果发现我们在基于JUnit 4的测试集中重复以下配置…
 
-```
+```java
 @RunWith(SpringRunner.class)
 @ContextConfiguration({"/app-config.xml", "/test-data-access-config.xml"})
 @ActiveProfiles("dev")
@@ -469,9 +465,9 @@ public class OrderRepositoryTests { }
 public class UserRepositoryTests { }
 ```
 
-We can reduce the above duplication by introducing a custom _composed annotation_ that centralizes the common test configuration like this:
+我们可以通过一个自定义的组合注解来减少上述的重复量，将通用的测试配置集中起来，就像这样：
 
-```
+```java
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @ContextConfiguration({"/app-config.xml", "/test-data-access-config.xml"})
@@ -480,9 +476,9 @@ We can reduce the above duplication by introducing a custom _composed annotation
 public @interface TransactionalDevTest { }
 ```
 
-Then we can use our custom `@TransactionalDevTest` annotation to simplify the configuration of individual test classes as follows:
+然后我们就可以像下面一样使用我们自定义的`@TransactionalDevTest`注解来简化每个类的配置：
 
-```
+```java
 @RunWith(SpringRunner.class)
 @TransactionalDevTest
 public class OrderRepositoryTests { }
@@ -492,5 +488,5 @@ public class OrderRepositoryTests { }
 public class UserRepositoryTests { }
 ```
 
-For further details, consult the [Spring Annotation Programming Model](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/htmlsingle/#annotation-programming-model).
+想获得详情，请查看[Spring注解编程模型](http://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle/#annotation-programming-model)
 
