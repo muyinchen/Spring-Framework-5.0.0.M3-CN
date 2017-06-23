@@ -149,4 +149,6 @@
     * [11.3 JDBC测试支持](part-iii-testing/11integration-testing/113-jdbc-testing-support.md)
     * [11.4 注解](part-iii-testing/11integration-testing/114-annotations.md)
     * [11.5 Spring TestContext Framework](part-iii-testing/11integration-testing/115-spring-testcontext-framework.md)
+* [Part IV. 数据访问](part-iv-shu-ju-fang-wen.md)
+  * 14. DAO support
 
