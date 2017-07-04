@@ -1,0 +1,4 @@
+### 13.10.1Use of the wrong transaction manager for a specific DataSource
+
+Use the_correct_`PlatformTransactionManager`implementation based on your choice of transactional technologies and requirements. Used properly, the Spring Framework merely provides a straightforward and portable abstraction. If you are using global transactions, you_must_use the`org.springframework.transaction.jta.JtaTransactionManager`class \(or an[application server-specific subclass](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/transaction.html#transaction-application-server-integration)of it\) for all your transactional operations. Otherwise the transaction infrastructure attempts to perform local transactions on resources such as container`DataSource`instances. Such local transactions do not make sense, and a good application server treats them as errors.
+
