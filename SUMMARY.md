@@ -193,7 +193,7 @@
     * [14.1 Introduction](part-iv-shu-ju-fang-wen/14dao-support/141-introduction.md)
     * [14.2 Consistent exception hierarchy](part-iv-shu-ju-fang-wen/14dao-support/142-consistent-exception-hierarchy.md)
     * [14.3 Annotations used for configuring DAO or Repository classes](part-iv-shu-ju-fang-wen/14dao-support/143-annotations-used-for-configuring-dao-or-repository-classes.md)
-  * 15.Data access with JDBC
+  * [15.Data access with JDBC](part-iv-shu-ju-fang-wen/15data-access-with-jdbc.md)
     * [15.1 Introduction to Spring Framework JDBC](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc.md)
       * [15.1.1 Choosing an approach for JDBC database access](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc/1511-choosing-an-approach-for-jdbc-database-access.md)
       * [15.1.2 Package hierarchy](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc/1512-package-hierarchy.md)
@@ -205,4 +205,6 @@
       * [15.2.5 Running queries](part-iv-shu-ju-fang-wen/1525-running-queries.md)
       * [15.2.6 Updating the database](part-iv-shu-ju-fang-wen/1526-updating-the-database.md)
       * [15.2.7 Retrieving auto-generated keys](part-iv-shu-ju-fang-wen/1527-retrieving-auto-generated-keys.md)
+    * [15.3 Controlling database connections](part-iv-shu-ju-fang-wen/153-controlling-database-connections.md)
+      * [15.3.1 DataSource](part-iv-shu-ju-fang-wen/153-controlling-database-connections/1531-datasource.md)
 
