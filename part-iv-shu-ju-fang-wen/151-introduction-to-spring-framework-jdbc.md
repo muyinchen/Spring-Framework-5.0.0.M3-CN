@@ -1,24 +1,23 @@
-## 15.1Introduction to Spring Framework JDBC
+## 15.**介绍Spring JDBC框架**
 
 The value-add provided by the Spring Framework JDBC abstraction is perhaps best shown by the sequence of actions outlined in the table below. The table shows what actions Spring will take care of and which actions are the responsibility of you, the application developer.
 
-**Table15.1.Spring JDBC - who does what?**
+表格15.1很清楚的以操作顺序显示列举了Spring框架针对JDBC操作做的一些抽象和封装。里面区分了哪些操作Spring已经帮你做好了、哪些操作是应用开发者需要自己负责的.
+
+**表15.1. Spring JDBC – 框架和应用开发者各自分工**
 
 | Action | Spring | You |
 | :--- | :--- | :--- |
-| Define connection parameters. |  | X |
-| Open the connection. | X |  |
-| Specify the SQL statement. |  | X |
-| Declare parameters and provide parameter values |  | X |
-| Prepare and execute the statement. | X |  |
-| Set up the loop to iterate through the results \(if any\). | X |  |
-| Do the work for each iteration. |  | X |
-| Process any exception. | X |  |
-| Handle transactions. | X |  |
-| Close the connection, statement and resultset. | X |  |
+| 定义连接参数 |  | X |
+| 打开连接 | X |  |
+| 指定SQL语句 |  | X |
+| 声明参数和提供参数值 |  | X |
+| 准备和执行语句 | X |  |
+| 返回结果的迭代（如果有） | X |  |
+| 具体操作每个迭代 |  | X |
+| 异常处理 | X |  |
+| 事务处理. | X |  |
+| 关闭连接、语句和结果集. | X |  |
 
-The Spring Framework takes care of all the low-level details that can make JDBC such a tedious API to develop with.
-
-  
-
+Spring帮你屏蔽了很多JDBC底层繁琐的API操作、让你更方便的开发
 

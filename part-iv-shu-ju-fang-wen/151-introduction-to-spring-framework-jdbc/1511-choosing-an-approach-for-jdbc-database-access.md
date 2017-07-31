@@ -1,14 +1,14 @@
-### 15.1.1Choosing an approach for JDBC database access
+### 15.1.1**选择一种JDBC数据库访问方法**
 
-You can choose among several approaches to form the basis for your JDBC database access. In addition to three flavors of the JdbcTemplate, a new SimpleJdbcInsert and SimplejdbcCall approach optimizes database metadata, and the RDBMS Object style takes a more object-oriented approach similar to that of JDO Query design. Once you start using one of these approaches, you can still mix and match to include a feature from a different approach. All approaches require a JDBC 2.0-compliant driver, and some advanced features require a JDBC 3.0 driver.
+JDBC数据库访问有几种基本的途径可供选择。除了JdbcTemplate的三种使用方式外，新的SimpleJdbcInsert和SimplejdbcCall调用类通过优化数据库元数据（来简化JDBC操作），还有一种更偏向于面向对象的RDBMS对象风格的方法、有点类似于JDO的查询设计。即使你已经选择了其中一种方法、你仍然可以混合使用另外一种方法的某一个特性。所有的方法都需要JDBC2.0兼容驱动的支持，一些更高级的特性则需要使用JDBC3.0驱动支持。
 
-* _JdbcTemplate_is the classic Spring JDBC approach and the most popular. This "lowest level" approach and all others use a JdbcTemplate under the covers.
+* \_JdbcTemplate 是经典的Spring JDBC访问方式，也是最常用的。这是“最基础”的方式、其他所有方式都是在 JdbcTemplate的基础之上封装的。
 
-* _NamedParameterJdbcTemplate_wraps a`JdbcTemplate`to provide named parameters instead of the traditional JDBC "?" placeholders. This approach provides better documentation and ease of use when you have multiple parameters for an SQL statement.
+* \_NamedParameterJdbcTemplate 在原有`JdbcTemplate`的基础上做了一层包装支持命名参数特性、用于替代传统的JDBC“？”占位符。当SQL语句中包含多个参数时使用这种方式能有更好的可读性和易用性
 
-* _SimpleJdbcInsert and SimpleJdbcCall_optimize database metadata to limit the amount of necessary configuration. This approach simplifies coding so that you only need to provide the name of the table or procedure and provide a map of parameters matching the column names. This only works if the database provides adequate metadata. If the database doesn’t provide this metadata, you will have to provide explicit configuration of the parameters.
+* \_SimpleJdbcInsert和SimpleJdbcCall操作类主要利用JDBC驱动所提供的数据库元数据的一些特性来简化数据库操作配置。这种方式简化了编码、你只需要提供表或者存储过程的名字、以及和列名相匹配的参数Map。但前提是数据库需要提供足够的元数据。如果数据库没有提供这些元数据，需要开发者显式配置参数的映射关系。
 
-* _RDBMS Objects including MappingSqlQuery, SqlUpdate and StoredProcedure_requires you to create reusable and thread-safe objects during initialization of your data access layer. This approach is modeled after JDO Query wherein you define your query string, declare parameters, and compile the query. Once you do that, execute methods can be called multiple times with various parameter values passed in.
+* \_RDBMS对象的方式包含MappingSqlQuery, SqlUpdate和StoredProcedure，需要你在初始化应用数据访问层时创建可重用和线程安全的对象。这种方式设计上类似于JDO查询、你可以定义查询字符串，声明参数及编译查询语句。一旦完成这些工作之后，执行方法可以根据不同的传入参数被多次调用。
 
 
 
