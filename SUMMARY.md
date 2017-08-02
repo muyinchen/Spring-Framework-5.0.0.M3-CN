@@ -197,7 +197,7 @@
     * [15.1  介绍Spring JDBC框架](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc.md)
       * [15.1.1 选择一种JDBC数据库访问方法](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc/1511-choosing-an-approach-for-jdbc-database-access.md)
       * [15.1.2 包层级](part-iv-shu-ju-fang-wen/151-introduction-to-spring-framework-jdbc/1512-package-hierarchy.md)
-    * [15.2 Using the JDBC core classes to control basic JDBC processing and error handling](part-iv-shu-ju-fang-wen/152-using-the-jdbc-core-classes-to-control-basic-jdbc-processing-and-error-handling.md)
+    * [15.2 使用JDBC核心类控制基础的JDBC处理过程和异常处理机制](part-iv-shu-ju-fang-wen/152-using-the-jdbc-core-classes-to-control-basic-jdbc-processing-and-error-handling.md)
       * [15.2.1 JdbcTemplate](part-iv-shu-ju-fang-wen/1521-jdbctemplate.md)
       * [15.2.2 NamedParameterJdbcTemplate](part-iv-shu-ju-fang-wen/1522-namedparameterjdbctemplate.md)
       * [15.2.3 SQLExceptionTranslator](part-iv-shu-ju-fang-wen/1523-sqlexceptiontranslator.md)

@@ -1,225 +1,227 @@
 ### 15.2.1JdbcTemplate
 
-The`JdbcTemplate`class is the central class in the JDBC core package. It handles the creation and release of resources, which helps you avoid common errors such as forgetting to close the connection. It performs the basic tasks of the core JDBC workflow such as statement creation and execution, leaving application code to provide SQL and extract results. The`JdbcTemplate`class executes SQL queries, update statements and stored procedure calls, performs iteration over`ResultSet`s and extraction of returned parameter values. It also catches JDBC exceptions and translates them to the generic, more informative, exception hierarchy defined in the`org.springframework.dao`package.
+`JdbcTemplate`是JDBC core包里面的核心类。它封装了对资源的创建和释放，可以帮你避免忘记关闭连接等常见错误。它也包含了核心JDBC工作流的一些基础工作、例如执行和声明语句，而把SQL语句的生成以及查询结果的提取工作留给应用代码。`JdbcTemplate`执行查询、更新SQL语句和调用存储过程，运行`ResultSet`迭代和抽取返回参数值。它也可以捕获JDBC异常并把它们转换成更加通用、解释性更强的异常层次结构、这些异常都定义在`org.springframework.dao`包里面。
 
-When you use the`JdbcTemplate`for your code, you only need to implement callback interfaces, giving them a clearly defined contract. The`PreparedStatementCreator`callback interface creates a prepared statement given a`Connection`provided by this class, providing SQL and any necessary parameters. The same is true for the`CallableStatementCreator`interface, which creates callable statements. The`RowCallbackHandler`interface extracts values from each row of a`ResultSet`.
+当你在代码中使用了`JdbcTemplate`类，你只需要实现回调接口。`PreparedStatementCreator`回调接口通过传入的`Connection`类（该类包含SQL和任何必要的参数）创建已声明的语句。`CallableStatementCreator`也提供类似的方式、该接口用于创建回调语句。`RowCallbackHandler`用于获取结果集每一行的值。
 
-The`JdbcTemplate`can be used within a DAO implementation through direct instantiation with a`DataSource`reference, or be configured in a Spring IoC container and given to DAOs as a bean reference.
+可以在DAO实现类中通过传入`DataSource`引用来完成`JdbcTemplate`的初始化；也可以在Spring IOC容器里面配置、作为DAO bean的依赖Bean配置。
 
 | ![](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | :--- |
-| The`DataSource`should always be configured as a bean in the Spring IoC container. In the first case the bean is given to the service directly; in the second case it is given to the prepared template. |
+| 备注：`DataSource`最好在Spring IOC容器里作为Bean配置起来。在上面第一种情况下，`DataSource`bean直接传给相关的服务；第二种情况下DataSource bean传递给JdbcTemplate bean。 |
 
-All SQL issued by this class is logged at the`DEBUG`level under the category corresponding to the fully qualified class name of the template instance \(typically`JdbcTemplate`, but it may be different if you are using a custom subclass of the`JdbcTemplate`class\).
+JdbcTemplate中使用的所有SQL以`DEBUG`级别记入日志（一般情况下日志的归类是`JdbcTemplate`对应的全限定类名，不过如果需要对`JdbcTemplate`进行定制的话，可能是它的子类名）
 
 #### Examples of JdbcTemplate class usage
 
-This section provides some examples of`JdbcTemplate`class usage. These examples are not an exhaustive list of all of the functionality exposed by the`JdbcTemplate`; see the attendant javadocs for that.
+这一节提供了`JdbcTemplate`类的一些使用例子。这些例子没有囊括`JdbcTemplate`可提供的所有功能；全部功能和用法请详见相关的javadocs.
 
-##### Querying \(SELECT\)
+##### 查询\(SELECT\)
 
-Here is a simple query for getting the number of rows in a relation:
+下面是一个简单的例子、用于获取关系表里面的行数
 
 ```java
 int rowCount = this.jdbcTemplate.queryForObject("select count(*) from t_actor", Integer.class);
 ```
 
-A simple query using a bind variable:
+使用绑定变量的简单查询：
 
 ```java
 int countOfActorsNamedJoe = this.jdbcTemplate.queryForObject(
-		"select count(*) from t_actor where first_name = ?", Integer.class, "Joe");
+        "select count(*) from t_actor where first_name = ?", Integer.class, "Joe");
 ```
 
-Querying for a`String`:
+`String`查询：
 
 ```java
 String lastName = this.jdbcTemplate.queryForObject(
-		"select last_name from t_actor where id = ?",
-		new Object[]{1212L}, String.class);
+        "select last_name from t_actor where id = ?",
+        new Object[]{1212L}, String.class);
 ```
 
-Querying and populating a _single _domain object:
+查询和填充领域模型：
 
 ```java
 Actor actor = this.jdbcTemplate.queryForObject(
-		"select first_name, last_name from t_actor where id = ?",
-		new Object[]{1212L},
-		new RowMapper<Actor>() {
-			public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Actor actor = new Actor();
-				actor.setFirstName(rs.getString("first_name"));
-				actor.setLastName(rs.getString("last_name"));
-				return actor;
-			}
-		});
+        "select first_name, last_name from t_actor where id = ?",
+        new Object[]{1212L},
+        new RowMapper<Actor>() {
+            public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Actor actor = new Actor();
+                actor.setFirstName(rs.getString("first_name"));
+                actor.setLastName(rs.getString("last_name"));
+                return actor;
+            }
+        });
 ```
 
-Querying and populating a number of domain objects:
+查询和填充多个领域对象：
 
 ```java
 List<Actor> actors = this.jdbcTemplate.query(
-		"select first_name, last_name from t_actor",
-		new RowMapper<Actor>() {
-			public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Actor actor = new Actor();
-				actor.setFirstName(rs.getString("first_name"));
-				actor.setLastName(rs.getString("last_name"));
-				return actor;
-			}
-		});
+        "select first_name, last_name from t_actor",
+        new RowMapper<Actor>() {
+            public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Actor actor = new Actor();
+                actor.setFirstName(rs.getString("first_name"));
+                actor.setLastName(rs.getString("last_name"));
+                return actor;
+            }
+        });
 ```
 
-If the last two snippets of code actually existed in the same application, it would make sense to remove the duplication present in the two`RowMapper`anonymous inner classes, and extract them out into a single class \(typically a`static`nested class\) that can then be referenced by DAO methods as needed. For example, it may be better to write the last code snippet as follows:
+如果上面的两段代码实际存在于相同的应用中，建议把`RowMapper`匿名类中重复的代码抽取到单独的类中（通常是一个静态类），方便被DAO方法引用。例如，上面的代码例子更好的写法如下：
 
 ```java
 public List<Actor> findAllActors() {
-	return this.jdbcTemplate.query( "select first_name, last_name from t_actor", new ActorMapper());
+    return this.jdbcTemplate.query( "select first_name, last_name from t_actor", new ActorMapper());
 }
 
 private static final class ActorMapper implements RowMapper<Actor> {
 
-	public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Actor actor = new Actor();
-		actor.setFirstName(rs.getString("first_name"));
-		actor.setLastName(rs.getString("last_name"));
-		return actor;
-	}
+    public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Actor actor = new Actor();
+        actor.setFirstName(rs.getString("first_name"));
+        actor.setLastName(rs.getString("last_name"));
+        return actor;
+    }
 }
 ```
 
-##### Updating \(INSERT/UPDATE/DELETE\) with jdbcTemplate
+**使用jdbcTemplate实现增删改**
 
-You use the`update(..)`method to perform insert, update and delete operations. Parameter values are usually provided as var args or alternatively as an object array.
+你可以使用`update(..)`方法实现插入，更新和删除操作。参数值可以通过可变参数或者封装在对象内传入。
 
 ```java
 this.jdbcTemplate.update(
-		"insert into t_actor (first_name, last_name) values (?, ?)",
-		"Leonor", "Watling");
+        "insert into t_actor (first_name, last_name) values (?, ?)",
+        "Leonor", "Watling");
 ```
 
 ```java
 this.jdbcTemplate.update(
-		"update t_actor set last_name = ? where id = ?",
-		"Banjo", 5276L);
+        "update t_actor set last_name = ? where id = ?",
+        "Banjo", 5276L);
 ```
 
 ```java
 this.jdbcTemplate.update(
-		"delete from actor where id = ?",
-		Long.valueOf(actorId));
+        "delete from actor where id = ?",
+        Long.valueOf(actorId));
 ```
 
-##### Other jdbcTemplate operations
+**其他jdbcTemplate操作**
 
-You can use the`execute(..)`method to execute any arbitrary SQL, and as such the method is often used for DDL statements. It is heavily overloaded with variants taking callback interfaces, binding variable arrays, and so on.
+你可以使用`execute(..)`方法执行任何SQL，甚至是DDL语句。这个方法可以传入回调接口、绑定可变参数数组等。
 
 ```java
 this.jdbcTemplate.execute("create table mytable (id integer, name varchar(100))");
 ```
 
-The following example invokes a simple stored procedure. More sophisticated stored procedure support is[covered later](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/jdbc.html#jdbc-StoredProcedure).
+下面的例子调用一段简单的存储过程。更复杂的存储过程支持文档[covered later](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/jdbc.html#jdbc-StoredProcedure)。
 
 ```java
 this.jdbcTemplate.update(
-		"call SUPPORT.REFRESH_ACTORS_SUMMARY(?)",
-		Long.valueOf(unionId));
+        "call SUPPORT.REFRESH_ACTORS_SUMMARY(?)",
+        Long.valueOf(unionId));
 ```
 
-#### JdbcTemplate best practices
+**JdbcTemplate 最佳实践**
 
-Instances of the`JdbcTemplate`class are_threadsafe once configured_. This is important because it means that you can configure a single instance of a`JdbcTemplate`and then safely inject this_shared_reference into multiple DAOs \(or repositories\). The`JdbcTemplate`is stateful, in that it maintains a reference to a`DataSource`, but this state is_not_conversational state.
+`JdbcTemplate`实例一旦配置之后是线程安全的。这点很重要因为这样你就能够配置`JdbcTemplate`的单例，然后安全的将其注入到多个DAO中（或者repositories）。`JdbcTemplate`是有状态的，内部存在对`DataSource`的引用，但是这种状态不是会话状态。
 
-A common practice when using the`JdbcTemplate`class \(and the associated[`NamedParameterJdbcTemplate`](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/jdbc.html#jdbc-NamedParameterJdbcTemplate)classes\) is to configure a`DataSource`in your Spring configuration file, and then dependency-inject that shared`DataSource`bean into your DAO classes; the`JdbcTemplate`is created in the setter for the`DataSource`. This leads to DAOs that look in part like the following:
+使用JdbcTemplate类的常用做法是在你的Spring配置文件里配置好一个`DataSource`，然后将其依赖注入进你的DAO类中（[`NamedParameterJdbcTemplate`](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/jdbc.html#jdbc-NamedParameterJdbcTemplate)也是如此）。`JdbcTemplate`在`DataSource`的Setter方法中被创建。就像如下DAO类的写法一样：
 
 ```java
 public class JdbcCorporateEventDao implements CorporateEventDao {
 
-	private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
-	// JDBC-backed implementations of the methods on the CorporateEventDao follow...
+    // JDBC-backed implementations of the methods on the CorporateEventDao follow...
 }
 ```
 
-The corresponding configuration might look like this.
+相关的配置是这样的：
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="corporateEventDao" class="com.example.JdbcCorporateEventDao">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
+    <bean id="corporateEventDao" class="com.example.JdbcCorporateEventDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
-	<context:property-placeholder location="jdbc.properties"/>
+    <context:property-placeholder location="jdbc.properties"/>
 
 </beans>
 ```
 
 An alternative to explicit configuration is to use component-scanning and annotation support for dependency injection. In this case you annotate the class with`@Repository`\(which makes it a candidate for component-scanning\) and annotate the`DataSource`setter method with`@Autowired`.
 
+另一种替代显式配置的方式是使用component-scanning和注解注入。在这个场景下需要添加`@Repository`注解（添加这个注解可以被component-scanning扫描到），同时在`DataSource`的Setter方法上添加`@Autowired`注解：
+
 ```java
 @Repository
 public class JdbcCorporateEventDao implements CorporateEventDao {
 
-	private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
-	// JDBC-backed implementations of the methods on the CorporateEventDao follow...
+    // JDBC-backed implementations of the methods on the CorporateEventDao follow...
 }
 ```
 
-The corresponding XML configuration file would look like the following:
+相关的XML配置如下：
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- Scans within the base package of the application for @Component classes to configure as beans -->
-	<context:component-scan base-package="org.springframework.docs.test" />
+    <!-- Scans within the base package of the application for @Component classes to configure as beans -->
+    <context:component-scan base-package="org.springframework.docs.test" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
-	<context:property-placeholder location="jdbc.properties"/>
+    <context:property-placeholder location="jdbc.properties"/>
 
 </beans>
 ```
 
-If you are using Spring’s`JdbcDaoSupport`class, and your various JDBC-backed DAO classes extend from it, then your sub-class inherits a`setDataSource(..)`method from the`JdbcDaoSupport`class. You can choose whether to inherit from this class. The`JdbcDaoSupport`class is provided as a convenience only.
+如果你使用Spring的`JdbcDaoSupport`类，许多JDBC相关的DAO类都从该类继承过来，这个时候相关子类需要继承JdbcDaoSupport类的`setDataSource(..)`方法。当然你也可以选择不从这个类继承，`JdbcDaoSupport`本身只是提供一些便利性。
 
-Regardless of which of the above template initialization styles you choose to use \(or not\), it is seldom necessary to create a new instance of a`JdbcTemplate`class each time you want to execute SQL. Once configured, a`JdbcTemplate`instance is threadsafe. You may want multiple`JdbcTemplate`instances if your application accesses multiple databases, which requires multiple`DataSources`, and subsequently multiple differently configured`JdbcTemplates`.
+无论你选择上面提到的哪种初始方式，当你在执行SQL语句时一般都不需要重新创建`JdbcTemplate `实例。JdbcTemplate一旦被配置后其实例都是线程安全的。当你的应用需要访问多个数据库时你可能也需要多个`JdbcTemplate`实例，相应的也需要多个`DataSources`，同时对应多个`JdbcTemplates`配置。
 
