@@ -1,8 +1,8 @@
-### 15.3.5 SingleConnectionDataSource
+### 15.3.5 SingleConnectionDataSource
 
-The`SingleConnectionDataSource`class is an implementation of the`SmartDataSource`interface that wraps a_single_`Connection`that is_not_closed after each use. Obviously, this is not multi-threading capable.
+`SingleConnectionDataSource`实现了`SmartDataSource`接口、内部封装了一个在每次使用后都不会关闭的单一连接。显然，这种场景下无法支持多线程。
 
-If any client code calls`close`in the assumption of a pooled connection, as when using persistence tools, set the`suppressClose`property to`true`. This setting returns a close-suppressing proxy wrapping the physical connection. Be aware that you will not be able to cast this to a native Oracle`Connection`or the like anymore.
+为了防止客户端代码误以为数据库连接来自连接池（就像使用持久化工具时一样）错误的调用`close`方法，你应将`suppressClose`设置为`true`。这样，通过该类获取的将是代理连接（禁止关闭）而不是原有的物理连接。需要注意你不能将这个类强制转换成Oracle等数据库的原生连接。
 
-This is primarily a test class. For example, it enables easy testing of code outside an application server, in conjunction with a simple JNDI environment. In contrast to`DriverManagerDataSource`, it reuses the same connection all the time, avoiding excessive creation of physical connections.
+这个类主要用于测试目的。例如，他使得测试代码能够脱离应用服务器，很方便的在单一的JNDI环境下调试。和`DriverManagerDataSource`相反，它总是重用相同的连接，这是为了避免在测试过程中创建过多的物理连接。
 

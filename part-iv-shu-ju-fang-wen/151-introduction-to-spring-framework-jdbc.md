@@ -1,7 +1,5 @@
 ## 15.**介绍Spring JDBC框架**
 
-The value-add provided by the Spring Framework JDBC abstraction is perhaps best shown by the sequence of actions outlined in the table below. The table shows what actions Spring will take care of and which actions are the responsibility of you, the application developer.
-
 表格15.1很清楚的以操作顺序显示列举了Spring框架针对JDBC操作做的一些抽象和封装。里面区分了哪些操作Spring已经帮你做好了、哪些操作是应用开发者需要自己负责的.
 
 **表15.1. Spring JDBC – 框架和应用开发者各自分工**

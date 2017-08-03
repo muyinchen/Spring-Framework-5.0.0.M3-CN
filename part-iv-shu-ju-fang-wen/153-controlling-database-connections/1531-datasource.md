@@ -1,16 +1,16 @@
 ### 15.3.1DataSource
 
-Spring obtains a connection to the database through a`DataSource`. A`DataSource`is part of the JDBC specification and is a generalized connection factory. It allows a container or a framework to hide connection pooling and transaction management issues from the application code. As a developer, you need not know details about how to connect to the database; that is the responsibility of the administrator that sets up the datasource. You most likely fill both roles as you develop and test code, but you do not necessarily have to know how the production data source is configured.
+Spring用`DataSource`来保持与数据库的连接。`DataSource`是JDBC规范的一部分同时是一种通用的连接工厂。它使得框架或者容器对应用代码屏蔽连接池或者事务管理等底层逻辑。作为开发者，你无需知道连接数据库的底层逻辑；这只是创建datasource的管理员该负责的模块。在开发测试过程中你可能需要同时扮演双重角色，但最终上线时你不需要知道生产数据源是如何配置的。
 
-When using Spring’s JDBC layer, you obtain a data source from JNDI or you configure your own with a connection pool implementation provided by a third party. Popular implementations are Apache Jakarta Commons DBCP and C3P0. Implementations in the Spring distribution are meant only for testing purposes and do not provide pooling.
+当使用Spring JDBC时，你可以通过JNDI获取数据库数据源、也可以利用第三方依赖包的连接池实现来配置。比较受欢迎的三方库有Apache Jakarta Commons DBCP 和 C3P0。在Spring产品内，有自己的数据源连接实现，但仅仅用于测试目的，同时并没有使用到连接池。
 
-This section uses Spring’s`DriverManagerDataSource`implementation, and several additional implementations are covered later.
+这一节使用了Spring的`DriverManagerDataSource`实现、其他更多的实现会在后面提到。
 
 | ![](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | :--- |
-| Only use the`DriverManagerDataSource`class should only be used for testing purposes since it does not provide pooling and will perform poorly when multiple requests for a connection are made. |
+| 注意：仅仅使用`DriverManagerDataSource`类只是为了测试目的、因为此类没有连接池功能，因此在并发连接请求时性能会比较差. |
 
-You obtain a connection with`DriverManagerDataSource`as you typically obtain a JDBC connection. Specify the fully qualified classname of the JDBC driver so that the`DriverManager`can load the driver class. Next, provide a URL that varies between JDBC drivers. \(Consult the documentation for your driver for the correct value.\) Then provide a username and a password to connect to the database. Here is an example of how to configure a`DriverManagerDataSource`in Java code:
+通过`DriverManagerDataSource`获取数据库连接的方式和传统JDBC是类似的。首先指定JDBC驱动的类全名，`DriverManager `会据此来加载驱动类。接下来、提供JDBC驱动对应的URL名称。（可以从相应驱动的文档里找到具体的名称）。然后传入用户名和密码来连接数据库。下面是一个具体配置`DriverManagerDataSource`连接的Java代码块:
 
 ```java
 DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -20,42 +20,42 @@ dataSource.setUsername("sa");
 dataSource.setPassword("");
 ```
 
-Here is the corresponding XML configuration:
+接下来是相关的XML配置：
 
 ```java
 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	<property name="driverClassName" value="${jdbc.driverClassName}"/>
-	<property name="url" value="${jdbc.url}"/>
-	<property name="username" value="${jdbc.username}"/>
-	<property name="password" value="${jdbc.password}"/>
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
 </bean>
 
 <context:property-placeholder location="jdbc.properties"/>
 ```
 
-The following examples show the basic connectivity and configuration for DBCP and C3P0. To learn about more options that help control the pooling features, see the product documentation for the respective connection pooling implementations.
+下面的例子展示的是DBCP和C3P0的基础连接配置。如果需要连接更多的连接池选项、请查看各自连接池实现的具体产品文档
 
-DBCP configuration:
+DBCP配置：
 
 ```java
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-	<property name="driverClassName" value="${jdbc.driverClassName}"/>
-	<property name="url" value="${jdbc.url}"/>
-	<property name="username" value="${jdbc.username}"/>
-	<property name="password" value="${jdbc.password}"/>
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
 </bean>
 
 <context:property-placeholder location="jdbc.properties"/>
 ```
 
-C3P0 configuration:
+C3P0 配置：
 
 ```java
 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-	<property name="driverClass" value="${jdbc.driverClassName}"/>
-	<property name="jdbcUrl" value="${jdbc.url}"/>
-	<property name="user" value="${jdbc.username}"/>
-	<property name="password" value="${jdbc.password}"/>
+    <property name="driverClass" value="${jdbc.driverClassName}"/>
+    <property name="jdbcUrl" value="${jdbc.url}"/>
+    <property name="user" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
 </bean>
 
 <context:property-placeholder location="jdbc.properties"/>

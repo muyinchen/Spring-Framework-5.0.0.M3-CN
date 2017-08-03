@@ -174,8 +174,6 @@ public class JdbcCorporateEventDao implements CorporateEventDao {
 </beans>
 ```
 
-An alternative to explicit configuration is to use component-scanning and annotation support for dependency injection. In this case you annotate the class with`@Repository`\(which makes it a candidate for component-scanning\) and annotate the`DataSource`setter method with`@Autowired`.
-
 另一种替代显式配置的方式是使用component-scanning和注解注入。在这个场景下需要添加`@Repository`注解（添加这个注解可以被component-scanning扫描到），同时在`DataSource`的Setter方法上添加`@Autowired`注解：
 
 ```java
@@ -223,5 +221,5 @@ public class JdbcCorporateEventDao implements CorporateEventDao {
 
 如果你使用Spring的`JdbcDaoSupport`类，许多JDBC相关的DAO类都从该类继承过来，这个时候相关子类需要继承JdbcDaoSupport类的`setDataSource(..)`方法。当然你也可以选择不从这个类继承，`JdbcDaoSupport`本身只是提供一些便利性。
 
-无论你选择上面提到的哪种初始方式，当你在执行SQL语句时一般都不需要重新创建`JdbcTemplate `实例。JdbcTemplate一旦被配置后其实例都是线程安全的。当你的应用需要访问多个数据库时你可能也需要多个`JdbcTemplate`实例，相应的也需要多个`DataSources`，同时对应多个`JdbcTemplates`配置。
+无论你选择上面提到的哪种初始方式，当你在执行SQL语句时一般都不需要重新创建`JdbcTemplate`实例。JdbcTemplate一旦被配置后其实例都是线程安全的。当你的应用需要访问多个数据库时你可能也需要多个`JdbcTemplate`实例，相应的也需要多个`DataSources`，同时对应多个`JdbcTemplates`配置。
 

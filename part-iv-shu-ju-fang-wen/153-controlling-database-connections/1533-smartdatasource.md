@@ -1,4 +1,4 @@
-### 15.3.3 SmartDataSource
+### 15.3.3 SmartDataSource
 
-The`SmartDataSource`interface should be implemented by classes that can provide a connection to a relational database. It extends the`DataSource`interface to allow classes using it to query whether the connection should be closed after a given operation. This usage is efficient when you know that you will reuse a connection.
+实现`SmartDataSource`接口的实现类需要能够提供到关系数据库的连接。它继承了`DataSource`接口，允许使用它的类查询是否在某个特定的操作后需要关闭连接。这在当你需要重用连接时比较有用。
 

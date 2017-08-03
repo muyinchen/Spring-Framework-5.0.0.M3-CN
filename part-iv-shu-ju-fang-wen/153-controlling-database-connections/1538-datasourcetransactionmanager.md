@@ -1,10 +1,10 @@
-### 15.3.8 DataSourceTransactionManager
+### 15.3.8 DataSourceTransactionManager
 
-The`DataSourceTransactionManager`class is a`PlatformTransactionManager`implementation for single JDBC datasources. It binds a JDBC connection from the specified data source to the currently executing thread, potentially allowing for one thread connection per data source.
+`DataSourceTransactionManager`类实现了`PlatformTransactionManager`接口。它将JDBC连接从指定的数据源绑定到当前执行的线程中，允许一个线程连接对应一个数据源。
 
-Application code is required to retrieve the JDBC connection through`DataSourceUtils.getConnection(DataSource)`instead of Java EE’s standard`DataSource.getConnection`. It throws unchecked`org.springframework.dao`exceptions instead of checked`SQLExceptions`. All framework classes like`JdbcTemplate`use this strategy implicitly. If not used with this transaction manager, the lookup strategy behaves exactly like the common one - it can thus be used in any case.
+应用代码需要通过`DataSourceUtils.getConnection(DataSource) `来获取JDBC连接，而不是通过JavaEE标准的`DataSource.getConnection`来获取。它会抛出`org.springframework.dao`的运行时异常而不是编译时SQL异常。所有框架类像`JdbcTemplate`都默认使用这个策略。如果不需要和这个 `DataSourceTransactionManager`类一起使用，`DataSourceUtils `提供的功能跟一般的数据库连接策略没有什么两样，因此它可以在任何场景下使用。
 
-The`DataSourceTransactionManager`class supports custom isolation levels, and timeouts that get applied as appropriate JDBC statement query timeouts. To support the latter, application code must either use`JdbcTemplate`or call the`DataSourceUtils.applyTransactionTimeout(..)`method for each created statement.
+`DataSourceTransactionManager`支持自定义隔离级别，以及JDBC查询超时机制。为了支持后者，应用代码必须在每个创建的语句中使用`JdbcTemplate`或是调用`DataSourceUtils.applyTransactionTimeout(..)`方法
 
-This implementation can be used instead of`JtaTransactionManager`in the single resource case, as it does not require the container to support JTA. Switching between both is just a matter of configuration, if you stick to the required connection lookup pattern. JTA does not support custom isolation levels!
+在单一的资源使用场景下它可以替代`JtaTransactionManager`，不需要要求容器去支持JTA。如果你严格遵循连接查找的模式的话、可以通过配置来做彼此切换。JTA本身不支持自定义隔离级别！
 
