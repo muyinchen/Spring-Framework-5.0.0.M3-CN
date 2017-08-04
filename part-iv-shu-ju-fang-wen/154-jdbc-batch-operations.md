@@ -1,4 +1,4 @@
-## 15.4 JDBC batch operations
+## 15.4 **JDBC批量操作**
 
-Most JDBC drivers provide improved performance if you batch multiple calls to the same prepared statement. By grouping updates into batches you limit the number of round trips to the database.
+大多数JDBC驱动在针对同一SQL语句做批处理时能够获得更好的性能。批量更新操作可以节省数据库的来回传输次数。
 

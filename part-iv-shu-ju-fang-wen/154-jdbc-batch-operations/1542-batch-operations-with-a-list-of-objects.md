@@ -1,61 +1,61 @@
-### 15.4.2Batch operations with a List of objects
+### 15.4.2**对象列表的批量处理**
 
-Both the`JdbcTemplate`and the`NamedParameterJdbcTemplate`provides an alternate way of providing the batch update. Instead of implementing a special batch interface, you provide all parameter values in the call as a list. The framework loops over these values and uses an internal prepared statement setter. The API varies depending on whether you use named parameters. For the named parameters you provide an array of`SqlParameterSource`, one entry for each member of the batch. You can use the`SqlParameterSource.createBatch`method to create this array, passing in either an array of JavaBeans or an array of Maps containing the parameter values.
+`JdbcTemplate`和`NamedParameterJdbcTemplate`都提供了批量更新的替代方案。这个时候不是实现一个特定的批量接口，而是在调用时传入所有的值列表。框架会循环访问这些值并且使用内部的SQL语句setter方法。你是否已声明参数对应API是不一样的。针对已声明参数你需要传入qlParameterSource数组，每项对应单次的批量操作。你可以使用`SqlParameterSource.createBatch`方法来创建这个数组，传入JavaBean数组或是包含参数值的Map数组。
 
-This example shows a batch update using named parameters:
-
-```java
-public class JdbcActorDao implements ActorDao {
-	private NamedParameterTemplate namedParameterJdbcTemplate;
-
-	public void setDataSource(DataSource dataSource) {
-		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-	}
-
-	public int[] batchUpdate(final List<Actor> actors) {
-		SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(actors.toArray());
-		int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(
-				"update t_actor set first_name = :firstName, last_name = :lastName where id = :id",
-				batch);
-		return updateCounts;
-	}
-
-	// ... additional methods
-}
-```
-
-For an SQL statement using the classic "?" placeholders, you pass in a list containing an object array with the update values. This object array must have one entry for each placeholder in the SQL statement, and they must be in the same order as they are defined in the SQL statement.
-
-The same example using classic JDBC "?" placeholders:
+下面是一个使用已声明参数的批量更新例子：
 
 ```java
 public class JdbcActorDao implements ActorDao {
+    private NamedParameterTemplate namedParameterJdbcTemplate;
 
-	private JdbcTemplate jdbcTemplate;
+    public void setDataSource(DataSource dataSource) {
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
 
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+    public int[] batchUpdate(final List<Actor> actors) {
+        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(actors.toArray());
+        int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(
+                "update t_actor set first_name = :firstName, last_name = :lastName where id = :id",
+                batch);
+        return updateCounts;
+    }
 
-	public int[] batchUpdate(final List<Actor> actors) {
-		List<Object[]> batch = new ArrayList<Object[]>();
-		for (Actor actor : actors) {
-			Object[] values = new Object[] {
-					actor.getFirstName(),
-					actor.getLastName(),
-					actor.getId()};
-			batch.add(values);
-		}
-		int[] updateCounts = jdbcTemplate.batchUpdate(
-				"update t_actor set first_name = ?, last_name = ? where id = ?",
-				batch);
-		return updateCounts;
-	}
+    // ... additional methods
+}
+```
 
-	// ... additional methods
+对于使用“？”占位符的SQL语句，你需要传入带有更新值的对象数组。对象数组每一项对应SQL语句中的一个占位符，并且传入顺序需要和SQL语句中定义的顺序保持一致。
+
+下面是使用经典JDBC“？”占位符的例子：
+
+```java
+public class JdbcActorDao implements ActorDao {
+
+    private JdbcTemplate jdbcTemplate;
+
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    public int[] batchUpdate(final List<Actor> actors) {
+        List<Object[]> batch = new ArrayList<Object[]>();
+        for (Actor actor : actors) {
+            Object[] values = new Object[] {
+                    actor.getFirstName(),
+                    actor.getLastName(),
+                    actor.getId()};
+            batch.add(values);
+        }
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+                "update t_actor set first_name = ?, last_name = ? where id = ?",
+                batch);
+        return updateCounts;
+    }
+
+    // ... additional methods
 
 }
 ```
 
-All of the above batch update methods return an int array containing the number of affected rows for each batch entry. This count is reported by the JDBC driver. If the count is not available, the JDBC driver returns a -2 value.
+上面所有的批量更新方法都返回一个数组，包含具体成功的行数。这个计数是由JDBC驱动返回的。如果拿不到计数。JDBC驱动会返回-2。
 

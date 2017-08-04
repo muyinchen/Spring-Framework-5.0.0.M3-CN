@@ -1,31 +1,33 @@
-### 15.5.2Retrieving auto-generated keys using SimpleJdbcInsert
+### 15.5.2**使用SimpleJdbcInsert获取自增Key**
 
 This example uses the same insert as the preceding, but instead of passing in the id it retrieves the auto-generated key and sets it on the new Actor object. When you create the`SimpleJdbcInsert`, in addition to specifying the table name, you specify the name of the generated key column with the`usingGeneratedKeyColumns`method.
+
+接下来，我们对于同样的插入语句，我们并不传入id，而是通过数据库自动获取主键的方式来创建新的Actor对象并插入数据库。 当我们创建SimpleJdbcInsert实例时, 我们不仅需要指定表名，同时我们通过usingGeneratedKeyColumns方法指定需要数据库自动生成主键的列名。
 
 ```java
 public class JdbcActorDao implements ActorDao {
 
-	private JdbcTemplate jdbcTemplate;
-	private SimpleJdbcInsert insertActor;
+    private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert insertActor;
 
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.insertActor = new SimpleJdbcInsert(dataSource)
-				.withTableName("t_actor")
-				.usingGeneratedKeyColumns("id");
-	}
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.insertActor = new SimpleJdbcInsert(dataSource)
+                .withTableName("t_actor")
+                .usingGeneratedKeyColumns("id");
+    }
 
-	public void add(Actor actor) {
-		Map<String, Object> parameters = new HashMap<String, Object>(2);
-		parameters.put("first_name", actor.getFirstName());
-		parameters.put("last_name", actor.getLastName());
-		Number newId = insertActor.executeAndReturnKey(parameters);
-		actor.setId(newId.longValue());
-	}
+    public void add(Actor actor) {
+        Map<String, Object> parameters = new HashMap<String, Object>(2);
+        parameters.put("first_name", actor.getFirstName());
+        parameters.put("last_name", actor.getLastName());
+        Number newId = insertActor.executeAndReturnKey(parameters);
+        actor.setId(newId.longValue());
+    }
 
-	// ... additional methods
+    // ... additional methods
 }
 ```
 
-The main difference when executing the insert by this second approach is that you do not add the id to the Map and you call the`executeAndReturnKey`method. This returns a`java.lang.Number`object with which you can create an instance of the numerical type that is used in our domain class. You cannot rely on all databases to return a specific Java class here;`java.lang.Number`is the base class that you can rely on. If you have multiple auto-generated columns, or the generated values are non-numeric, then you can use a`KeyHolder`that is returned from the`executeAndReturnKeyHolder`method.
+执行插入操作时第二种方式最大的区别是你不是在Map中指定ID，而是调用`executeAndReturnKey`方法。这个方法返回`java.lang.Number`对象，可以创建一个数值类型的实例用于我们的领域模型中。你不能仅仅依赖所有的数据库都返回一个指定的Java类；`java.lang.Number`是你可以依赖的基础类。如果你有多个自增列，或者自增的值是非数值型的，你可以使用`executeAndReturnKeyHolder `方法返回的`KeyHolder`
 

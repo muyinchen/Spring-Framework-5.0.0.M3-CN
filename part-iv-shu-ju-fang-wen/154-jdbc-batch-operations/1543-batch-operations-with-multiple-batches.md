@@ -1,38 +1,37 @@
-### 15.4.3Batch operations with multiple batches
+### 15.4.3**多个批处理操作**
 
-The last example of a batch update deals with batches that are so large that you want to break them up into several smaller batches. You can of course do this with the methods mentioned above by making multiple calls to the`batchUpdate`method, but there is now a more convenient method. This method takes, in addition to the SQL statement, a Collection of objects containing the parameters, the number of updates to make for each batch and a`ParameterizedPreparedStatementSetter`to set the values for the parameters of the prepared statement. The framework loops over the provided values and breaks the update calls into batches of the size specified.
+上面最后一个例子更新的批处理数量太大，最好能再分割成更小的块。最简单的方式就是你多次调用`batchUpdate`来实现，但是可以有更优的方法。要使用这个方法除了SQL语句，还需要传入参数集合对象，每次Batch的更新数和一个`ParameterizedPreparedStatementSetter`去设置预编译SQL语句的参数值。框架会循环调用提供的值并且将更新操作切割成指定数量的小批次。
 
-This example shows a batch update using a batch size of 100:
+下面的例子设置了更新批次数量为100的批量更新操作：
 
 ```java
 public class JdbcActorDao implements ActorDao {
 
-	private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
-	public int[][] batchUpdate(final Collection<Actor> actors) {
-		int[][] updateCounts = jdbcTemplate.batchUpdate(
-				"update t_actor set first_name = ?, last_name = ? where id = ?",
-				actors,
-				100,
-				new ParameterizedPreparedStatementSetter<Actor>() {
-					public void setValues(PreparedStatement ps, Actor argument) throws SQLException {
-						ps.setString(1, argument.getFirstName());
-						ps.setString(2, argument.getLastName());
-						ps.setLong(3, argument.getId().longValue());
-					}
-				});
-		return updateCounts;
-	}
+    public int[][] batchUpdate(final Collection<Actor> actors) {
+        int[][] updateCounts = jdbcTemplate.batchUpdate(
+                "update t_actor set first_name = ?, last_name = ? where id = ?",
+                actors,
+                100,
+                new ParameterizedPreparedStatementSetter<Actor>() {
+                    public void setValues(PreparedStatement ps, Actor argument) throws SQLException {
+                        ps.setString(1, argument.getFirstName());
+                        ps.setString(2, argument.getLastName());
+                        ps.setLong(3, argument.getId().longValue());
+                    }
+                });
+        return updateCounts;
+    }
 
-	// ... additional methods
+    // ... additional methods
 
 }
-
 ```
 
-The batch update methods for this call returns an array of int arrays containing an array entry for each batch with an array of the number of affected rows for each update. The top level array’s length indicates the number of batches executed and the second level array’s length indicates the number of updates in that batch. The number of updates in each batch should be the batch size provided for all batches except for the last one that might be less, depending on the total number of update objects provided. The update count for each update statement is the one reported by the JDBC driver. If the count is not available, the JDBC driver returns a -2 value.
+这个调用的批量更新方法返回一个包含int数组的二维数组，包含每次更新生效的行数。第一层数组长度代表批处理执行的数量，第二层数组长度代表每个批处理生效的更新数。每个批处理的更新数必须和所有批处理的大小匹配，除非是最后一次批处理可能小于这个数，具体依赖于更新对象的总数。每次更新语句生效的更新数由JDBC驱动提供。如果更新数量不存在，JDBC驱动会返回-2
 
