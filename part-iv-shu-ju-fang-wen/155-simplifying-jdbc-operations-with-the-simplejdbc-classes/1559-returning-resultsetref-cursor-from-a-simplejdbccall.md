@@ -1,8 +1,8 @@
-### 15.5.9Returning ResultSet/REF Cursor from a SimpleJdbcCall
+### 15.5.9**从SimpleJdbcCall返回ResultSet/REF游标**
 
-Calling a stored procedure or function that returns a result set is a bit tricky. Some databases return result sets during the JDBC results processing while others require an explicitly registered`out`parameter of a specific type. Both approaches need additional processing to loop over the result set and process the returned rows. With the`SimpleJdbcCall`you use the`returningResultSet`method and declare a`RowMapper`implementation to be used for a specific parameter. In the case where the result set is returned during the results processing, there are no names defined, so the returned results will have to match the order in which you declare the`RowMapper`implementations. The name specified is still used to store the processed list of results in the results map that is returned from the execute statement.
+调用存储过程或者函数返回结果集会相对棘手一点。一些数据库会在JDBC结果处理中返回结果集，而另外一些数据库则需要明确指定返回值的类型。两种方式都需要循环迭代结果集做额外处理。通过`SimpleJdbcCall`，你可以使用`returningResultSet`方法，并定义一个`RowMapper`的实现类来处理特定的返回值。 当结果集在返回结果处理过程中没有被定义名称时，返回的结果集必须与定义的`RowMapper`的实现类指定的顺序保持一致。 而指定的名字也会被用作返回结果集中的名称。
 
-The next example uses a stored procedure that takes no IN parameters and returns all rows from the t\_actor table. Here is the MySQL source for this procedure:
+下面的例子使用了一个不包含输入参数的存储过程并且返回t\_actor标的所有行。下面是这个存储过程的Mysql源代码：
 
 ```java
 CREATE PROCEDURE read_all_actors()
@@ -11,31 +11,31 @@ BEGIN
 END;
 ```
 
-To call this procedure you declare the`RowMapper`. Because the class you want to map to follows the JavaBean rules, you can use a`BeanPropertyRowMapper`that is created by passing in the required class to map to in the`newInstance`method.
+调用这个存储过程你需要定义`RowMapper`。因为我们定义的Map类遵循JavaBean规范，所以我们可以使用`BeanPropertyRowMapper`作为实现类。 通过将相应的class类作为参数传入到`newInstance`方法中，我们可以创建这个实现类。
 
 ```java
 public class JdbcActorDao implements ActorDao {
 
-	private SimpleJdbcCall procReadAllActors;
+    private SimpleJdbcCall procReadAllActors;
 
-	public void setDataSource(DataSource dataSource) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		jdbcTemplate.setResultsMapCaseInsensitive(true);
-		this.procReadAllActors = new SimpleJdbcCall(jdbcTemplate)
-				.withProcedureName("read_all_actors")
-				.returningResultSet("actors",
-				BeanPropertyRowMapper.newInstance(Actor.class));
-	}
+    public void setDataSource(DataSource dataSource) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.setResultsMapCaseInsensitive(true);
+        this.procReadAllActors = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("read_all_actors")
+                .returningResultSet("actors",
+                BeanPropertyRowMapper.newInstance(Actor.class));
+    }
 
-	public List getActorsList() {
-		Map m = procReadAllActors.execute(new HashMap<String, Object>(0));
-		return (List) m.get("actors");
-	}
+    public List getActorsList() {
+        Map m = procReadAllActors.execute(new HashMap<String, Object>(0));
+        return (List) m.get("actors");
+    }
 
-	// ... additional methods
+    // ... additional methods
 
 }
 ```
 
-The execute call passes in an empty Map because this call does not take any parameters. The list of Actors is then retrieved from the results map and returned to the caller.
+execute调用传入一个空Map，因为这里不需要传入任何参数。从结果Map中提取Actors列表，并且返回给调用者。
 
