@@ -228,7 +228,7 @@
       * [15.5.7 如何定义SqlParameters](part-iv-shu-ju-fang-wen/155-simplifying-jdbc-operations-with-the-simplejdbc-classes/1557-how-to-define-sqlparameters.md)
       * [15.5.8 使用SimpleJdbcCall调用内置存储函数](part-iv-shu-ju-fang-wen/155-simplifying-jdbc-operations-with-the-simplejdbc-classes/1558-calling-a-stored-function-using-simplejdbccall.md)
       * [15.5.9 从SimpleJdbcCall返回ResultSet/REF游标](part-iv-shu-ju-fang-wen/155-simplifying-jdbc-operations-with-the-simplejdbc-classes/1559-returning-resultsetref-cursor-from-a-simplejdbccall.md)
-    * [15.6 Modeling JDBC operations as Java objects](part-iv-shu-ju-fang-wen/156-modeling-jdbc-operations-as-java-objects.md)
+    * [15.6 像Java对象那样操作JDBC](part-iv-shu-ju-fang-wen/156-modeling-jdbc-operations-as-java-objects.md)
       * [15.6.1 SqlQuery](part-iv-shu-ju-fang-wen/156-modeling-jdbc-operations-as-java-objects/1561-sqlquery.md)
       * [15.6.2 MappingSqlQuery](part-iv-shu-ju-fang-wen/156-modeling-jdbc-operations-as-java-objects/1562-mappingsqlquery.md)
       * [15.6.3 SqlUpdate](part-iv-shu-ju-fang-wen/156-modeling-jdbc-operations-as-java-objects/1563-sqlupdate.md)
