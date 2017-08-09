@@ -4,7 +4,7 @@
 
 继承的`sql`属性将是RDBMS中存储过程的名称。
 
-为了定义一个`StoredProcedure`类，你需要使用`SqlParameter`或者它的一个子类。你必须像下面的代码例子那样在构造函数中指定参数名和SQL类型。SQL类型使用`java.sql.Types `常量定义。
+为了定义一个`StoredProcedure`类，你需要使用`SqlParameter`或者它的一个子类。你必须像下面的代码例子那样在构造函数中指定参数名和SQL类型。SQL类型使用`java.sql.Types`常量定义。
 
 ```java
 new SqlParameter("in_id", Types.NUMERIC),
@@ -13,7 +13,7 @@ new SqlParameter("in_id", Types.NUMERIC),
 
 `SqlParameter`的第一行定义了一个输入参数。输入参数可以同时被存储过程调用和使用`SqlQuery`的查询语句使用，他的子类会在下面的章节提到。
 
-第二行`SqlOutParameter `参数定义了一个在存储过程调用中使用的输出参数。`SqlInOutParameter `还有一个`InOut`参数，该参数提供了一个输入值，同时也有返回值。
+第二行`SqlOutParameter`参数定义了一个在存储过程调用中使用的输出参数。`SqlInOutParameter`还有一个`InOut`参数，该参数提供了一个输入值，同时也有返回值。
 
 对应输入参数，除了名字和SQL类型，你还能指定返回区间数值类型和自定义数据库类型。对于输出参数你可以使用`RowMapper`来处理REF游标返回的行映射关系。另一个选择是指定`SqlReturnType`，能够让你定义自定义的返回值类型。
 
@@ -96,13 +96,9 @@ public class TitlesAndGenresStoredProcedure extends StoredProcedure {
 }
 ```
 
-Notice how the overloaded variants of the`declareParameter(..)`method that have been used in the`TitlesAndGenresStoredProcedure`constructor are passed`RowMapper`implementation instances; this is a very convenient and powerful way to reuse existing functionality. The code for the two`RowMapper`implementations is provided below.
+值得注意的是`TitlesAndGenresStoredProcedure`构造函数中使用过的`declareParameter(..)`方法的重载变量是如何传递`RowMapper`实现实例的。这是一种非常方便有效的重用方式。两种`RowMapper`实现的代码如下：
 
-The`TitleMapper`class maps a`ResultSet`to a`Title`domain object for each row in the supplied`ResultSet`:
-
-值得注意的是`TitlesAndGenresStoredProcedure`构造函数中 `declareParameter(..)`的`SqlOutParameter`参数， 该参数使用`RowMapper`接口的实现。这是一种非常方便有效的重用方式。两种RowMapper实现的代码如下：
-
-TitleMapper类将返回结果集的每一行映射成Title类
+`TitleMapper`类将`ResultSet`映射到提供的`ResultSet`中每行的一个`Title`域对象：
 
 ```java
 import org.springframework.jdbc.core.RowMapper;
@@ -123,7 +119,7 @@ public final class TitleMapper implements RowMapper<Title> {
 }
 ```
 
-The`GenreMapper`class maps a`ResultSet`to a`Genre`domain object for each row in the supplied`ResultSet`.
+`GenreMapper`类将返回结果集的每一行映射成`Genre`类
 
 ```java
 import org.springframework.jdbc.core.RowMapper;
@@ -141,7 +137,7 @@ public final class GenreMapper implements RowMapper<Genre> {
 }
 ```
 
-To pass parameters to a stored procedure that has one or more input parameters in its definition in the RDBMS, you can code a strongly typed`execute(..)`method that would delegate to the superclass' untyped`execute(Map parameters)`method \(which has`protected`access\); for example:
+为了将参数传递给RDBMS中定义的一个或多个输入参数给存储过程，你可以定义一个强类型的`execute(..)`方法，该方法将调用基类的protected `execute(Map parameters)`方法（具有受保护的访问权限）。例如：
 
 ```java
 import oracle.jdbc.OracleTypes;

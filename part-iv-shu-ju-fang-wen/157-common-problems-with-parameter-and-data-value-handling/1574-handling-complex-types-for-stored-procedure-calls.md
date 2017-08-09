@@ -1,60 +1,60 @@
-### 15.7.4Handling complex types for stored procedure calls
+### 15.7.4**处理存储过程调用的复杂类型**
 
-When you call stored procedures you can sometimes use complex types specific to the database. To accommodate these types, Spring provides a`SqlReturnType`for handling them when they are returned from the stored procedure call and`SqlTypeValue`when they are passed in as a parameter to the stored procedure.
+当你调用存储过程时有时需要使用数据库特定的复杂类型。为了兼容这些类型，当存储过程调用返回时Spring提供了一个`SqlReturnType` 来处理这些类型，`SqlTypeValue`用于存储过程的传入参数。
 
-Here is an example of returning the value of an Oracle`STRUCT`object of the user declared type`ITEM_TYPE`. The`SqlReturnType`interface has a single method named`getTypeValue`that must be implemented. This interface is used as part of the declaration of an`SqlOutParameter`.
+下面是一个用户自定义类型`ITEM_TYPE`的Oracle `STRUCT`对象的返回值例子。`SqlReturnType`有一个方法`getTypeValue`必须被实现。而这个接口的实现将被用作`SqlOutParameter`声明的一部分。
 
 ```java
 final TestItem = new TestItem(123L, "A test item",
-		new SimpleDateFormat("yyyy-M-d").parse("2010-12-31"));
+        new SimpleDateFormat("yyyy-M-d").parse("2010-12-31"));
 
 declareParameter(new SqlOutParameter("item", OracleTypes.STRUCT, "ITEM_TYPE",
-	new SqlReturnType() {
-		public Object getTypeValue(CallableStatement cs, int colIndx, int sqlType, String typeName) throws SQLException {
-			STRUCT struct = (STRUCT) cs.getObject(colIndx);
-			Object[] attr = struct.getAttributes();
-			TestItem item = new TestItem();
-			item.setId(((Number) attr[0]).longValue());
-			item.setDescription((String) attr[1]);
-			item.setExpirationDate((java.util.Date) attr[2]);
-			return item;
-		}
-	}));
+    new SqlReturnType() {
+        public Object getTypeValue(CallableStatement cs, int colIndx, int sqlType, String typeName) throws SQLException {
+            STRUCT struct = (STRUCT) cs.getObject(colIndx);
+            Object[] attr = struct.getAttributes();
+            TestItem item = new TestItem();
+            item.setId(((Number) attr[0]).longValue());
+            item.setDescription((String) attr[1]);
+            item.setExpirationDate((java.util.Date) attr[2]);
+            return item;
+        }
+    }));
 ```
 
-You use the`SqlTypeValue`to pass in the value of a Java object like`TestItem`into a stored procedure. The`SqlTypeValue`interface has a single method named`createTypeValue`that you must implement. The active connection is passed in, and you can use it to create database-specific objects such as`StructDescriptor`s, as shown in the following example, or`ArrayDescriptor`s.
+你可以使用`SqlTypeValue `类往存储过程传入像`TestItem`那样的Java对象。你必须实现`SqlTypeValue`接口的`createTypeValue`方法。你可以使用传入的连接来创建像`StructDescriptors`这样的数据库指定对象,或`ArrayDescriptors`。下面是相关的例子。
 
-```
+```java
 final TestItem = new TestItem(123L, "A test item",
-		new SimpleDateFormat("yyyy-M-d").parse("2010-12-31"));
+        new SimpleDateFormat("yyyy-M-d").parse("2010-12-31"));
 
 SqlTypeValue value = new AbstractSqlTypeValue() {
-	protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {
-		StructDescriptor itemDescriptor = new StructDescriptor(typeName, conn);
-		Struct item = new STRUCT(itemDescriptor, conn,
-		new Object[] {
-			testItem.getId(),
-			testItem.getDescription(),
-			new java.sql.Date(testItem.getExpirationDate().getTime())
-		});
-		return item;
-	}
+    protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {
+        StructDescriptor itemDescriptor = new StructDescriptor(typeName, conn);
+        Struct item = new STRUCT(itemDescriptor, conn,
+        new Object[] {
+            testItem.getId(),
+            testItem.getDescription(),
+            new java.sql.Date(testItem.getExpirationDate().getTime())
+        });
+        return item;
+    }
 };
 ```
 
-This`SqlTypeValue`can now be added to the Map containing the input parameters for the execute call of the stored procedure.
+`SqlTypeValue`会加入到包含输入参数的Map中，用于执行存储过程调用。
 
-Another use for the`SqlTypeValue`is passing in an array of values to an Oracle stored procedure. Oracle has its own internal`ARRAY`class that must be used in this case, and you can use the`SqlTypeValue`to create an instance of the Oracle`ARRAY`and populate it with values from the Java`ARRAY`.
+`SqlTypeValue` 的另外一个用法是给Oracle的存储过程传入一个数组。Oracle内部有它自己的`ARRAY`类，在这些例子中一定会被使用，你可以使用`SqlTypeValue`来创建Oracle `ARRAY`的实例，并且设置到Java `ARRAY`类的值中。
 
 ```java
 final Long[] ids = new Long[] {1L, 2L};
 
 SqlTypeValue value = new AbstractSqlTypeValue() {
-	protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {
-		ArrayDescriptor arrayDescriptor = new ArrayDescriptor(typeName, conn);
-		ARRAY idArray = new ARRAY(arrayDescriptor, conn, ids);
-		return idArray;
-	}
+    protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {
+        ArrayDescriptor arrayDescriptor = new ArrayDescriptor(typeName, conn);
+        ARRAY idArray = new ARRAY(arrayDescriptor, conn, ids);
+        return idArray;
+    }
 };
 ```
 

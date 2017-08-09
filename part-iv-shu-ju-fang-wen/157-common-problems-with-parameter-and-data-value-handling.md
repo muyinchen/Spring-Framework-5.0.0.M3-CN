@@ -1,4 +1,4 @@
-## 15.7 Common problems with parameter and data value handling
+## 15.7 **参数和数据处理的常见问题**
 
-Common problems with parameters and data values exist in the different approaches provided by the Spring Framework JDBC.
+Spring JDBC框架提供了多个方法来处理常见的参数和数据问题
 

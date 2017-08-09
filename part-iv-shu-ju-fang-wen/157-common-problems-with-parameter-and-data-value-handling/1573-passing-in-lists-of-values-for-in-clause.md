@@ -1,10 +1,10 @@
-### 15.7.3Passing in lists of values for IN clause
+### 15.7.3传入IN语句的列表值
 
-The SQL standard allows for selecting rows based on an expression that includes a variable list of values. A typical example would be`select * from T_ACTOR where id in (1, 2, 3)`. This variable list is not directly supported for prepared statements by the JDBC standard; you cannot declare a variable number of placeholders. You need a number of variations with the desired number of placeholders prepared, or you need to generate the SQL string dynamically once you know how many placeholders are required. The named parameter support provided in the`NamedParameterJdbcTemplate`and`JdbcTemplate`takes the latter approach. Pass in the values as a`java.util.List`of primitive objects. This list will be used to insert the required placeholders and pass in the values during the statement execution.
+SQL标准允许基于一个带参数列表的表达式进行查询，一个典型的例子是`select * from T_ACTOR where id in (1, 2, 3)`. 这样的可变参数列表没有被JDBC标准直接支持；你不能定义可变数量的占位符（placeholder），只能定义固定变量的占位符，或者你在动态生成SQL字符串的时候需要提前知晓所需占位符的数量。`NamedParameterJdbcTemplate` 和 `JdbcTemplate `都使用了后面那种方式。当你传入参数时，你需要传入一个`java.util.List`类型，支持基本类型。而这个list将会在SQL执行时替换占位符并传入参数。
 
 | ![](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png.pagespeed.ce.9zQ_1wVwzR.png) |
 | :--- |
-| Be careful when passing in many values. The JDBC standard does not guarantee that you can use more than 100 values for an`in`expression list. Various databases exceed this number, but they usually have a hard limit for how many values are allowed. Oracle’s limit is 1000. |
+| 备注：在传入多个值的时候需要注意。JDBC标准不保证你能在一个`in`表达式列表中传入超过100个值，不少数据库会超过这个值，但是一般都会有个上限。比如Oracle的上限是1000. |
 
-In addition to the primitive values in the value list, you can create a`java.util.List`of object arrays. This list would support multiple expressions defined for the`in`clause such as`select * from T_ACTOR where (id, last_name) in ((1, 'Johnson'), (2, 'Harrop'\))`. This of course requires that your database supports this syntax.
+除了值列表的元数据值，你可以创建`java.util.List`的对象数组。这个列表支持多个在`in`语句内定义的表达式例如`select * from T_ACTOR where (id, last_name) in ((1, ‘Johnson’), (2, ‘Harrop’\))`。当然有个前提你的数据库需要支持这个语法。
 
