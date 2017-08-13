@@ -1,10 +1,10 @@
-### 15.8.6Generating unique names for embedded databases
+### 15.8.6**生成内嵌数据库的唯一名字**
 
-Development teams often encounter errors with embedded databases if their test suite inadvertently attempts to recreate additional instances of the same database. This can happen quite easily if an XML configuration file or`@Configuration`class is responsible for creating an embedded database and the corresponding configuration is then reused across multiple testing scenarios within the same test suite \(i.e., within the same JVM process\) –- for example, integration tests against embedded databases whose`ApplicationContext`configuration only differs with regard to which bean definition profiles are active.
+开发团队在使用内嵌数据库时经常碰到的一个错误是：当他们的测试集想对同一个数据库创建额外的实例。这种错误在以下场景经常发生，XML配置文件或者`@Configuration`类用于创建内嵌数据库，并且相关的配置在同样的测试集的多个测试场景下都被用到（例如，在同一个JVM进程中）。例如，针对内嵌数据库的不同集成测试的`ApplicationContext`配置的区别只在当前哪个Bean定义是有效的。
 
-The root cause of such errors is the fact that Spring’s`EmbeddedDatabaseFactory`\(used internally by both the``XML namespace element and the`EmbeddedDatabaseBuilder`for Java Config) will set the name of the embedded database to`"testdb"`if not otherwise specified. For the case of``, the embedded database is typically assigned a name equal to the bean’s`id`\(i.e., often something like`"dataSource"`\). Thus, subsequent attempts to create an embedded database will not result in a new database. Instead, the same JDBC connection URL will be reused, and attempts to create a new embedded database will actually point to an existing embedded database created from the same configuration.
+这些错误的根源是Spring的`EmbeddedDatabaseFactory`工厂（ XML命名空间和Java Config对象的`EmbeddedDatabaseBuilder`内部都用到了这个）会将内嵌数据库的名字默认设置成”testdb”.针对的场景，内嵌数据库通常设置成和Bean `Id`相同的名字。（例如，常用像“`dataSource`”的名字）。结果，接下来创建内嵌数据库的尝试都没创建一个新的数据库。相反，同样的JDBC链接URL被重用。创建内嵌数据的库的尝试往往从同一个配置返回了已存在的内嵌数据库实例。
 
-To address this common issue Spring Framework 4.2 provides support for generating_unique_names for embedded databases. To enable the use of generated names, use one of the following options.
+为了解决这个问题Spring框架4.2 提供了生成内嵌数据库唯一名的支持。例如：
 
 * `EmbeddedDatabaseFactory.setGenerateUniqueDatabaseName()`
 

@@ -1,10 +1,10 @@
-### 15.8.7Extending the embedded database support
+### 15.8.7**内嵌数据库扩展支持**
 
-Spring JDBC embedded database support can be extended in two ways:
+Spring JDBC 内嵌数据库支持以下两种扩展支持：
 
-* Implement`EmbeddedDatabaseConfigurer`to support a new embedded database type.
+* 实现`EmbeddedDatabaseConfigurer`支持新的内嵌数据库类型。
 
-* Implement`DataSourceFactory`to support a new`DataSource`implementation, such as a connection pool to manage embedded database connections.
+* 实现DataSourceFactory支持新的`DataSource`实现，例如管理内嵌数据库连接的连接池
 
-You are encouraged to contribute back extensions to the Spring community at[jira.spring.io](https://jira.spring.io/browse/SPR).
+欢迎贡献内部扩展给Spring社区，相关网址见：[jira.spring.io](https://jira.spring.io/browse/SPR).
 

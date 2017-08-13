@@ -1,4 +1,8 @@
-### 15.8.1 Why use an embedded database?
+### 15.8.1 **为什么使用一个内嵌数据库？**
 
-An embedded database is useful during the development phase of a project because of its lightweight nature. Benefits include ease of configuration, quick startup time, testability, and the ability to rapidly evolve SQL during development.
+内嵌数据库因为比较轻量级所以在开发阶段比较方便有用。包括配置比较容易，启动快，方便测试，并且在开发阶段方便快速设计SQL操作
+
+
+
+
 

@@ -1,6 +1,6 @@
-### 15.8.3Creating an embedded database programmatically
+### 15.8.3**使用编程方式创建内嵌数据库**
 
-The`EmbeddedDatabaseBuilder`class provides a fluent API for constructing an embedded database programmatically. Use this when you need to create an embedded database in a standalone environment or in a standalone integration test like in the following example.
+`EmbeddedDatabaseBuilder`提供了创建内嵌数据库的流式API。当你在独立的环境中或者是在独立的集成测试中可以使用这种方法创建一个内嵌数据库，下面是一个例子：
 
 ```java
 EmbeddedDatabase db = new EmbeddedDatabaseBuilder()
@@ -17,9 +17,9 @@ EmbeddedDatabase db = new EmbeddedDatabaseBuilder()
 db.shutdown()
 ```
 
-Consult the Javadoc for`EmbeddedDatabaseBuilder`for further details on all supported options.
+更多支持的细节请参见：`EmbeddedDatabaseBuilder `的JavaDoc。
 
-The`EmbeddedDatabaseBuilder`can also be used to create an embedded database using Java Config like in the following example.
+`EmbeddedDatabaseBuilder `也可以使用Java Config类来创建内嵌数据库，下面是一个例子：
 
 ```java
 @Configuration
