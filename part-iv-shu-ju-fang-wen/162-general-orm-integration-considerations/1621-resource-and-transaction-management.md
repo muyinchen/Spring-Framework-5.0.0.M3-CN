@@ -1,8 +1,8 @@
-### 16.2.1Resource and transaction management
+### 16.2.1资源和事务管理
 
-Typical business applications are cluttered with repetitive resource management code. Many projects try to invent their own solutions, sometimes sacrificing proper handling of failures for programming convenience. Spring advocates simple solutions for proper resource handling, namely IoC through templating in the case of JDBC and applying AOP interceptors for the ORM technologies.
+通常企业应用都会包含很多重复的的资源管理代码。很多项目总是尝试去创造自己的解决方案，有时会为了开发的方便而牺牲对错误的处理。Spring为资源的配置管理提供了简单易用的解决方案，在JDBC上使用模板技术，在ORM上使用AOP拦截技术。
 
-The infrastructure provides proper resource handling and appropriate conversion of specific API exceptions to an unchecked infrastructure exception hierarchy. Spring introduces a DAO exception hierarchy, applicable to any data access strategy. For direct JDBC, the`JdbcTemplate`class mentioned in a previous section provides connection handling and proper conversion of`SQLException`to the`DataAccessException`hierarchy, including translation of database-specific SQL error codes to meaningful exception classes. For ORM technologies, see the next section for how to get the same exception translation benefits.
+Spring的基础设施提供了合适的资源处理，同时Spring引入了DAO层的异常体系，可以适用于任何数据访问策略。对于JDBC直连来说，前面提及到的`JdbcTemplate`类提供了包括连接处理，对`SQLException`到`DataAccessException`的异常封装，同时还包含对于一些特定数据库SQL错误代码的转换。对于ORM技术来说，可以参考下一节来了解异常封装的优点。
 
-When it comes to transaction management, the`JdbcTemplate`class hooks in to the Spring transaction support and supports both JTA and JDBC transactions, through respective Spring transaction managers. For the supported ORM technologies Spring offers Hibernate and JPA support through the Hibernate and JPA transaction managers as well as JTA support. For details on transaction support, see the[Chapter13,_Transaction Management_](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/transaction.html)chapter.
+当谈到事务管理时，`JdbcTemplate`类通过Spring事务管理器挂接到Spring事务支持，并支持JTA和JDBC事务。Spring通过Hibernate，JPA事务管理器和JTA的支持来提供Hibernate和JPA这类ORM技术的支持。想了解更多关于事务的描述，可以参考第13章，[事务管理](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/transaction.html)。
 
