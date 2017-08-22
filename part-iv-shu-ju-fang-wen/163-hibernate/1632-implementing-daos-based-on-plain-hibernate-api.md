@@ -34,11 +34,11 @@ public class ProductDaoImpl implements ProductDao {
 </beans>
 ```
 
-The main advantage of this DAO style is that it depends on Hibernate API only; no import of any Spring class is required. This is of course appealing from a non-invasiveness perspective, and will no doubt feel more natural to Hibernate developers.
+上面的DAO实现方式的好处在于只依赖于Hibernate API，而无需引入Spring的class。这从非侵入性的角度来看当然是有吸引力的，毫无疑问，这种开发方式会令Hibernate开发人员将会更加自然。
 
-However, the DAO throws plain`HibernateException`\(which is unchecked, so does not have to be declared or caught\), which means that callers can only treat exceptions as generally fatal - unless they want to depend on Hibernate’s own exception hierarchy. Catching specific causes such as an optimistic locking failure is not possible without tying the caller to the implementation strategy. This trade off might be acceptable to applications that are strongly Hibernate-based and/or do not need any special exception treatment.
+然而，DAO层会抛出Hibernate自有异常`HibernateException`（属于非检查异常，无需显式声明和使用try-catch），但是也意味着调用方会将异常看做致命异常——除非调用方将Hibernate异常体系作为应用的异常体系来处理。而在这种情况下，除非调用方自己来实现一定的策略，否则捕获一些诸如乐观锁失败之类的特定错误是不可能的。对于强烈基于Hibernate的应用程序或不需要对特殊异常处理的应用程序，这种代价可能是可以接受的。
 
-Fortunately, Spring’s`LocalSessionFactoryBean`supports Hibernate’s`SessionFactory.getCurrentSession()`method for any Spring transaction strategy, returning the current Spring-managed transactional`Session`even with`HibernateTransactionManager`. Of course, the standard behavior of that method remains the return of the current`Session`associated with the ongoing JTA transaction, if any. This behavior applies regardless of whether you are using Spring’s`JtaTransactionManager`, EJB container managed transactions \(CMTs\), or JTA.
+幸运的是，Spring的`LocalSessionFactoryBean`可以通过Hibernate的`SessionFactory.getCurrentSession()`方法为所有的Spring事务策略提供支持，使用`HibernateTransactionManager`返回当前的Spring管理的事务的`Session`。当然，该方法的标准行为仍然是返回与正在进行的JTA事务相关联的当前`Session`（如果有的话）。无论开发者是使用Spring的`JtaTransactionManager`，EJB容器管理事务（CMT）还是JTA，都会适用此行为。
 
-In summary: you can implement DAOs based on the plain Hibernate API, while still being able to participate in Spring-managed transactions.
+总而言之：开发者可以基于纯Hibernate API来实现DAO，同时也可以集成Spring来管理事务。
 
