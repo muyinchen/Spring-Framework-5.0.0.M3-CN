@@ -1,41 +1,41 @@
-### 16.3.7Spurious application server warnings with Hibernate
+### 16.3.7Hibernate的虚假应用服务器警告
 
-In some JTA environments with very strict`XADataSource`implementations — currently only some WebLogic Server and WebSphere versions — when Hibernate is configured without regard to the JTA`PlatformTransactionManager`object for that environment, it is possible for spurious warning or exceptions to show up in the application server log. These warnings or exceptions indicate that the connection being accessed is no longer valid, or JDBC access is no longer valid, possibly because the transaction is no longer active. As an example, here is an actual exception from WebLogic:
+在某些具有非常严格的`XADataSource`实现的JTA环境（目前只有一些WebLogic Server和WebSphere版本）中，当配置Hibernate时，没有考虑到JTA的`PlatformTransactionManager`对象，可能会在应用程序服务器日志中显示虚假警告或异常。这些警告或异常经常描述正在访问的连接不再有效，或者JDBC访问不再有效。这通常可能是因为事务不再有效。例如，这是WebLogic的一个实际异常：
 
 ```java
 java.sql.SQLException: The transaction is no longer active - status: 'Committed'. No
 further JDBC access is allowed within this transaction.
 ```
 
-You resolve this warning by simply making Hibernate aware of the JTA`PlatformTransactionManager`instance, to which it will synchronize \(along with Spring\). You have two options for doing this:
+开发者可以通过配置令Hibernate意识到Spring中同步的JTA`PlatformTransactionManager`实例的存在，这样即可消除掉前面所说的虚假警告信息。开发者有以下两种选择：
 
-* If in your application context you are already directly obtaining the JTA`PlatformTransactionManager`object \(presumably from JNDI through`JndiObjectFactoryBean`or```) and feeding it, for example, to Spring’s``JtaTransactionManager`, then the easiest way is to specify a reference to the bean defining this JTA`PlatformTransactionManager`instance as the value of the`jtaTransactionManager`property for`LocalSessionFactoryBean.\`Spring then makes the object available to Hibernate.
+* 如果在应用程序上下文中，开发者已经直接获取了JTA`PlatformTransactionManager`对象（可能是从JNDI到`JndiObjectFactoryBean`或者`<jee：jndi-lookup>`标签），并将其提供给Spring的Jta`TransactionManager`（其中最简单的方法就是指定一个引用bean将此JTA `PlatformTransactionManager`实例定义为`LocalSessionFactoryBean`的jta`TransactionManager`属性的值）。 Spring之后会令`PlatformTransactionManager`\`对象对Hibernate可见。
 
-* More likely you do not already have the JTA`PlatformTransactionManager`instance, because Spring’s`JtaTransactionManager`can find it itself. Thus you need to configure Hibernate to look up JTA`PlatformTransactionManager`directly. You do this by configuring an application server- specific`TransactionManagerLookup`class in the Hibernate configuration, as described in the Hibernate manual.
+* 更有可能开发者无法获取JTA`PlatformTransactionManager`实例，因为Spring的`JtaTransactionManager`是可以自己找到该实例的。因此，开发者需要配置Hibernate令其直接查找JTA`PlatformTransactionManager`。开发者可以如Hibernate手册中所述那样通过在Hibernate配置中配置应用程序服务器特定的`TransactionManagerLookup`类来执行此操作。
 
-The remainder of this section describes the sequence of events that occur with and without Hibernate’s awareness of the JTA`PlatformTransactionManager`.
+本节的其余部分描述了在`PlatformTransactionManager`对Hibernate可见和`PlatformTransactionManager`对Hibernate不可见的情况下发生的事件序列:
 
-When Hibernate is not configured with any awareness of the JTA`PlatformTransactionManager`, the following events occur when a JTA transaction commits:
+当Hibernate未配置任何对JTA`PlatformTransactionManager`的进行查找时，JTA事务提交时会发生以下事件：
 
-* The JTA transaction commits.
+* JTA事务提交
 
-* Spring’s`JtaTransactionManager`is synchronized to the JTA transaction, so it is called back through an_afterCompletion_callback by the JTA transaction manager.
+* Spring的`JtaTransactionManager`与JTA事务同步，所以它被JTA事务管理器通过`afterCompletion`回调调用。
 
-* Among other activities, this synchronization can trigger a callback by Spring to Hibernate, through Hibernate’s`afterTransactionCompletion`callback \(used to clear the Hibernate cache\), followed by an explicit`close()`call on the Hibernate Session, which causes Hibernate to attempt to`close()`the JDBC Connection.
+* 在其他活动中，此同步令Spring通过Hibernate的`afterTransactionCompletion`触发回调（用于清除Hibernate缓存），然后在Hibernate Session上调用`close()`，从而令Hibernate尝试`close()`JDBC连接。
 
-* In some environments, this`Connection.close()`call then triggers the warning or error, as the application server no longer considers the`Connection`usable at all, because the transaction has already been committed.
+* 在某些环境中，因为事务已经提交，应用程序服务器会认为`Connection`不可用，导致`Connection.close()`调用会触发警告或错误。
 
-When Hibernate is configured with awareness of the JTA`PlatformTransactionManager`, the following events occur when a JTA transaction commits:
+当Hibernate配置了对JTA`PlatformTransactionManager`进行查找时，JTA事务提交时会发生以下事件：
 
-* the JTA transaction is ready to commit.
+* JTA事务准备提交
 
-* Spring’s`JtaTransactionManager`is synchronized to the JTA transaction, so the transaction is called back through a_beforeCompletion_callback by the JTA transaction manager.
+* Spring的`JtaTransactionManager`与JTA事务同步，所以JTA事务管理器通过`beforeCompletion`方法来回调事务。
 
-* Spring is aware that Hibernate itself is synchronized to the JTA transaction, and behaves differently than in the previous scenario. Assuming the Hibernate`Session`needs to be closed at all, Spring will close it now.
+* Spring确定Hibernate与JTA事务同步，并且行为与前一种情况不同。假设Hibernate `Session`需要关闭，Spring将会关闭它。
 
-* The JTA transaction commits.
+* JTA事务提交。
 
-* Hibernate is synchronized to the JTA transaction, so the transaction is called back through an_afterCompletion_callback by the JTA transaction manager, and can properly clear its cache.
+* Hibernate与JTA事务同步，所以JTA事务管理器通过`afterCompletion`方法回调事务，可以正确清除其缓存。
 
 
 
