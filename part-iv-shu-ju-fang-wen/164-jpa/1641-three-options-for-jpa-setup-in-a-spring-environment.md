@@ -90,8 +90,6 @@ Spring为各种环境提供了一些`LoadTimeWeaver`实现，允许`ClassTransfo
 
 有关`LoadTimeWeaver`的实现及其设置的通用或定制的各种平台（如Tomcat，WebLogic，GlassFish，Resin和JBoss）的更多了解，请参阅AOP章节中的[Spring配置](http://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle/#aop-aj-ltw-spring)一节。
 
-As described in the aforementioned section, you can configure a context-wide`LoadTimeWeaver`using the`@EnableLoadTimeWeaving`annotation of`context:load-time-weaver`XML element. Such a global weaver is picked up by all JPA`LocalContainerEntityManagerFactoryBeans`automatically. This is the preferred way of setting up a load-time weaver, delivering autodetection of the platform \(WebLogic, GlassFish, Tomcat, Resin, JBoss or VM agent\) and automatic propagation of the weaver to all weaver-aware beans:
-
 如前面部分所述，开发者可以使用`@EnableLoadTimeWeaving`注解或者`context:load-time-weaver`XML元素来配置上下文范围的`LoadTimeWeaver`。所有JPA `LocalContainerEntityManagerFactoryBeans`都会自动拾取这样的全局织入器。这是设置加载时间织入器的首选方式，为平台（WebLogic，GlassFish，Tomcat，Resin，JBoss或VM代理）提供自动检测功能，并将织入组件自动传播到所有可以感知织入者的Bean：
 
 ```java

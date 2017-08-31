@@ -263,8 +263,8 @@
       * [16.3.7 Hibernate的虚假应用服务器警告](part-iv-shu-ju-fang-wen/163-hibernate/1637-spurious-application-server-warnings-with-hibernate.md)
     * [16.4 JPA](part-iv-shu-ju-fang-wen/164-jpa.md)
       * [16.4.1 Spring中JPA配置的三个选项](part-iv-shu-ju-fang-wen/164-jpa/1641-three-options-for-jpa-setup-in-a-spring-environment.md)
-      * [16.4.2 Implementing DAOs based on JPA: EntityManagerFactory and EntityManager](part-iv-shu-ju-fang-wen/164-jpa/1642-implementing-daos-based-on-jpa-entitymanagerfactory-and-entitymanager.md)
-      * [16.4.3 Spring-driven JPA transactions](part-iv-shu-ju-fang-wen/164-jpa/1643-spring-driven-jpa-transactions.md)
-      * [16.4.4 JpaDialect and JpaVendorAdapter](part-iv-shu-ju-fang-wen/164-jpa/1644-jpadialect-and-jpavendoradapter.md)
-      * [16.4.5 Setting up JPA with JTA transaction management](part-iv-shu-ju-fang-wen/164-jpa/1645-setting-up-jpa-with-jta-transaction-management.md)
+      * [16.4.2 基于JPA的EntityManagerFactory和EntityManager来实现DAO](part-iv-shu-ju-fang-wen/164-jpa/1642-implementing-daos-based-on-jpa-entitymanagerfactory-and-entitymanager.md)
+      * [16.4.3 Spring驱动的JPA事务](part-iv-shu-ju-fang-wen/164-jpa/1643-spring-driven-jpa-transactions.md)
+      * [16.4.4 JpaDialect和JpaVendorAdapter](part-iv-shu-ju-fang-wen/164-jpa/1644-jpadialect-and-jpavendoradapter.md)
+      * [16.4.5 为JPA配置JTA事务管理](part-iv-shu-ju-fang-wen/164-jpa/1645-setting-up-jpa-with-jta-transaction-management.md)
 
