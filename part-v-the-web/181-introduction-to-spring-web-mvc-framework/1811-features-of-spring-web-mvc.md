@@ -1,38 +1,36 @@
-### 18.1.1Features of Spring Web MVC
+### 18.1.1Spring Web MVC的特点
 
-**Spring Web Flow**
+**Spring Web 流程**
 
-Spring Web Flow \(SWF\) aims to be the best solution for the management of web application page flow.
+Spring Web 流程 \(SWF\)的目的是成为最好的Web页面应用流程管理方案，SWF与Servlet 和Portlet 环境中的Spring MVC和JSF等现有框架集成。如果你有一个这样的业务流程，使用会话模型比纯粹的请求要优，那么SWF可能是一个选择。
 
-SWF integrates with existing frameworks like Spring MVC and JSF, in both Servlet and Portlet environments. If you have a business process \(or processes\) that would benefit from a conversational model as opposed to a purely request model, then SWF may be the solution.
+SWF允许您将逻辑页面流作为在不同情况下可重用的自包含模块捕获，因此非常适合构建引导用户通过驱动业务流程的受控导航的Web应用程序模块。
 
-SWF allows you to capture logical page flows as self-contained modules that are reusable in different situations, and as such is ideal for building web application modules that guide the user through controlled navigations that drive business processes.
+更多关于SWF的信息，请点击[Spring Web Flow website](http://projects.spring.io/spring-webflow/).
 
-For more information about SWF, consult the[Spring Web Flow website](http://projects.spring.io/spring-webflow/).
+Spring 的Web模块包含许多独特的web支持特性：
 
-Spring’s web module includes many unique web support features:
+* _明确并分离的角色.每个角色_-控制器，验证器，命令对象，构建对象，模型对象，分发器，映射处理器，视图解析等等都是完全的一个特定对象
 
-* _Clear separation of roles_. Each role — controller, validator, command object, form object, model object,`DispatcherServlet`, handler mapping, view resolver, and so on — can be fulfilled by a specialized object.
+* _框架和应用程序类作为JavaBeans的强大而直接的配置。_ 此配置功能包括跨上下文的简单引用，例如从Web控制器到业务对象和验证器。
 
-* _Powerful and straightforward configuration of both framework and application classes as JavaBeans_. This configuration capability includes easy referencing across contexts, such as from web controllers to business objects and validators.
+* 可适配，无入侵，灵活，定义您需要的任何控制器方法签名，可能使用给定方案的参数注释之一（例如`@RequestParam`，`@RequestHeader`，`@PathVariable`等）。
 
-* _Adaptability, non-intrusiveness, and flexibility._Define any controller method signature you need, possibly using one of the parameter annotations \(such as @RequestParam, @RequestHeader, @PathVariable, and more\) for a given scenario.
+* _可重用的业务代码_，不需要重复，使用现有的业务对象作为命令或表单对象，而不是仿照它们来扩展特定的框架基类。
 
-* _Reusable business code, no need for duplication_. Use existing business objects as command or form objects instead of mirroring them to extend a particular framework base class.
+* _自定义绑定和验证_，类型不匹配作为应用程序级验证错误，保持违规值，本地化日期和数字绑定等，而不是只使用仅包含字符串的表单对象进行手动解析和转换为业务对象。
 
-* _Customizable binding and validation_. Type mismatches as application-level validation errors that keep the offending value, localized date and number binding, and so on instead of String-only form objects with manual parsing and conversion to business objects.
+* _自定义的处理程序映射和视图解析_，从简单的URL配置策略到复杂的，特制的策略，Spring比Web MVC框架更灵活，这些框架需要特定的技术。
 
-* _Customizable handler mapping and view resolution_. Handler mapping and view resolution strategies range from simple URL-based configuration, to sophisticated, purpose-built resolution strategies. Spring is more flexible than web MVC frameworks that mandate a particular technique.
+* 灵活的模型转换，具有名称/值的模型传输Map支持与任何视图技术的轻松集成。
 
-* _Flexible model transfer_. Model transfer with a name/value`Map`supports easy integration with any view technology.
+* 本地，时区，主题自定义，支持具有或不具有Spring标签库的JSP，支持JSTL，支持FreeMarker而不需要额外的网桥等等。
 
-* _Customizable locale, time zone and theme resolution, support for JSPs with or without Spring tag library, support for JSTL, support for FreeMarker without the need for extra bridges, and so on._
+* _一个简单而强大的JSP标签库，被称为Spring标签库，为数据绑定和主题等功能提供支持。_ 自定义标签允许在标记代码方面具有最大的灵活性。 有关标签库描述符的信息，请参见附录[Chapter 40,spring JSP Tag Library](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/spring-tld.html)
 
-* _A simple yet powerful JSP tag library known as the Spring tag library that provides support for features such as data binding and themes_. The custom tags allow for maximum flexibility in terms of markup code. For information on the tag library descriptor, see the appendix entitled[Chapter40,_spring JSP Tag Library_](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/spring-tld.html)
+* 在Spring 2.0中引入的JSP表单标签库，使得在JSP页面中的写入表单更容易。 有关标签库描述符的信息，请参见附录[Chapter 41,spring-form JSP Tag Library](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/spring-form-tld.html)
 
-* _A JSP form tag library, introduced in Spring 2.0, that makes writing forms in JSP pages much easier._For information on the tag library descriptor, see the appendix entitled[Chapter41,_spring-form JSP Tag Library_](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/spring-form-tld.html)
-
-* _Beans whose lifecycle is scoped to the current HTTP request or HTTPSession._This is not a specific feature of Spring MVC itself, but rather of the`WebApplicationContext`container\(s\) that Spring MVC uses. These bean scopes are described in[Section3.5.4, “Request, session, application, and WebSocket scopes”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/beans.html#beans-factory-scopes-other)
+* Bean的生命周期范围限定在当前的HTTP请求或HTTP Session中。 这不是Spring MVC本身的一个特定功能，而是Spring MVC使用的WebApplicationContext容器。 这些bean范围在[Section 3.5.4, “Request, session, application, and WebSocket scopes”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/beans.html#beans-factory-scopes-other)
 
 
 
