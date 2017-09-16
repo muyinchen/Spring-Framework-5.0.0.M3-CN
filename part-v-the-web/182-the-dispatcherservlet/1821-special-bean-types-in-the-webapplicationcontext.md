@@ -1,19 +1,19 @@
-### 18.2.1Special Bean Types In the WebApplicationContext
+### 18.2.1**WebApplicationContext中的特殊Bean类型**
 
-The Spring`DispatcherServlet`uses special beans to process requests and render the appropriate views. These beans are part of Spring MVC. You can choose which special beans to use by simply configuring one or more of them in the`WebApplicationContext`. However, you don’t need to do that initially since Spring MVC maintains a list of default beans to use if you don’t configure any. More on that in the next section. First see the table below listing the special bean types the`DispatcherServlet`relies on.
+Spring `DispatcherServlet`使用特殊的bean来处理请求并呈现适当的视图。 这些bean是Spring MVC的一部分。 您可以通过在`WebApplicationContext`中简单配置一个或多个选择要使用的特殊bean。 但是，您最初不需要这样做，因为Spring MVC维护一个默认bean列表，如果您没有配置任何内容。 更多的在下一节。 首先看下表列出`DispatcherServlet`依赖的特殊bean类型。
 
-**Table18.1.Special bean types in the WebApplicationContext**
+**Table18.1.**在 WebApplicationContext中的特殊bean类型
 
 | Bean type | Explanation |
 | :--- | :--- |
-| [HandlerMapping](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-handlermapping) | Maps incoming requests to handlers and a list of pre- and post-processors \(handler interceptors\) based on some criteria the details of which vary by`HandlerMapping`implementation. The most popular implementation supports annotated controllers but other implementations exists as well. |
-| HandlerAdapter | Helps the`DispatcherServlet`to invoke a handler mapped to a request regardless of the handler is actually invoked. For example, invoking an annotated controller requires resolving various annotations. Thus the main purpose of a`HandlerAdapter`is to shield the`DispatcherServlet`from such details. |
-| [HandlerExceptionResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-exceptionhandlers) | Maps exceptions to views also allowing for more complex exception handling code. |
-| [ViewResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-viewresolver) | Resolves logical String-based view names to actual`View`types. |
-| [LocaleResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-localeresolver)&[LocaleContextResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-timezone) | Resolves the locale a client is using and possibly their time zone, in order to be able to offer internationalized views |
-| [ThemeResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-themeresolver) | Resolves themes your web application can use, for example, to offer personalized layouts |
-| [MultipartResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart) | Parses multi-part requests for example to support processing file uploads from HTML forms. |
-| [FlashMapManager](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes) | Stores and retrieves the "input" and the "output"`FlashMap`that can be used to pass attributes from one request to another, usually across a redirect. |
+| [HandlerMapping](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-handlermapping) | 根据一些标准将传入的请求映射到处理程序和前处理程序和后处理程序列表（处理程序拦截器），其细节由`HandlerMapping`实现而异。 最流行的实现支持注释控制器，但其他实现也存在。 |
+| HandlerAdapter | 帮助`DispatcherServlet`调用映射到请求的处理程序，而不管实际调用哪个处理程序。 例如，调用带注释的控制器需要解析各种注释。 因此，`HandlerAdapter`的主要目的是屏蔽`DispatcherServlet`和这些细节 |
+| [HandlerExceptionResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-exceptionhandlers) | 映射视图的异常，也允许更复杂的异常处理代码。 |
+| [ViewResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-viewresolver) | 将基于逻辑字符串的视图名称解析为实际的View类型。 |
+| [LocaleResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-localeresolver)&[LocaleContextResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-timezone) | 解决客户端正在使用的区域设置以及可能的时区，以便能够提供国际化的视图 |
+| [ThemeResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-themeresolver) | 解决您的Web应用程序可以使用的主题，例如，提供个性化的布局 |
+| [MultipartResolver](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart) | 解析multi-part请求，以支持从HTML表单处理文件上传。 |
+| [FlashMapManager](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes) | 存储并检索可以用于将属性从一个请求传递到另一个请求的“输入”和“输出”FlashMap，通常是通过重定向。 |
 
 
 
