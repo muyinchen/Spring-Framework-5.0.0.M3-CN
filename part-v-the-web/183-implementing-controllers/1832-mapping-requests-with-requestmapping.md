@@ -1,81 +1,81 @@
-### 18.3.2Mapping Requests With @RequestMapping
+### 18.3.2使用@RequestMapping映射请求
 
-You use the`@RequestMapping`annotation to map URLs such as`/appointments`onto an entire class or a particular handler method. Typically the class-level annotation maps a specific request path \(or path pattern\) onto a form controller, with additional method-level annotations narrowing the primary mapping for a specific HTTP request method \("GET", "POST", etc.\) or an HTTP request parameter condition.
+您可以使用`@RequestMapping`注释将诸如`/appointments`的URL映射到整个类或特定的处理程序方法。 通常，类级注释将特定的请求路径（或路径模式）映射到表单控制器上，其他方法级注释缩小了特定HTTP请求方法（“GET”，“POST”等）的主映射，或 HTTP请求参数条件。
 
-The following example from the_Petcare_sample shows a controller in a Spring MVC application that uses this annotation:
+Petcare示例中的以下示例显示了使用此注释的Spring MVC应用程序中的控制器：
 
 ```java
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentsController {
 
-	private final AppointmentBook appointmentBook;
+    private final AppointmentBook appointmentBook;
 
-	@Autowired
-	public AppointmentsController(AppointmentBook appointmentBook) {
-		this.appointmentBook = appointmentBook;
-	}
+    @Autowired
+    public AppointmentsController(AppointmentBook appointmentBook) {
+        this.appointmentBook = appointmentBook;
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, Appointment> get() {
-		return appointmentBook.getAppointmentsForToday();
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public Map<String, Appointment> get() {
+        return appointmentBook.getAppointmentsForToday();
+    }
 
-	@RequestMapping(path = "/{day}", method = RequestMethod.GET)
-	public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day, Model model) {
-		return appointmentBook.getAppointmentsForDay(day);
-	}
+    @RequestMapping(path = "/{day}", method = RequestMethod.GET)
+    public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day, Model model) {
+        return appointmentBook.getAppointmentsForDay(day);
+    }
 
-	@RequestMapping(path = "/new", method = RequestMethod.GET)
-	public AppointmentForm getNewForm() {
-		return new AppointmentForm();
-	}
+    @RequestMapping(path = "/new", method = RequestMethod.GET)
+    public AppointmentForm getNewForm() {
+        return new AppointmentForm();
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String add(@Valid AppointmentForm appointment, BindingResult result) {
-		if (result.hasErrors()) {
-			return "appointments/new";
-		}
-		appointmentBook.addAppointment(appointment);
-		return "redirect:/appointments";
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String add(@Valid AppointmentForm appointment, BindingResult result) {
+        if (result.hasErrors()) {
+            return "appointments/new";
+        }
+        appointmentBook.addAppointment(appointment);
+        return "redirect:/appointments";
+    }
 }
 ```
 
-In the above example,`@RequestMapping`is used in a number of places. The first usage is on the type \(class\) level, which indicates that all handler methods in this controller are relative to the`/appointments`path. The`get()`method has a further`@RequestMapping`refinement: it only accepts`GET`requests, meaning that an HTTP`GET`for`/appointments`invokes this method. The`add()`has a similar refinement, and the`getNewForm()`combines the definition of HTTP method and path into one, so that`GET`requests for`appointments/new`are handled by that method.
+在上面的例子中，`@RequestMapping`用在很多地方。 第一个用法是类型（类）级别，这表示此控制器中的所有处理程序方法都相对于`/appointments`路径。 `get()`方法还有一个@RequestMapping细化：它只接受GET请求，这意味着`/appointments` 的HTTP `GET`调用此方法。`add()`有一个类似的细化，`getNewForm()`将HTTP方法和路径的定义组合成一个，以便通过该方法处理`appointments/new`的GET请求。
 
-The`getForDay()`method shows another usage of`@RequestMapping`: URI templates. \(See[the section called “URI Template Patterns”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates)\).
+`getForDay()`方法显示了`@RequestMapping`：URI模板的另一种用法。 （参见[“URI模板模式”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates)一节）。
 
-A`@RequestMapping`on the class level is not required. Without it, all paths are simply absolute, and not relative. The following example from the_PetClinic_sample application shows a multi-action controller using`@RequestMapping`:
+类级别上的`@RequestMapping`不是必需的。 没有它，所有的路径都是绝对的，而不是相对的。 PetClinic示例应用程序的以下示例显示了使用`@RequestMapping`的多操作控制器：
 
 ```java
 @Controller
 public class ClinicController {
 
-	private final Clinic clinic;
+    private final Clinic clinic;
 
-	@Autowired
-	public ClinicController(Clinic clinic) {
-		this.clinic = clinic;
-	}
+    @Autowired
+    public ClinicController(Clinic clinic) {
+        this.clinic = clinic;
+    }
 
-	@RequestMapping("/")
-	public void welcomeHandler() {
-	}
+    @RequestMapping("/")
+    public void welcomeHandler() {
+    }
 
-	@RequestMapping("/vets")
-	public ModelMap vetsHandler() {
-		return new ModelMap(this.clinic.getVets());
-	}
+    @RequestMapping("/vets")
+    public ModelMap vetsHandler() {
+        return new ModelMap(this.clinic.getVets());
+    }
 
 }
 ```
 
-The above example does not specify`GET`vs.`PUT`,`POST`, and so forth, because`@RequestMapping`maps all HTTP methods by default. Use`@RequestMapping(method=GET)`or`@GetMapping`to narrow the mapping.
+上述示例不指定`GET`与`PUT`，`POST`等，因为`@RequestMapping`默认映射所有HTTP方法。 使用`@RequestMapping(method=GET)`或`@GetMapping`来缩小映射。
 
-#### Composed @RequestMapping Variants
+#### 组合@RequestMapping变体
 
-Spring Framework 4.3 introduces the following method-level_composed_variants of the`@RequestMapping`annotation that help to simplify mappings for common HTTP methods and better express the semantics of the annotated handler method. For example, a`@GetMapping`can be read as a`GET@RequestMapping`.
+Spring Framework 4.3引入了`@RequestMapping`注释的以下方法级组合变体，有助于简化常见HTTP方法的映射，并更好地表达注释处理程序方法的语义。 例如，`@GetMapping`可以被读取为GET `@RequestMapping`。
 
 * `@GetMapping`
 
@@ -87,125 +87,127 @@ Spring Framework 4.3 introduces the following method-level_composed_variants of 
 
 * `@PatchMapping`
 
-The following example shows a modified version of the`AppointmentsController`from the previous section that has been simplified with_composed_`@RequestMapping`annotations.
+以下示例显示了使用已组合的`@RequestMapping`注释简化的上一节中的`AppointmentsController`的修改版本。
 
 ```java
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentsController {
 
-	private final AppointmentBook appointmentBook;
+    private final AppointmentBook appointmentBook;
 
-	@Autowired
-	public AppointmentsController(AppointmentBook appointmentBook) {
-		this.appointmentBook = appointmentBook;
-	}
+    @Autowired
+    public AppointmentsController(AppointmentBook appointmentBook) {
+        this.appointmentBook = appointmentBook;
+    }
 
-	@GetMapping
-	public Map<String, Appointment> get() {
-		return appointmentBook.getAppointmentsForToday();
-	}
+    @GetMapping
+    public Map<String, Appointment> get() {
+        return appointmentBook.getAppointmentsForToday();
+    }
 
-	@GetMapping("/{day}")
-	public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day, Model model) {
-		return appointmentBook.getAppointmentsForDay(day);
-	}
+    @GetMapping("/{day}")
+    public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day, Model model) {
+        return appointmentBook.getAppointmentsForDay(day);
+    }
 
-	@GetMapping("/new")
-	public AppointmentForm getNewForm() {
-		return new AppointmentForm();
-	}
+    @GetMapping("/new")
+    public AppointmentForm getNewForm() {
+        return new AppointmentForm();
+    }
 
-	@PostMapping
-	public String add(@Valid AppointmentForm appointment, BindingResult result) {
-		if (result.hasErrors()) {
-			return "appointments/new";
-		}
-		appointmentBook.addAppointment(appointment);
-		return "redirect:/appointments";
-	}
+    @PostMapping
+    public String add(@Valid AppointmentForm appointment, BindingResult result) {
+        if (result.hasErrors()) {
+            return "appointments/new";
+        }
+        appointmentBook.addAppointment(appointment);
+        return "redirect:/appointments";
+    }
 }
 ```
 
-#### @Controller and AOP Proxying
+#### @Controller 和AOP 代理
 
-In some cases a controller may need to be decorated with an AOP proxy at runtime. One example is if you choose to have`@Transactional`annotations directly on the controller. When this is the case, for controllers specifically, we recommend using class-based proxying. This is typically the default choice with controllers. However if a controller must implement an interface that is not a Spring Context callback \(e.g.`InitializingBean`,`*Aware`, etc\), you may need to explicitly configure class-based proxying. For example with`, change to`.
+在某些情况下，控制器可能需要在运行时用AOP代理进行装饰。 一个例子是如果您选择在控制器上直接使用`@Transactional`注释。 在这种情况下，对于控制器，我们建议使用基于类的代理。 这通常是控制器的默认选项。 但是，如果控制器必须实现不是Spring Context回调的接口（例如`InitializingBean`，`* Aware`等），则可能需要显式配置基于类的代理。 例如，使用
 
-#### New Support Classes for @RequestMapping methods in Spring MVC 3.1
+`<tx：annotation-driven />`，更改为`<tx：annotation-driven proxy-target-class =“true”/>`。
 
-Spring 3.1 introduced a new set of support classes for`@RequestMapping`methods called`RequestMappingHandlerMapping`and`RequestMappingHandlerAdapter`respectively. They are recommended for use and even required to take advantage of new features in Spring MVC 3.1 and going forward. The new support classes are enabled by default by the MVC namespace and the MVC Java config but must be configured explicitly if using neither. This section describes a few important differences between the old and the new support classes.
+#### Spring MVC 3.1中的@RequestMapping方法的新支持类
 
-Prior to Spring 3.1, type and method-level request mappings were examined in two separate stages — a controller was selected first by the`DefaultAnnotationHandlerMapping`and the actual method to invoke was narrowed down second by the`AnnotationMethodHandlerAdapter`.
+Spring 3.1分别为`@RequestMapping`方法引入了一组新的支持类，分别叫做`RequestMappingHandlerMapping`和`RequestMappingHandlerAdapter`。它们被推荐使用，甚至需要利用Spring MVC 3.1中的新功能和未来。默认情况下，MVC命名空间和MVC Java配置启用新的支持类，但是如果不使用，则必须显式配置。本节介绍旧支持类和新支持类之间的一些重要区别。
 
-With the new support classes in Spring 3.1, the`RequestMappingHandlerMapping`is the only place where a decision is made about which method should process the request. Think of controller methods as a collection of unique endpoints with mappings for each method derived from type and method-level`@RequestMapping`information.
+在Spring 3.1之前，类型和方法级请求映射在两个单独的阶段进行了检查 – 首先由`DefaultAnnotationHandlerMapping`选择一个控制器，并且实际的调用方法被`AnnotationMethodHandlerAdapter`缩小。
 
-This enables some new possibilities. For once a`HandlerInterceptor`or a`HandlerExceptionResolver`can now expect the Object-based handler to be a`HandlerMethod`, which allows them to examine the exact method, its parameters and associated annotations. The processing for a URL no longer needs to be split across different controllers.
+使用Spring 3.1中的新支持类，`RequestMappingHandlerMapping`是唯一可以决定哪个方法应该处理请求的地方。将控制器方法作为从类型和方法级`@RequestMapping`信息派生的每个方法的映射的唯一端点的集合。
 
-There are also several things no longer possible:
+这使得一些新的可能性。一旦`HandlerInterceptor`或`HandlerExceptionResolver`现在可以期望基于对象的处理程序是`HandlerMethod`，它允许它们检查确切的方法，其参数和关联的注释。 URL的处理不再需要跨不同的控制器进行拆分。
 
-* Select a controller first with a`SimpleUrlHandlerMapping`or`BeanNameUrlHandlerMapping`and then narrow the method based on`@RequestMapping`annotations.
+还有下面几件事情已经不复存在了：
 
-* Rely on method names as a fall-back mechanism to disambiguate between two`@RequestMapping`methods that don’t have an explicit path mapping URL path but otherwise match equally, e.g. by HTTP method. In the new support classes`@RequestMapping`methods have to be mapped uniquely.
+* 首先使用`SimpleUrlHandlerMapping`或`BeanNameUrlHandlerMapping`选择控制器，然后基于`@RequestMapping`注释来缩小方法。
 
-* Have a single default method \(without an explicit path mapping\) with which requests are processed if no other controller method matches more concretely. In the new support classes if a matching method is not found a 404 error is raised.
+* 依赖于方法名称作为一种落后机制，以消除两个`@RequestMapping`方法之间的差异，这两个方法没有明确的路径映射URL路径， 通过HTTP方法。 在新的支持类中，`@RequestMapping`方法必须被唯一地映射。
 
-The above features are still supported with the existing support classes. However to take advantage of new Spring MVC 3.1 features you’ll need to use the new support classes.
+* 如果没有其他控制器方法更具体地匹配，请使用单个默认方法（无显式路径映射）处理请求。 在新的支持类中，如果找不到匹配方法，则会引发404错误。
 
-#### URI Template Patterns
+上述功能仍然支持现有的支持类。 不过要利用新的Spring MVC 3.1功能，您需要使用新的支持类。
 
-_URI templates_can be used for convenient access to selected parts of a URL in a`@RequestMapping`method.
+#### URI 模版模式
 
-A URI Template is a URI-like string, containing one or more variable names. When you substitute values for these variables, the template becomes a URI. The[proposed RFC](http://bitworking.org/projects/URI-Templates/)for URI Templates defines how a URI is parameterized. For example, the URI Template`http://www.example.com/users/{userId}`contains the variable_userId_. Assigning the value_fred_to the variable yields`http://www.example.com/users/fred`.
+可以使用URI模板方便地访问`@RequestMapping`方法中URL的所选部分。
 
-In Spring MVC you can use the`@PathVariable`annotation on a method argument to bind it to the value of a URI template variable:
+URI模板是一个类似URI的字符串，包含一个或多个变量名称。 当您替换这些变量的值时，模板将成为一个URI。 所提出的RFC模板RFC定义了URI如何参数化。 例如，URI模板`http://www.example.com/users/{userId}`包含变量userId。 将`fred`的值分配给变量会得到`http://www.example.com/users/fred`。
+
+在Spring MVC中，您可以使用方法参数上的`@PathVariable`注释将其绑定到URI模板变量的值：
 
 ```java
 @GetMapping("/owners/{ownerId}")
 public String findOwner(@PathVariable String ownerId, Model model) {
-	Owner owner = ownerService.findOwner(ownerId);
-	model.addAttribute("owner", owner);
-	return "displayOwner";
+    Owner owner = ownerService.findOwner(ownerId);
+    model.addAttribute("owner", owner);
+    return "displayOwner";
 }
 ```
 
-The URI Template "/owners/{ownerId}" specifies the variable name`ownerId`. When the controller handles this request, the value of`ownerId`is set to the value found in the appropriate part of the URI. For example, when a request comes in for`/owners/fred`, the value of`ownerId`is`fred`.
+URI模板“`/ owners / {ownerId}`”指定变量名`ownerId`。 当控制器处理此请求时，`ownerId`的值将设置为在URI的适当部分中找到的值。 例如，当`/owner/fred`出现请求时，`ownerId`的值为`fred`。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| To process the @PathVariable annotation, Spring MVC needs to find the matching URI template variable by name. You can specify it in the annotation:`*@GetMapping("/owners/{ownerId}")*public String findOwner(**@PathVariable("ownerId")** String theOwner, Model model) { // implementation omitted}`Or if the URI template variable name matches the method argument name you can omit that detail. As long as your code is compiled with debugging information or the`-parameters`compiler flag on Java 8, Spring MVC will match the method argument name to the URI template variable name:`*@GetMapping("/owners/{ownerId}")*public String findOwner(**@PathVariable** String ownerId, Model model) { // implementation omitted}` |
+| 要处理`@PathVariable`注释，Spring MVC需要按名称找到匹配的URI模板变量。 您可以在注释中指定它：`*@GetMapping("/owners/{ownerId}")*public String findOwner(**@PathVariable("ownerId")** String theOwner, Model model) { // implementation omitted}`或者如果URI模板变量名称与方法参数名称匹配，则可以省略该详细信息。 只要您的代码使用Java 8编译调试信息或参数编译器标志，Spring MVC将将方法参数名称与URI模板变量名称相匹配：`*@GetMapping("/owners/{ownerId}")*public String findOwner(**@PathVariable** String ownerId, Model model) { // implementation omitted}` |
 
-A method can have any number of`@PathVariable`annotations:
+一个方法可以有任何数量的`@PathVariable`注释：
 
 ```java
 @GetMapping("/owners/{ownerId}/pets/{petId}")
 public String findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
-	Owner owner = ownerService.findOwner(ownerId);
-	Pet pet = owner.getPet(petId);
-	model.addAttribute("pet", pet);
-	return "displayPet";
+    Owner owner = ownerService.findOwner(ownerId);
+    Pet pet = owner.getPet(petId);
+    model.addAttribute("pet", pet);
+    return "displayPet";
 }
 ```
 
-When a`@PathVariable`annotation is used on a`Map`argument, the map is populated with all URI template variables.
+当在`Map <String，String>`参数上使用`@PathVariable`注释时，映射将填充所有URI模板变量。
 
-A URI template can be assembled from type and method level_@RequestMapping_annotations. As a result the`findPet()`method can be invoked with a URL such as`/owners/42/pets/21`.
+URI模板可以从类型和方法级别`@RequestMapping`注释中进行组合。 因此，可以使用`/owners/42/pets/21`等URL调用`findPet()`方法。
 
 ```java
 @Controller
 @RequestMapping("/owners/{ownerId}")
 public class RelativePathUriTemplateController {
 
-	@RequestMapping("/pets/{petId}")
-	public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
-		// implementation omitted
-	}
+    @RequestMapping("/pets/{petId}")
+    public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
+        // implementation omitted
+    }
 
 }
 ```
 
-A`@PathVariable`argument can be of_any simple type_such as`int`,`long`,`Date`, etc. Spring automatically converts to the appropriate type or throws a`TypeMismatchException`if it fails to do so. You can also register support for parsing additional data types. See[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion)and[the section called “Customizing WebDataBinder initialization”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder).
+`@PathVariable`参数可以是\_\_any简单的type\_such，如`int`，`long`，`Date`等。如果没有这样做，Spring将自动转换为适当的类型或抛出TypeMismatchException。 您还可以注册解析附加数据类型的支持。 Seethe部分称为[“方法参数和类型转换”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion)和[“定制WebDataBinder初始化”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)一节。
 
-#### URI Template Patterns with Regular Expressions
+#### 具有正则表达式的URI模板模式
 
 Sometimes you need more precision in defining URI template variables. Consider the URL`"/spring-web/spring-web-3.0.5.jar"`. How do you break it down into multiple parts?
 
@@ -214,11 +216,11 @@ The`@RequestMapping`annotation supports the use of regular expressions in URI te
 ```java
 @RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
 public void handle(@PathVariable String version, @PathVariable String extension) {
-	// ...
+    // ...
 }
 ```
 
-####  Path Patterns
+#### Path Patterns
 
 In addition to URI templates, the`@RequestMapping`annotation and all_composed_`@RequestMapping`variants also support Ant-style path patterns \(for example,`/myPath/*.do`\). A combination of URI template variables and Ant-style globs is also supported \(e.g.`/owners/*/pets/{petId}`\).
 
@@ -282,8 +284,8 @@ Below is an example of extracting the matrix variable "q":
 @GetMapping("/pets/{petId}")
 public void findPet(@PathVariable String petId, @MatrixVariable int q) {
 
-	// petId == 42
-	// q == 11
+    // petId == 42
+    // q == 11
 
 }
 ```
@@ -295,11 +297,11 @@ Since all path segments may contain matrix variables, in some cases you need to 
 
 @GetMapping("/owners/{ownerId}/pets/{petId}")
 public void findPet(
-		@MatrixVariable(name="q", pathVar="ownerId") int q1,
-		@MatrixVariable(name="q", pathVar="petId") int q2) {
+        @MatrixVariable(name="q", pathVar="ownerId") int q1,
+        @MatrixVariable(name="q", pathVar="petId") int q2) {
 
-	// q1 == 11
-	// q2 == 22
+    // q1 == 11
+    // q2 == 22
 
 }
 ```
@@ -312,7 +314,7 @@ A matrix variable may be defined as optional and a default value specified:
 @GetMapping("/pets/{petId}")
 public void findPet(@MatrixVariable(required=false, defaultValue="1") int q) {
 
-	// q == 1
+    // q == 1
 
 }
 ```
@@ -324,11 +326,11 @@ All matrix variables may be obtained in a Map:
 
 @GetMapping("/owners/{ownerId}/pets/{petId}")
 public void findPet(
-		@MatrixVariable MultiValueMap<String, String> matrixVars,
-		@MatrixVariable(pathVar="petId"") MultiValueMap<String, String> petMatrixVars) {
+        @MatrixVariable MultiValueMap<String, String> matrixVars,
+        @MatrixVariable(pathVar="petId"") MultiValueMap<String, String> petMatrixVars) {
 
-	// matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
-	// petMatrixVars: ["q" : 11, "s" : 23]
+    // matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
+    // petMatrixVars: ["q" : 11, "s" : 23]
 
 }
 ```
@@ -339,14 +341,14 @@ Note that to enable the use of matrix variables, you must set the`removeSemicolo
 | :--- |
 | The MVC Java config and the MVC namespace both provide options for enabling the use of matrix variables.If you are using Java config, The[Advanced Customizations with MVC Java Config](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-advanced-java)section describes how the`RequestMappingHandlerMapping`can be customized.In the MVC namespace, the```element has an``enable-matrix-variables`attribute that should be set to`true`. By default it is set to`false`.`\` |
 
-####  Consumable Media Types
+#### Consumable Media Types
 
 You can narrow the primary mapping by specifying a list of consumable media types. The request will be matched only if the`Content-Type`request header matches the specified media type. For example:
 
 ```java
 @PostMapping(path = "/pets", consumes = "application/json")
 public void addPet(@RequestBody Pet pet, Model model) {
-	// implementation omitted
+    // implementation omitted
 }
 ```
 
@@ -354,29 +356,29 @@ Consumable media type expressions can also be negated as in`!text/plain`to match
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| The_consumes_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level consumable types override rather than extend type-level consumable types. |
+| The\_consumes\_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level consumable types override rather than extend type-level consumable types. |
 
 #### Producible Media Types
 
-You can narrow the primary mapping by specifying a list of producible media types. The request will be matched only if the`Accept`request header matches one of these values. Furthermore, use of the_produces_condition ensures the actual content type used to generate the response respects the media types specified in the_produces_condition. For example:
+You can narrow the primary mapping by specifying a list of producible media types. The request will be matched only if the`Accept`request header matches one of these values. Furthermore, use of the\_produces\_condition ensures the actual content type used to generate the response respects the media types specified in the\_produces\_condition. For example:
 
 ```java
 @GetMapping(path = "/pets/{petId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @ResponseBody
 public Pet getPet(@PathVariable String petId, Model model) {
-	// implementation omitted
+    // implementation omitted
 }
 ```
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Be aware that the media type specified in the_produces_condition can also optionally specify a character set. For example, in the code snippet above we specify the same media type than the default one configured in`MappingJackson2HttpMessageConverter`, including the`UTF-8`charset. |
+| Be aware that the media type specified in the\_produces\_condition can also optionally specify a character set. For example, in the code snippet above we specify the same media type than the default one configured in`MappingJackson2HttpMessageConverter`, including the`UTF-8`charset. |
 
 Just like with_consumes_, producible media type expressions can be negated as in`!text/plain`to match to all requests other than those with an`Accept`header value of`text/plain`. Also consider using constants provided in`MediaType`such as`APPLICATION_JSON_VALUE`and`APPLICATION_JSON_UTF8_VALUE`.
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| The_produces_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level producible types override rather than extend type-level producible types. |
+| The\_produces\_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level producible types override rather than extend type-level producible types. |
 
 #### Request Parameters and Header Values
 
@@ -387,10 +389,10 @@ You can narrow request matching through request parameter conditions such as`"my
 @RequestMapping("/owners/{ownerId}")
 public class RelativePathUriTemplateController {
 
-	@GetMapping(path = "/pets/{petId}", params = "myParam=myValue")
-	public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
-		// implementation omitted
-	}
+    @GetMapping(path = "/pets/{petId}", params = "myParam=myValue")
+    public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
+        // implementation omitted
+    }
 
 }
 ```
@@ -402,17 +404,17 @@ The same can be done to test for request header presence/absence or to match bas
 @RequestMapping("/owners/{ownerId}")
 public class RelativePathUriTemplateController {
 
-	@GetMapping(path = "/pets", headers = "myHeader=myValue")
-	public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
-		// implementation omitted
-	}
+    @GetMapping(path = "/pets", headers = "myHeader=myValue")
+    public void findPet(@PathVariable String ownerId, @PathVariable String petId, Model model) {
+        // implementation omitted
+    }
 
 }
 ```
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| Although you can match to_Content-Type_and_Accept_header values using media type wild cards \(for example_"content-type=text/\*"_will match to_"text/plain"_and_"text/html"_\), it is recommended to use the_consumes_and_produces_conditions respectively instead. They are intended specifically for that purpose. |
+| Although you can match to_Content-Type\_and\_Accept\_header values using media type wild cards \(for example_"content-type=text/\*"_will match to_"text/plain"_and_"text/html"\_\), it is recommended to use the\_consumes\_and\_produces\_conditions respectively instead. They are intended specifically for that purpose. |
 
 #### HTTP HEAD and HTTP OPTIONS
 
@@ -421,7 +423,4 @@ public class RelativePathUriTemplateController {
 `@RequestMapping`methods have built-in support for HTTP OPTIONS. By default an HTTP OPTIONS request is handled by setting the "Allow" response header to the HTTP methods explicitly declared on all`@RequestMapping`methods with matching URL patterns. When no HTTP methods are explicitly declared the "Allow" header is set to "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS". Ideally always declare the HTTP method\(s\) that an`@RequestMapping`method is intended to handle, or alternatively use one of the dedicated_composed_`@RequestMapping`variants \(see[the section called “Composed @RequestMapping Variants”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-composed)\).
 
 Although not necessary an`@RequestMapping`method can be mapped to and handle either HTTP HEAD or HTTP OPTIONS, or both.
-
-  
-
 

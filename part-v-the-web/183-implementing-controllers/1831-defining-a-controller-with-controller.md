@@ -1,31 +1,28 @@
-### 18.3.1Defining a controller with @Controller
+### 18.3.1使用@Controller定义控制器
 
-The`@Controller`annotation indicates that a particular class serves the role of a_controller_. Spring does not require you to extend any controller base class or reference the Servlet API. However, you can still reference Servlet-specific features if you need to.
+`@Controller`注释表示特定的类用于控制器的角色。 Spring不需要扩展任何控制器基类或引用Servlet API。 但是，如果需要，您仍然可以参考Servlet特定的功能。
 
-The`@Controller`annotation acts as a stereotype for the annotated class, indicating its role. The dispatcher scans such annotated classes for mapped methods and detects`@RequestMapping`annotations \(see the next section\).
+`@Controller`注释作为注释类的构造型，表示其作用。 调度程序扫描这些注释类的映射方法，并检测`@RequestMapping`注释（请参阅下一节）。
 
-You can define annotated controller beans explicitly, using a standard Spring bean definition in the dispatcher’s context. However, the`@Controller`stereotype also allows for autodetection, aligned with Spring general support for detecting component classes in the classpath and auto-registering bean definitions for them.
-
-To enable autodetection of such annotated controllers, you add component scanning to your configuration. Use the_spring-context_schema as shown in the following XML snippet:
+您可以使用调度程序上下文中的标准Spring bean定义来明确定义带注释的控制器bean。 但是，`@Controller`构造型还允许自动检测，与Spring通用支持对齐，用于检测类路径中的组件类并自动注册它们的bean定义。要启用自动检测这些带注释的控制器，您可以向组态添加组件扫描。 使用spring-context模式，如以下XML代码片段所示：
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="org.springframework.samples.petclinic.web"/>
+    <context:component-scan base-package="org.springframework.samples.petclinic.web"/>
 
-	<!-- ... -->
+    <!-- ... -->
 
 </beans>
-
 ```
 
 

@@ -1,9 +1,5 @@
 ### 18.2.2 默认DispatcherServlet 配置
 
-
-
-In[Section 18.16, “Configuring Spring MVC”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config)you’ll learn about other options for configuring Spring MVC including MVC Java config and the MVC XML namespace both of which provide a simple starting point and assume little knowledge of how Spring MVC works. Regardless of how you choose to configure your application, the concepts explained in this section are fundamental and should be of help to you.
-
 如上一节中针对每个特殊bean所述，`DispatcherServlet`会维护默认使用的实现列表。此信息保存在包`org.springframework.web.servlet`中的文件`DispatcherServlet.properties`中。
 
 所有特殊bean都有一些合理的默认值。不久之后，您将需要自定义这些bean提供的一个或多个属性。例如，将`InternalResourceViewResolver`设置的`prefix`属性配置为视图文件的父位置是很常见的。
