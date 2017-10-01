@@ -209,9 +209,9 @@ public class RelativePathUriTemplateController {
 
 #### 具有正则表达式的URI模板模式
 
-Sometimes you need more precision in defining URI template variables. Consider the URL`"/spring-web/spring-web-3.0.5.jar"`. How do you break it down into multiple parts?
+有时您需要更精确地定义URI模板变量。 考虑URL`“/spring-web/spring-web-3.0.5.jar”`。 你怎么把它分解成多个部分？
 
-The`@RequestMapping`annotation supports the use of regular expressions in URI template variables. The syntax is`{varName:regex}`where the first part defines the variable name and the second - the regular expression. For example:
+`@RequestMapping`注释支持在URI模板变量中使用正则表达式。 语法是`{varName：regex}`，其中第一部分定义了变量名，第二部分定义了正则表达式。 例如：
 
 ```java
 @RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
@@ -220,55 +220,55 @@ public void handle(@PathVariable String version, @PathVariable String extension)
 }
 ```
 
-#### Path Patterns
+#### 路径模式
 
-In addition to URI templates, the`@RequestMapping`annotation and all_composed_`@RequestMapping`variants also support Ant-style path patterns \(for example,`/myPath/*.do`\). A combination of URI template variables and Ant-style globs is also supported \(e.g.`/owners/*/pets/{petId}`\).
+除了URI模板之外，`@RequestMapping`注释和所有组合的`@RequestMapping`变体也支持Ant样式的路径模式（例如`/myPath/*.do`）。 还支持URI模板变量和Ant-style glob的组合（例如`/owners/*/pets/{petId}`）。
 
-#### Path Pattern Comparison
+#### 路径模式比较
 
-When a URL matches multiple patterns, a sort is used to find the most specific match.
+当URL匹配多个模式时，使用排序来查找最具体的匹配。
 
-A pattern with a lower count of URI variables and wild cards is considered more specific. For example`/hotels/{hotel}/*`has 1 URI variable and 1 wild card and is considered more specific than`/hotels/{hotel}/**`which as 1 URI variable and 2 wild cards.
+具有较低数量URI变量和通配符的模式被认为更具体。 例如/`hotels/{hotel}/*`具有1个URI变量和1个通配符，被认为比`/hotels/{hotel}/**`更具体，其中1个URI变量和2个通配符。
 
-If two patterns have the same count, the one that is longer is considered more specific. For example`/foo/bar*`is longer and considered more specific than`/foo/*`.
+如果两个模式具有相同的计数，那么较长的模式被认为更具体。 例如`/foo/bar*`比较长，被认为比`/foo/*`更具体。
 
-When two patterns have the same count and length, the pattern with fewer wild cards is considered more specific. For example`/hotels/{hotel}`is more specific than`/hotels/*`.
+当两个模式具有相同的计数和长度时，具有较少通配符的模式被认为更具体。 例如`/hotels/ {hotel}`比`/hotels/*`更具体。
 
-There are also some additional special rules:
+下面有些额外增加的特殊的规则：
 
-* The**default mapping pattern**`/**`is less specific than any other pattern. For example`/api/{a}/{b}/{c}`is more specific.
+* **默认映射模式**`/**`比任何其他模式都要小。 例如`/api/{a}/{b}/{c}`更具体。
 
-* A**prefix pattern**such as`/public/**`is less specific than any other pattern that doesn’t contain double wildcards. For example`/public/path3/{a}/{b}/{c}`is more specific.
+* 诸如`/public/**`之类的**前缀模式**比不包含双通配符的任何其他模式都不那么具体。 例如`/public/path3/{a}/{b}/{c}`更具体。
 
-For the full details see`AntPatternComparator`in`AntPathMatcher`. Note that the PathMatcher can be customized \(see[Section18.16.11, “Path Matching”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-path-matching)in the section on configuring Spring MVC\).
+有关详细信息，请参阅AntPathMatcher中的AntPatternComparator。 请注意，可以自定义PathMatcher（参见[Section 18.16.11, “Path Matching”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-path-matching)\).
 
-#### Path Patterns with Placeholders
+#### 具有占位符的路径模式
 
-Patterns in`@RequestMapping`annotations support`${…​}`placeholders against local properties and/or system properties and environment variables. This may be useful in cases where the path a controller is mapped to may need to be customized through configuration. For more information on placeholders, see the javadocs of the`PropertyPlaceholderConfigurer`class.
+`@RequestMapping`注释中的模式支持对本地属性and/or系统属性和环境变量的`${…}`占位符。 在将控制器映射到的路径可能需要通过配置进行定制的情况下，这可能是有用的。 有关占位符的更多信息，请参阅`PropertyPlaceholderConfigurer`类的javadocs。
 
-#### Suffix Pattern Matching
+#### 后缀模式匹配
 
-By default Spring MVC performs`".*"`suffix pattern matching so that a controller mapped to`/person`is also implicitly mapped to`/person.*`. This makes it easy to request different representations of a resource through the URL path \(e.g.`/person.pdf`,`/person.xml`\).
+默认情况下，Spring MVC执行`".*"`后缀模式匹配，以便映射到`/person`的控制器也隐式映射到`/person.*`。这使得通过URL路径（例如`/person.pdf`,`/person.xml`）可以轻松地请求资源的不同表示。
 
-Suffix pattern matching can be turned off or restricted to a set of path extensions explicitly registered for content negotiation purposes. This is generally recommended to minimize ambiguity with common request mappings such as`/person/{id}`where a dot might not represent a file extension, e.g.`/person/joe@email.com`vs`/person/joe@email.com.json`. Furthermore as explained in the note below suffix pattern matching as well as content negotiation may be used in some circumstances to attempt malicious attacks and there are good reasons to restrict them meaningfully.
+后缀模式匹配可以关闭或限制为一组明确注册用于内容协商的路径扩展。通常建议通过诸如`/person/{id}`之类的常见请求映射来减少歧义，其中点可能不表示文件扩展名，例如`/person/joe@email.com` vs `/person/joe@email.com.json`。此外，如下面的说明中所解释的，后缀模式匹配以及内容协商可能在某些情况下用于尝试恶意攻击，并且有充分的理由有意义地限制它们。
 
-See[Section18.16.11, “Path Matching”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-path-matching)for suffix pattern matching configuration and also[Section18.16.6, “Content Negotiation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-content-negotiation)for content negotiation configuration.
+有关后缀模式匹配配置，请参见[Section18.16.11, “Path Matching”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-path-matching)，内容协商配置[Section18.16.6, “Content Negotiation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-content-negotiation)。
 
-#### Suffix Pattern Matching and RFD
+#### 后缀模式匹配和RFD
 
-Reflected file download \(RFD\) attack was first described in a[paper by Trustwave](https://www.trustwave.com/Resources/SpiderLabs-Blog/Reflected-File-Download---A-New-Web-Attack-Vector/)in 2014. The attack is similar to XSS in that it relies on input \(e.g. query parameter, URI variable\) being reflected in the response. However instead of inserting JavaScript into HTML, an RFD attack relies on the browser switching to perform a download and treating the response as an executable script if double-clicked based on the file extension \(e.g. .bat, .cmd\).
+反射文件下载（RFD）攻击是由Trustwave在2014年的一篇论文中首次描述的。攻击类似于XSS，因为它依赖于响应中反映的输入（例如查询参数，URI变量）。然而，不是将JavaScript插入到HTML中，如果基于文件扩展名（例如.bat，.cmd）双击，则RFD攻击依赖于浏览器切换来执行下载并将响应视为可执行脚本。
 
-In Spring MVC`@ResponseBody`and`ResponseEntity`methods are at risk because they can render different content types which clients can request including via URL path extensions. Note however that neither disabling suffix pattern matching nor disabling the use of path extensions for content negotiation purposes alone are effective at preventing RFD attacks.
+在Spring MVC `@ResponseBody`和`ResponseEntity`方法存在风险，因为它们可以呈现客户端可以通过URL路径扩展请求的不同内容类型。但是请注意，单独禁用后缀模式匹配或禁用仅用于内容协商的路径扩展都可以有效地防止RFD攻击。
 
-For comprehensive protection against RFD, prior to rendering the response body Spring MVC adds a`Content-Disposition:inline;filename=f.txt`header to suggest a fixed and safe download file. This is done only if the URL path contains a file extension that is neither whitelisted nor explicitly registered for content negotiation purposes. However it may potentially have side effects when URLs are typed directly into a browser.
+为了全面保护RFD，在呈现响应体之前，Spring MVC添加了`Content-Disposition:inline;filename=f.txt`头来建议一个固定和安全的下载文件。只有当URL路径包含既不是白名单的文件扩展名，也没有明确注册用于内容协商的目的，这是完成的。但是，当URL直接输入浏览器时，可能会产生副作用。
 
-Many common path extensions are whitelisted by default. Furthermore REST API calls are typically not meant to be used as URLs directly in browsers. Nevertheless applications that use custom`HttpMessageConverter`implementations can explicitly register file extensions for content negotiation and the Content-Disposition header will not be added for such extensions. See[Section18.16.6, “Content Negotiation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-content-negotiation).
+许多常见的路径扩展名默认为白名单。此外，REST API调用通常不是直接用于浏览器中的URL。然而，使用自定义`HttpMessageConverter`实现的应用程序可以明确地注册用于内容协商的文件扩展名，并且不会为此类扩展添加Content-Disposition头。见第18.16.6节[“Content Negotiation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-content-negotiation)。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| This was originally introduced as part of work for[CVE-2015-5211](https://pivotal.io/security/cve-2015-5211). Below are additional recommendations from the report:Encode rather than escape JSON responses. This is also an OWASP XSS recommendation. For an example of how to do that with Spring see[spring-jackson-owasp](https://github.com/rwinch/spring-jackson-owasp).Configure suffix pattern matching to be turned off or restricted to explicitly registered suffixes only.Configure content negotiation with the properties "useJaf" and "ignoreUnknownPathExtensions" set to false which would result in a 406 response for URLs with unknown extensions. Note however that this may not be an option if URLs are naturally expected to have a dot towards the end.Add`X-Content-Type-Options: nosniff`header to responses. Spring Security 4 does this by default. |
+| 这是[CVE-2015-5211](https://pivotal.io/security/cve-2015-5211)工作的一部分。 以下是报告中的其他建议：1、编码而不是转义JSON响应。 这也是OWASP XSS的建议。 有关Spring的例子，请参阅[spring-jackson-owasp](https://github.com/rwinch/spring-jackson-owasp) 2、将后缀模式匹配配置为关闭或仅限于明确注册的后缀。3、配置使用属性“useJaf”和“ignoreUnknownPathExtensions”设置为false的内容协商，这将导致具有未知扩展名的URL的406响应。 但是请注意，如果URL自然希望有一个结束点，这可能不是一个选择4、添加`X-Content-Type-Options：nosniff`头到响应。 Spring Security 4默认情况下执行此操作。 |
 
-#### Matrix Variables
+#### 矩阵变量
 
 The URI specification[RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.3)defines the possibility of including name-value pairs within path segments. There is no specific term used in the spec. The general "URI path parameters" could be applied although the more unique["Matrix URIs"](https://www.w3.org/DesignIssues/MatrixURIs.html), originating from an old post by Tim Berners-Lee, is also frequently used and fairly well known. Within Spring MVC these are referred to as matrix variables.
 
