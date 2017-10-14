@@ -270,13 +270,13 @@ public void handle(@PathVariable String version, @PathVariable String extension)
 
 #### 矩阵变量
 
-The URI specification[RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.3)defines the possibility of including name-value pairs within path segments. There is no specific term used in the spec. The general "URI path parameters" could be applied although the more unique["Matrix URIs"](https://www.w3.org/DesignIssues/MatrixURIs.html), originating from an old post by Tim Berners-Lee, is also frequently used and fairly well known. Within Spring MVC these are referred to as matrix variables.
+URI规范[RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.3)定义了在路径段中包含名称 – 值对的可能性。规格中没有使用具体术语。可以应用一般的“URI路径参数”，尽管来自Tim Berners-Lee的旧帖子的更独特的["Matrix URIs"](https://www.w3.org/DesignIssues/MatrixURIs.html)也经常被使用并且是相当熟知的。在Spring MVC中，这些被称为矩阵变量。
 
-Matrix variables can appear in any path segment, each matrix variable separated with a ";" \(semicolon\). For example:`"/cars;color=red;year=2012"`. Multiple values may be either "," \(comma\) separated`"color=red,green,blue"`or the variable name may be repeated`"color=red;color=green;color=blue"`.
+矩阵变量可以出现在任何路径段中，每个矩阵变量用“;”分隔（分号）。例如：`"/cars;color=red;year=2012"`。多个值可以是“，”（逗号）分隔`"color=red,green,blue"`，或者变量名称可以重复`"color=red;color=green;color=blue"`。
 
-If a URL is expected to contain matrix variables, the request mapping pattern must represent them with a URI template. This ensures the request can be matched correctly regardless of whether matrix variables are present or not and in what order they are provided.
+如果URL预期包含矩阵变量，则请求映射模式必须使用URI模板来表示它们。这确保了请求可以正确匹配，无论矩阵变量是否存在，以及它们提供什么顺序。
 
-Below is an example of extracting the matrix variable "q":
+以下是提取矩阵变量“q”的示例：
 
 ```java
 // GET /pets/42;q=11;r=22
@@ -290,7 +290,7 @@ public void findPet(@PathVariable String petId, @MatrixVariable int q) {
 }
 ```
 
-Since all path segments may contain matrix variables, in some cases you need to be more specific to identify where the variable is expected to be:
+由于所有路径段都可能包含矩阵变量，因此在某些情况下，您需要更具体地确定变量预期位于何处：
 
 ```java
 // GET /owners/42;q=11/pets/21;q=22
@@ -306,7 +306,7 @@ public void findPet(
 }
 ```
 
-A matrix variable may be defined as optional and a default value specified:
+矩阵变量可以定义为可选参数，并指定一个默认值：
 
 ```java
 // GET /pets/42
@@ -319,7 +319,7 @@ public void findPet(@MatrixVariable(required=false, defaultValue="1") int q) {
 }
 ```
 
-All matrix variables may be obtained in a Map:
+所有矩阵变量可以在Map中获得：
 
 ```java
 // GET /owners/42;q=11;r=12/pets/21;q=22;s=23
@@ -335,15 +335,33 @@ public void findPet(
 }
 ```
 
-Note that to enable the use of matrix variables, you must set the`removeSemicolonContent`property of`RequestMappingHandlerMapping`to`false`. By default it is set to`true`.
+请注意，为了使用矩阵变量，您必须将`RequestMappingHandlerMapping`的`removeSemicolonContent`属性设置为`false`。 默认设置为`true`。
 
-| ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
-| :--- |
-| The MVC Java config and the MVC namespace both provide options for enabling the use of matrix variables.If you are using Java config, The[Advanced Customizations with MVC Java Config](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-advanced-java)section describes how the`RequestMappingHandlerMapping`can be customized.In the MVC namespace, the```element has an``enable-matrix-variables`attribute that should be set to`true`. By default it is set to`false`.`\` |
+> MVC Java配置和MVC命名空间都提供了使用矩阵变量的选项。
+>
+> 如果您使用Java配置，使用MVC Java Config的高级自定义部分将介绍如何自定义RequestMappingHandlerMapping。
+>
+> 在MVC命名空间中，`<mvc：annotation-driven>`元素具有一个应该设置为`true`的`enable-matrix-variables`属性。 默认情况下设置为`false`。
+>
+> ```
+>     <?xml version="1.0" encoding="UTF-8"?>
+>     <beans xmlns="http://www.springframework.org/schema/beans"
+>         xmlns:mvc="http://www.springframework.org/schema/mvc"
+>         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>         xsi:schemaLocation="
+>             http://www.springframework.org/schema/beans
+>             http://www.springframework.org/schema/beans/spring-beans.xsd
+>             http://www.springframework.org/schema/mvc
+>             http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+>
+>         <mvc:annotation-driven enable-matrix-variables="true"/>
+>
+>     </beans>
+> ```
 
-#### Consumable Media Types
+#### Consumable Media 类型
 
-You can narrow the primary mapping by specifying a list of consumable media types. The request will be matched only if the`Content-Type`request header matches the specified media type. For example:
+您可以通过指定consumable media类型的列表来缩小主要映射。 只有当`Content-Type`请求头与指定的媒体类型匹配时，才会匹配该请求。 例如：
 
 ```java
 @PostMapping(path = "/pets", consumes = "application/json")
@@ -352,15 +370,15 @@ public void addPet(@RequestBody Pet pet, Model model) {
 }
 ```
 
-Consumable media type expressions can also be negated as in`!text/plain`to match to all requests other than those with`Content-Type`of`text/plain`. Also consider using constants provided in`MediaType`such as`APPLICATION_JSON_VALUE`and`APPLICATION_JSON_UTF8_VALUE`.
+consumable media类型表达式也可以在`!text/plain`中否定，以匹配除`Content-Type` 或 `text/plain`之外的所有请求。 还要考虑使用`MediaType`中提供的常量，例如`APPLICATION_JSON_VALUE`和A`PPLICATION_JSON_UTF8_VALUE`。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| The\_consumes\_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level consumable types override rather than extend type-level consumable types. |
+| 在类型和方法级别上支持\_\_consumes\_condition。 与大多数其他条件不同，当在类型级别使用时，方法级consumable types将覆盖而不是扩展类型级别的consumable types。 |
 
-#### Producible Media Types
+#### Producible Media 类型
 
-You can narrow the primary mapping by specifying a list of producible media types. The request will be matched only if the`Accept`request header matches one of these values. Furthermore, use of the\_produces\_condition ensures the actual content type used to generate the response respects the media types specified in the\_produces\_condition. For example:
+您可以通过指定producible media类型列表来缩小主要映射。 只有当`Accept`请求头匹配这些值之一时，才会匹配该请求。 此外，使用产生条件确保用于产生响应的实际内容类型与产生条件中指定的媒体类型相关。 例如：
 
 ```java
 @GetMapping(path = "/pets/{petId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -372,17 +390,17 @@ public Pet getPet(@PathVariable String petId, Model model) {
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Be aware that the media type specified in the\_produces\_condition can also optionally specify a character set. For example, in the code snippet above we specify the same media type than the default one configured in`MappingJackson2HttpMessageConverter`, including the`UTF-8`charset. |
+| 在\_products\_condition中指定的媒体类型也可以选择指定一个字符集。 例如，在上面的代码片段中，我们指定与默认配置在`MappingJackson2HttpMessageConverter`中的介质类型相同的介质类型，包括`UTF-8` charset。 |
 
-Just like with_consumes_, producible media type expressions can be negated as in`!text/plain`to match to all requests other than those with an`Accept`header value of`text/plain`. Also consider using constants provided in`MediaType`such as`APPLICATION_JSON_VALUE`and`APPLICATION_JSON_UTF8_VALUE`.
+就像消费一样，producible media类型表达式可以被否定为`!text/plain`，以匹配除了`Accept`头文件值为`text/plain`的所有请求。 还要考虑使用`MediaType`中提供的常量，例如`APPLICATION_JSON_VALUE`和`APPLICATION_JSON_UTF8_VALUE`。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| The\_produces\_condition is supported on the type and on the method level. Unlike most other conditions, when used at the type level, method-level producible types override rather than extend type-level producible types. |
+| 在类型和方法级别上支持\_\_produces\_condition。 与大多数其他条件不同，当在类型级别使用时，方法级producible类型将覆盖而不是扩展类型级producible类型。 |
 
-#### Request Parameters and Header Values
+#### 请求参数和头部值
 
-You can narrow request matching through request parameter conditions such as`"myParam"`,`"!myParam"`, or`"myParam=myValue"`. The first two test for request parameter presence/absence and the third for a specific parameter value. Here is an example with a request parameter value condition:
+您可以通过请求参数条件（如`"myParam"`，`"!myParam"`或`"myParam=myValue"`）缩小请求匹配。 前两个测试请求参数存在/不存在，第三个为特定参数值。 下面是一个请求参数值条件的例子：
 
 ```java
 @Controller
@@ -397,7 +415,7 @@ public class RelativePathUriTemplateController {
 }
 ```
 
-The same can be done to test for request header presence/absence or to match based on a specific request header value:
+也可以根据特定的请求头值来测试请求头存在/不存在或匹配：
 
 ```java
 @Controller
@@ -414,13 +432,13 @@ public class RelativePathUriTemplateController {
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| Although you can match to_Content-Type\_and\_Accept\_header values using media type wild cards \(for example_"content-type=text/\*"_will match to_"text/plain"_and_"text/html"\_\), it is recommended to use the\_consumes\_and\_produces\_conditions respectively instead. They are intended specifically for that purpose. |
+| 虽然可以使用媒体类型通配符匹配toContent-Type\_and\_Accept\_header值（例如“content-type = text / \*”将匹配“text / plain”和“text / html”\_），但建议分别使用\_onsumes\_and\_produces\_cignitions。 它们专门用于此目的。 |
 
-#### HTTP HEAD and HTTP OPTIONS
+#### HTTP 头部和 HTTP 可选项
 
-`@RequestMapping`methods mapped to "GET" are also implicitly mapped to "HEAD", i.e. there is no need to have "HEAD" explicitly declared. An HTTP HEAD request is processed as if it were an HTTP GET except instead of writing the body only the number of bytes are counted and the "Content-Length" header set.
+映射到“GET”的`@RequestMapping`方法也隐式映射到“HEAD”，即不需要明确声明“HEAD”。处理HTTP HEAD请求就像是HTTP GET一样，而不是仅写入正文，仅计数字节数，并设置“Content-Length”头。
 
-`@RequestMapping`methods have built-in support for HTTP OPTIONS. By default an HTTP OPTIONS request is handled by setting the "Allow" response header to the HTTP methods explicitly declared on all`@RequestMapping`methods with matching URL patterns. When no HTTP methods are explicitly declared the "Allow" header is set to "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS". Ideally always declare the HTTP method\(s\) that an`@RequestMapping`method is intended to handle, or alternatively use one of the dedicated_composed_`@RequestMapping`variants \(see[the section called “Composed @RequestMapping Variants”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-composed)\).
+`@RequestMapping`方法内置支持HTTP选项。默认情况下，通过将所有`@RequestMapping`方法上显式声明的具有匹配URL模式的HTTP方法设置为“允许”响应头来处理HTTP OPTIONS请求。当没有明确声明HTTP方法时，“允许”标题设置为“GET，HEAD，POST，PUT，PATCH，DELETE，OPTIONS”。理想地总是声明`@RequestMapping`方法要处理的HTTP方法，或者使用专用的组合`@RequestMapping`变体之一（参见[“Composed @RequestMapping Variants”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-composed)一节）。
 
-Although not necessary an`@RequestMapping`method can be mapped to and handle either HTTP HEAD or HTTP OPTIONS, or both.
+虽然不需要`@RequestMapping`方法可以映射到HTTP HEAD或HTTP选项，也可以两者兼容。
 
