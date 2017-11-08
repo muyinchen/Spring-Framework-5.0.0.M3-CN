@@ -1,79 +1,83 @@
-### 18.3.3Defining @RequestMapping handler methods
+### 18.3.3 定义@RequestMapping 处理方法
 
-`@RequestMapping`handler methods can have very flexible signatures. The supported method arguments and return values are described in the following section. Most arguments can be used in arbitrary order with the only exception being`BindingResult`arguments. This is described in the next section.
-
-| ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
-| :--- |
-| Spring 3.1 introduced a new set of support classes for`@RequestMapping`methods called`RequestMappingHandlerMapping`and`RequestMappingHandlerAdapter`respectively. They are recommended for use and even required to take advantage of new features in Spring MVC 3.1 and going forward. The new support classes are enabled by default from the MVC namespace and with use of the MVC Java config but must be configured explicitly if using neither. |
-
-#### Supported method argument types
-
-The following are the supported method arguments:
-
-* `org.springframework.web.context.request.WebRequest`or`org.springframework.web.context.request.NativeWebRequest`. Allows for generic request parameter access as well as request/session attribute access, without ties to the native Servlet API.
-
-* Request or response objects \(Servlet API\). Choose any specific request or response type, for example`ServletRequest`or`HttpServletRequest`or Spring’s`MultipartRequest`/`MultipartHttpServletRequest`.
-
-* Session object \(Servlet API\) of type`HttpSession`. An argument of this type enforces the presence of a corresponding session. As a consequence, such an argument is never`null`.
+`@RequestMapping`处理方法可以有非常灵活的签名。 支持的方法参数和返回值将在以下部分中介绍。 大多数参数可以按任意顺序使用，唯一的例外是`BindingResult`参数。 这将在下一节中介绍。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Session access may not be thread-safe, in particular in a Servlet environment. Consider setting the`RequestMappingHandlerAdapter`'s "synchronizeOnSession" flag to "true" if multiple requests are allowed to access a session concurrently. |
+| Spring 3.1为`@RequestMapping`方法引入了一组新的支持类，分别称为`RequestMappingHandlerMapping`和`RequestMappingHandlerAdapter`。 它们被推荐使用，甚至需要利用Spring MVC 3.1中的新特性并继续前进。 新的支持类默认从MVC命名空间启用，并且使用MVC Java配置，但是如果两者都不使用，则必须明确配置。 |
 
-* `java.servlet.http.PushBuilder`for the associated Servlet 4.0 push builder API, allowing for programmatic HTTP/2 resource pushes.
+#### 支持的方法参数类型
 
-* `java.security.Principal`\(or a specific`Principal`implementation class if known\), containing the currently authenticated user.
+下面是支持的方法参数类型：
 
-* `org.springframework.http.HttpMethod`for the HTTP request method, represented as Spring’s`HttpMethod`enum.
+* `org.springframework.web.context.request.WebRequest`或 `org.springframework.web.context.request.NativeWebRequest`允许通用请求参数访问以及请求/会话属性访问，而不涉及本机Servlet API。
 
-* `java.util.Locale`for the current request locale, determined by the most specific locale resolver available, in effect, the configured`LocaleResolver`/`LocaleContextResolver`in an MVC environment.
+* Request 或 response 对象\(Servlet API\). 选择任意特定的请求或响应类型, 例如
+  `ServletRequest`或`HttpServletRequest`或 Spring’s`MultipartRequest`/`MultipartHttpServletRequest`
+  .
+* Session对象（Servlet API）类型为`HttpSession`。 此类型的参数强制存在相应的会话。 因此，这样的论证从不为`null`。
 
-* `java.util.TimeZone`\(Java 6+\) /`java.time.ZoneId`\(Java 8+\) for the time zone associated with the current request, as determined by a`LocaleContextResolver`.
+| ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
+| :--- |
+| 会话访问可能不是线程安全的，特别是在Servlet环境中。 如果允许多个请求同时访问会话，请考虑将`RequestMappingHandlerAdapter`的“synchronizeOnSession”标志设置为“true”。. |
 
-* `java.io.InputStream`/`java.io.Reader`for access to the request’s content. This value is the raw InputStream/Reader as exposed by the Servlet API.
+* `java.servlet.http.PushBuilder`用于关联的Servlet 4.0推送构建器API，允许编程的HTTP / 2资源推送。
 
-* `java.io.OutputStream`/`java.io.Writer`for generating the response’s content. This value is the raw OutputStream/Writer as exposed by the Servlet API.
+* `java.security.Principal`（或一个特定的`Principal`实现类（如果已知）），包含当前验证的用户。
 
-* `@PathVariable`annotated parameters for access to URI template variables. See[the section called “URI Template Patterns”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates).
+* `org.springframework.http.HttpMethod`为HTTP请求方法，表示为Spring的`HttpMethod`枚举。
 
-* `@MatrixVariable`annotated parameters for access to name-value pairs located in URI path segments. See[the section called “Matrix Variables”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-matrix-variables).
+* 由当前请求区域设置的`java.util.Locale`，由最具体的语言环境解析器确定，实际上是在MVC环境中配置的`LocaleResolver `/ `LocaleContextResolver`。
 
-* `@RequestParam`annotated parameters for access to specific Servlet request parameters. Parameter values are converted to the declared method argument type. See[the section called “Binding request parameters to method parameters with @RequestParam”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestparam).
+* 与当前请求相关联的时区的`java.util.TimeZone`（Java 6+）/ `java.time.ZoneId`（Java 8+），由`LocaleContextResolver`确定。
 
-* `@RequestHeader`annotated parameters for access to specific Servlet request HTTP headers. Parameter values are converted to the declared method argument type. See[the section called “Mapping request header attributes with the @RequestHeader annotation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestheader).
+* `java.io.InputStream` / `java.io.Reader`，用于访问请求的内容。该值是由Servlet API公开的原始InputStream / Reader。
 
-* `@RequestBody`annotated parameters for access to the HTTP request body. Parameter values are converted to the declared method argument type using`HttpMessageConverter`s. See[the section called “Mapping the request body with the @RequestBody annotation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestbody).
+* `java.io.OutputStream` / `java.io.Writer`用于生成响应的内容。该值是由Servlet API公开的原始OutputStream / Writer。
 
-* `@RequestPart`annotated parameters for access to the content of a "multipart/form-data" request part. See[Section18.10.5, “Handling a file upload request from programmatic clients”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart-forms-non-browsers)and[Section18.10, “Spring’s multipart \(file upload\) support”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart).
+* `@PathVariable`注释参数，用于访问URI模板变量。请参阅[the section called “URI Template Patterns”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates)
+  .
+* `@MatrixVariable`注释参数，用于访问位于URI路径段中的名称/值对。请参阅 [the section called “Matrix Variables”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-matrix-variables)。
 
-* `@SessionAttribute`annotated parameters for access to existing, permanent session attributes \(e.g. user authentication object\) as opposed to model attributes temporarily stored in the session as part of a controller workflow via`@SessionAttributes`.
+* `@RequestParam`用于访问特定Servlet请求参数的注释参数。参数值将转换为声明的方法参数类型。请参阅[the section called “Binding request parameters to method parameters with @RequestParam”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestparam)。
 
-* `@RequestAttribute`annotated parameters for access to request attributes.
+* `@RequestHeader`用于访问特定Servlet请求HTTP标头的注释参数。参数值将转换为声明的方法参数类型。请参阅 [the section called “Mapping request header attributes with the @RequestHeader annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestheader)。
 
-* `HttpEntity`parameters for access to the Servlet request HTTP headers and contents. The request stream will be converted to the entity body using`HttpMessageConverter`s. See[the section called “Using HttpEntity”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity).
+* `@RequestBody`用于访问HTTP请求体的注释参数。使用`HttpMessageConverters`将参数值转换为声明的方法参数类型。请参阅[the section called “Mapping the request body with the @RequestBody annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestbody)。
 
-* `java.util.Map`/`org.springframework.ui.Model`/`org.springframework.ui.ModelMap`for enriching the implicit model that is exposed to the web view.
+* @RequestPart注释参数，用于访问“multipart / form-data”请求部分的内容。请参见[Section 18.10.5, “Handling a file upload request from programmatic clients”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart-forms-non-browsers)和[Section 18.10, “Spring’s multipart \(file upload\) support”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart)
 
-* `org.springframework.web.servlet.mvc.support.RedirectAttributes`to specify the exact set of attributes to use in case of a redirect and also to add flash attributes \(attributes stored temporarily on the server-side to make them available to the request after the redirect\). See[the section called “Passing Data To the Redirect Target”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-passing-data)and[Section18.6, “Using flash attributes”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes).
+* `@SessionAttribute`用于访问现有的永久会话属性（例如，用户认证对象）的注释参数，而不是通过`@SessionAttributes`作为控制器工作流的一部分临时存储在会话中的模型属性。
 
-* Command or form objects to bind request parameters to bean properties \(via setters\) or directly to fields, with customizable type conversion, depending on`@InitBinder`methods and/or the HandlerAdapter configuration. See the`webBindingInitializer`property on`RequestMappingHandlerAdapter`. Such command objects along with their validation results will be exposed as model attributes by default, using the command class name - e.g. model attribute "orderAddress" for a command object of type "some.package.OrderAddress". The`ModelAttribute`annotation can be used on a method argument to customize the model attribute name used.
+* `@RequestAttribute`用于访问请求属性的注释参数。
 
-* `org.springframework.validation.Errors`/`org.springframework.validation.BindingResult`validation results for a preceding command or form object \(the immediately preceding method argument\).
+* `HttpEntity`参数访问Servlet请求HTTP头和内容。请求流将使用`HttpMessageConverters`转换为实体。请参阅 [the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity)。
 
-* `org.springframework.web.bind.support.SessionStatus`status handle for marking form processing as complete, which triggers the cleanup of session attributes that have been indicated by the`@SessionAttributes`annotation at the handler type level.
+* `java.util.Map` / `org.springframework.ui.Model` / `org.springframework.ui.ModelMap`用于丰富暴露于Web视图的隐式模型。
 
-* `org.springframework.web.util.UriComponentsBuilder`a builder for preparing a URL relative to the current request’s host, port, scheme, context path, and the literal part of the servlet mapping.
+* `org.springframework.web.servlet.mvc.support.RedirectAttributes`来指定在重定向情况下使用的精确的属性集，并且还添加Flash属性（临时存储在服务器端的属性，使其可以在请求之后使用重定向）。请参见 
+  [the section called “Passing Data To the Redirect Target”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-passing-data)和[Section 18.6, “Using flash attributes”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)。
+
+* 根据`@InitBinder`方法和/或HandlerAdapter配置，命令或表单对象将请求参数绑定到bean属性（通过setter）或直接转换为字段，并进行可定制的类型转换。请参阅`RequestMappingHandlerAdapter`上的`webBindingInitializer`属性。默认情况下，这些命令对象及其验证结果将作为模型属性公开，使用命令类名称 – 例如。对于“some.package.OrderAddress”类型的命令对象的model属性“orderAddress”。 `ModelAttribute`注释可以用于方法参数来自定义所使用的模型属性名称。
+
+* `org.springframework.validation.Errors` / `org.springframework.validation.BindingResult`验证前一个命令或表单对象的结果（即在前面的方法参数）。
+
+* 用于将表单处理标记为完整的`org.springframework.web.bind.support.SessionStatus`状态句柄，它触发在处理程序类型级别上由`@SessionAttributes`注释指示的会话属性的清除。
+
+* `org.springframework.web.util.UriComponentsBuilder`用于准备与当前请求的主机，端口，方案，上下文路径以及servlet映射的文字部分相关的URL的构建器。
 
 The`Errors`or`BindingResult`parameters have to follow the model object that is being bound immediately as the method signature might have more than one model object and Spring will create a separate`BindingResult`instance for each of them so the following sample won’t work:
 
-**Invalid ordering of BindingResult and @ModelAttribute.**
+`Errors`或`BindingResult`参数必须遵循正在绑定的模型对象，因为方法签名可能有多个模型对象，Spring将为每个模型对象创建一个单独的`BindingResult`实例，因此以下示例将不起作用：
+
+**BindingResult和@ModelAttribute的排序无效。**
 
 ```java
 @PostMapping
 public String processSubmit(@ModelAttribute("pet") Pet pet, Model model, BindingResult result) { ... }
 ```
 
-Note, that there is a`Model`parameter in between`Pet`and`BindingResult`. To get this working you have to reorder the parameters as follows:
+注意，`Pet`和`BindingResult`之间有一个`Model`参数。 要使其工作，您必须重新排序参数如下：
 
 ```java
 @PostMapping
@@ -82,9 +86,9 @@ public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| JDK 1.8’s`java.util.Optional`is supported as a method parameter type with annotations that have a`required`attribute \(e.g.`@RequestParam`,`@RequestHeader`, etc\). The use of`java.util.Optional`in those cases is equivalent to having`required=false`. |
+| 支持JDK 1.8的`java.util.Optional`作为方法参数类型，其注解具有所需的属性（例如`@RequestParam`，`@RequestHeader`等）。 在这些情况下使用`java.util.Optional`相当于`required=false`。  |
 
-#### Supported method return types
+#### 支持的方法返回类型
 
 The following are the supported return types:
 
@@ -132,16 +136,16 @@ The following code snippet shows the usage:
 @SessionAttributes("pet")
 public class EditPetForm {
 
-	// ...
+    // ...
 
-	@GetMapping
-	public String setupForm(@RequestParam("petId") int petId, ModelMap model) {
-		Pet pet = this.clinic.loadPet(petId);
-		model.addAttribute("pet", pet);
-		return "petForm";
-	}
+    @GetMapping
+    public String setupForm(@RequestParam("petId") int petId, ModelMap model) {
+        Pet pet = this.clinic.loadPet(petId);
+        model.addAttribute("pet", pet);
+        return "petForm";
+    }
 
-	// ...
+    // ...
 
 }
 ```
@@ -159,7 +163,7 @@ The`@RequestBody`method parameter annotation indicates that a method parameter s
 ```java
 @PutMapping("/something")
 public void handle(@RequestBody String body, Writer writer) throws IOException {
-	writer.write(body);
+    writer.write(body);
 }
 ```
 
@@ -179,21 +183,21 @@ If you intend to read and write XML, you will need to configure the`MarshallingH
 
 ```java
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-	<property name="messageConverters">
-		<util:list id="beanList">
-			<ref bean="stringHttpMessageConverter"/>
-			<ref bean="marshallingHttpMessageConverter"/>
-		</util:list>
-	</property>
+    <property name="messageConverters">
+        <util:list id="beanList">
+            <ref bean="stringHttpMessageConverter"/>
+            <ref bean="marshallingHttpMessageConverter"/>
+        </util:list>
+    </property>
 </bean>
 
 <bean id="stringHttpMessageConverter"
-		class="org.springframework.http.converter.StringHttpMessageConverter"/>
+        class="org.springframework.http.converter.StringHttpMessageConverter"/>
 
 <bean id="marshallingHttpMessageConverter"
-		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-	<property name="marshaller" ref="castorMarshaller"/>
-	<property name="unmarshaller" ref="castorMarshaller"/>
+        class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+    <property name="marshaller" ref="castorMarshaller"/>
+    <property name="unmarshaller" ref="castorMarshaller"/>
 </bean>
 ```
 
@@ -213,7 +217,7 @@ The`@ResponseBody`annotation is similar to`@RequestBody`. This annotation can be
 @GetMapping("/something")
 @ResponseBody
 public String helloWorld() {
-	return "Hello World";
+    return "Hello World";
 }
 ```
 
@@ -236,14 +240,14 @@ The`HttpEntity`is similar to`@RequestBody`and`@ResponseBody`. Besides getting ac
 ```java
 @RequestMapping("/something")
 public ResponseEntity<String> handle(HttpEntity<byte[]> requestEntity) throws UnsupportedEncodingException {
-	String requestHeader = requestEntity.getHeaders().getFirst("MyRequestHeader");
-	byte[] requestBody = requestEntity.getBody();
+    String requestHeader = requestEntity.getHeaders().getFirst("MyRequestHeader");
+    byte[] requestBody = requestEntity.getBody();
 
-	// do something with request header and body
+    // do something with request header and body
 
-	HttpHeaders responseHeaders = new HttpHeaders();
-	responseHeaders.set("MyResponseHeader", "MyValue");
-	return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.CREATED);
+    HttpHeaders responseHeaders = new HttpHeaders();
+    responseHeaders.set("MyResponseHeader", "MyValue");
+    return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.CREATED);
 }
 ```
 
@@ -251,7 +255,7 @@ The above example gets the value of the`MyRequestHeader`request header, and read
 
 As with`@RequestBody`and`@ResponseBody`, Spring uses`HttpMessageConverter`to convert from and to the request and response streams. For more information on these converters, see the previous section and[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion).
 
-####  Using @ModelAttribute on a method
+#### Using @ModelAttribute on a method
 
 The`@ModelAttribute`annotation can be used on methods or on method arguments. This section explains its usage on methods while the next section explains its usage on method arguments.
 
@@ -264,15 +268,15 @@ An`@ModelAttribute`on a method indicates the purpose of that method is to add on
 
 @ModelAttribute
 public Account addAccount(@RequestParam String number) {
-	return accountManager.findAccount(number);
+    return accountManager.findAccount(number);
 }
 
 // Add multiple attributes
 
 @ModelAttribute
 public void populateModel(@RequestParam String number, Model model) {
-	model.addAttribute(accountManager.findAccount(number));
-	// add more ...
+    model.addAttribute(accountManager.findAccount(number));
+    // add more ...
 }
 ```
 
@@ -316,7 +320,7 @@ An`@ModelAttribute`method is a common way to retrieve an attribute from the data
 ```java
 @PutMapping("/accounts/{account}")
 public String save(@ModelAttribute("account") Account account) {
-	// ...
+    // ...
 }
 ```
 
@@ -330,11 +334,11 @@ As a result of data binding there may be errors such as missing required fields 
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
 public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result) {
 
-	if (result.hasErrors()) {
-		return "petForm";
-	}
+    if (result.hasErrors()) {
+        return "petForm";
+    }
 
-	// ...
+    // ...
 
 }
 ```
@@ -368,12 +372,12 @@ In addition to data binding you can also invoke validation using your own custom
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
 public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result) {
 
-	new PetValidator().validate(pet, result);
-	if (result.hasErrors()) {
-		return "petForm";
-	}
+    new PetValidator().validate(pet, result);
+    if (result.hasErrors()) {
+        return "petForm";
+    }
 
-	// ...
+    // ...
 
 }
 ```
@@ -384,11 +388,11 @@ Or you can have validation invoked automatically by adding the JSR-303`@Valid`an
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
 public String processSubmit(@Valid @ModelAttribute("pet") Pet pet, BindingResult result) {
 
-	if (result.hasErrors()) {
-		return "petForm";
-	}
+    if (result.hasErrors()) {
+        return "petForm";
+    }
 
-	// ...
+    // ...
 
 }
 ```
@@ -406,7 +410,7 @@ The following code snippet shows the usage of this annotation, specifying the mo
 @RequestMapping("/editPet.do")
 @SessionAttributes("pet")
 public class EditPetForm {
-	// ...
+    // ...
 }
 ```
 
@@ -417,7 +421,7 @@ If you need access to pre-existing session attributes that are managed globally,
 ```java
 @RequestMapping("/")
 public String handle(@SessionAttribute User user) {
-	// ...
+    // ...
 }
 ```
 
@@ -432,7 +436,7 @@ Similar to`@SessionAttribute`the`@RequestAttribute`annotation can be used to acc
 ```java
 @RequestMapping("/")
 public String handle(@RequestAttribute Client client) {
-	// ...
+    // ...
 }
 ```
 
@@ -444,18 +448,18 @@ To support HTTP PUT and PATCH requests, the`spring-web`module provides the filte
 
 ```java
 <filter>
-	<filter-name>httpPutFormFilter</filter-name>
-	<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+    <filter-name>httpPutFormFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
 </filter>
 
 <filter-mapping>
-	<filter-name>httpPutFormFilter</filter-name>
-	<servlet-name>dispatcherServlet</servlet-name>
+    <filter-name>httpPutFormFilter</filter-name>
+    <servlet-name>dispatcherServlet</servlet-name>
 </filter-mapping>
 
 <servlet>
-	<servlet-name>dispatcherServlet</servlet-name>
-	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 </servlet>
 ```
 
@@ -480,7 +484,7 @@ The following code sample demonstrates how to get the value of the`JSESSIONID`co
 ```java
 @RequestMapping("/displayHeaderInfo.do")
 public void displayHeaderInfo(@CookieValue("JSESSIONID") String cookie) {
-	//...
+    //...
 }
 ```
 
@@ -506,8 +510,8 @@ The following code sample demonstrates how to get the value of the`Accept-Encodi
 ```java
 @RequestMapping("/displayHeaderInfo.do")
 public void displayHeaderInfo(@RequestHeader("Accept-Encoding") String encoding,
-		@RequestHeader("Keep-Alive") long keepAlive) {
-	//...
+        @RequestHeader("Keep-Alive") long keepAlive) {
+    //...
 }
 ```
 
@@ -521,7 +525,7 @@ When an`@RequestHeader`annotation is used on a`Map`,`MultiValueMap`, or`HttpHead
 
 #### Method Parameters And Type Conversion
 
-String-based values extracted from the request including request parameters, path variables, request headers, and cookie values may need to be converted to the target type of the method parameter or field \(e.g., binding a request parameter to a field in an`@ModelAttribute`parameter\) they’re bound to. If the target type is not`String`, Spring automatically converts to the appropriate type. All simple types such as int, long, Date, etc. are supported. You can further customize the conversion process through a`WebDataBinder`\(see[the section called “Customizing WebDataBinder initialization”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)\) or by registering`Formatters`with the`FormattingConversionService`\(see[Section 5.6, “Spring Field Formatting”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)\).
+String-based values extracted from the request including request parameters, path variables, request headers, and cookie values may need to be converted to the target type of the method parameter or field \(e.g., binding a request parameter to a field in an`@ModelAttribute`parameter\) they’re bound to. If the target type is not`String`, Spring automatically converts to the appropriate type. All simple types such as int, long, Date, etc. are supported. You can further customize the conversion process through a`WebDataBinder`\(see[the section called “Customizing WebDataBinder initialization”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)\) or by registering`Formatters`with the`FormattingConversionService`\(see[Section 5.6, “Spring Field Formatting”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)\).
 
 #### Customizing WebDataBinder initialization
 
@@ -539,14 +543,14 @@ The following example demonstrates the use of`@InitBinder`to configure a`CustomD
 @Controller
 public class MyFormController {
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-	}
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
 
-	// ...
+    // ...
 }
 ```
 
@@ -556,12 +560,12 @@ Alternatively, as of Spring 4.2, consider using`addCustomFormatter`to specify`Fo
 @Controller
 public class MyFormController {
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
-	}
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
+    }
 
-	// ...
+    // ...
 }
 ```
 
@@ -573,10 +577,10 @@ The following example from the PetClinic application shows a configuration using
 
 ```java
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-	<property name="cacheSeconds" value="0"/>
-	<property name="webBindingInitializer">
-		<bean class="org.springframework.samples.petclinic.web.ClinicBindingInitializer"/>
-	</property>
+    <property name="cacheSeconds" value="0"/>
+    <property name="webBindingInitializer">
+        <bean class="org.springframework.samples.petclinic.web.ClinicBindingInitializer"/>
+    </property>
 </bean>
 ```
 
@@ -618,38 +622,38 @@ To use it with an`@ResponseBody`controller method or controller methods that ret
 @RestController
 public class UserController {
 
-	@GetMapping("/user")
-	@JsonView(User.WithoutPasswordView.class)
-	public User getUser() {
-		return new User("eric", "7!jd#h23");
-	}
+    @GetMapping("/user")
+    @JsonView(User.WithoutPasswordView.class)
+    public User getUser() {
+        return new User("eric", "7!jd#h23");
+    }
 }
 
 public class User {
 
-	public interface WithoutPasswordView {};
-	public interface WithPasswordView extends WithoutPasswordView {};
+    public interface WithoutPasswordView {};
+    public interface WithPasswordView extends WithoutPasswordView {};
 
-	private String username;
-	private String password;
+    private String username;
+    private String password;
 
-	public User() {
-	}
+    public User() {
+    }
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-	@JsonView(WithoutPasswordView.class)
-	public String getUsername() {
-		return this.username;
-	}
+    @JsonView(WithoutPasswordView.class)
+    public String getUsername() {
+        return this.username;
+    }
 
-	@JsonView(WithPasswordView.class)
-	public String getPassword() {
-		return this.password;
-	}
+    @JsonView(WithPasswordView.class)
+    public String getPassword() {
+        return this.password;
+    }
 }
 ```
 
@@ -663,12 +667,12 @@ For controllers relying on view resolution, simply add the serialization view cl
 @Controller
 public class UserController extends AbstractController {
 
-	@GetMapping("/user")
-	public String getUser(Model model) {
-		model.addAttribute("user", new User("eric", "7!jd#h23"));
-		model.addAttribute(JsonView.class.getName(), User.WithoutPasswordView.class);
-		return "userView";
-	}
+    @GetMapping("/user")
+    public String getUser(Model model) {
+        model.addAttribute("user", new User("eric", "7!jd#h23"));
+        model.addAttribute(JsonView.class.getName(), User.WithoutPasswordView.class);
+        return "userView";
+    }
 }
 ```
 
@@ -680,9 +684,9 @@ In order to enable[JSONP](https://en.wikipedia.org/wiki/JSONP)support for`@Respo
 @ControllerAdvice
 public class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
 
-	public JsonpAdvice() {
-		super("callback");
-	}
+    public JsonpAdvice() {
+        super("callback");
+    }
 }
 ```
 
