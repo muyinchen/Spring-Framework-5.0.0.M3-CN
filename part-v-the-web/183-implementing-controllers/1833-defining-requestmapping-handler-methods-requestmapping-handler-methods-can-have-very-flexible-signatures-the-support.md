@@ -1,4 +1,4 @@
-### 18.3.3 定义@RequestMapping 处理方法
+### 18.3.3 定义@RequestMapping 处理方法
 
 `@RequestMapping`处理方法可以有非常灵活的签名。 支持的方法参数和返回值将在以下部分中介绍。 大多数参数可以按任意顺序使用，唯一的例外是`BindingResult`参数。 这将在下一节中介绍。
 
@@ -12,9 +12,10 @@
 
 * `org.springframework.web.context.request.WebRequest`或 `org.springframework.web.context.request.NativeWebRequest`允许通用请求参数访问以及请求/会话属性访问，而不涉及本机Servlet API。
 
-* Request 或 response 对象\(Servlet API\). 选择任意特定的请求或响应类型, 例如
-  `ServletRequest`或`HttpServletRequest`或 Spring’s`MultipartRequest`/`MultipartHttpServletRequest`
+* Request 或 response 对象\(Servlet API\). 选择任意特定的请求或响应类型, 例如  
+  `ServletRequest`或`HttpServletRequest`或 Spring’s`MultipartRequest`/`MultipartHttpServletRequest`  
   .
+
 * Session对象（Servlet API）类型为`HttpSession`。 此类型的参数强制存在相应的会话。 因此，这样的论证从不为`null`。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
@@ -27,7 +28,7 @@
 
 * `org.springframework.http.HttpMethod`为HTTP请求方法，表示为Spring的`HttpMethod`枚举。
 
-* 由当前请求区域设置的`java.util.Locale`，由最具体的语言环境解析器确定，实际上是在MVC环境中配置的`LocaleResolver `/ `LocaleContextResolver`。
+* 由当前请求区域设置的`java.util.Locale`，由最具体的语言环境解析器确定，实际上是在MVC环境中配置的`LocaleResolver`/ `LocaleContextResolver`。
 
 * 与当前请求相关联的时区的`java.util.TimeZone`（Java 6+）/ `java.time.ZoneId`（Java 8+），由`LocaleContextResolver`确定。
 
@@ -35,28 +36,29 @@
 
 * `java.io.OutputStream` / `java.io.Writer`用于生成响应的内容。该值是由Servlet API公开的原始OutputStream / Writer。
 
-* `@PathVariable`注释参数，用于访问URI模板变量。请参阅[the section called “URI Template Patterns”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates)
+* `@PathVariable`注释参数，用于访问URI模板变量。请参阅[the section called “URI Template Patterns”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-uri-templates)  
   .
-* `@MatrixVariable`注释参数，用于访问位于URI路径段中的名称/值对。请参阅 [the section called “Matrix Variables”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-matrix-variables)。
+
+* `@MatrixVariable`注释参数，用于访问位于URI路径段中的名称/值对。请参阅 [the section called “Matrix Variables”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-matrix-variables)。
 
 * `@RequestParam`用于访问特定Servlet请求参数的注释参数。参数值将转换为声明的方法参数类型。请参阅[the section called “Binding request parameters to method parameters with @RequestParam”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestparam)。
 
-* `@RequestHeader`用于访问特定Servlet请求HTTP标头的注释参数。参数值将转换为声明的方法参数类型。请参阅 [the section called “Mapping request header attributes with the @RequestHeader annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestheader)。
+* `@RequestHeader`用于访问特定Servlet请求HTTP标头的注释参数。参数值将转换为声明的方法参数类型。请参阅 [the section called “Mapping request header attributes with the @RequestHeader annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestheader)。
 
 * `@RequestBody`用于访问HTTP请求体的注释参数。使用`HttpMessageConverters`将参数值转换为声明的方法参数类型。请参阅[the section called “Mapping the request body with the @RequestBody annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestbody)。
 
-* @RequestPart注释参数，用于访问“multipart / form-data”请求部分的内容。请参见[Section 18.10.5, “Handling a file upload request from programmatic clients”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart-forms-non-browsers)和[Section 18.10, “Spring’s multipart \(file upload\) support”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart)
+* @RequestPart注释参数，用于访问“multipart / form-data”请求部分的内容。请参见[Section 18.10.5, “Handling a file upload request from programmatic clients”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart-forms-non-browsers)和[Section 18.10, “Spring’s multipart \(file upload\) support”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multipart)
 
 * `@SessionAttribute`用于访问现有的永久会话属性（例如，用户认证对象）的注释参数，而不是通过`@SessionAttributes`作为控制器工作流的一部分临时存储在会话中的模型属性。
 
 * `@RequestAttribute`用于访问请求属性的注释参数。
 
-* `HttpEntity`参数访问Servlet请求HTTP头和内容。请求流将使用`HttpMessageConverters`转换为实体。请参阅 [the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity)。
+* `HttpEntity`参数访问Servlet请求HTTP头和内容。请求流将使用`HttpMessageConverters`转换为实体。请参阅 [the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity)。
 
 * `java.util.Map` / `org.springframework.ui.Model` / `org.springframework.ui.ModelMap`用于丰富暴露于Web视图的隐式模型。
 
-* `org.springframework.web.servlet.mvc.support.RedirectAttributes`来指定在重定向情况下使用的精确的属性集，并且还添加Flash属性（临时存储在服务器端的属性，使其可以在请求之后使用重定向）。请参见 
-  [the section called “Passing Data To the Redirect Target”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-passing-data)和[Section 18.6, “Using flash attributes”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)。
+* `org.springframework.web.servlet.mvc.support.RedirectAttributes`来指定在重定向情况下使用的精确的属性集，并且还添加Flash属性（临时存储在服务器端的属性，使其可以在请求之后使用重定向）。请参见   
+  [the section called “Passing Data To the Redirect Target”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-passing-data)和[Section 18.6, “Using flash attributes”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)。
 
 * 根据`@InitBinder`方法和/或HandlerAdapter配置，命令或表单对象将请求参数绑定到bean属性（通过setter）或直接转换为字段，并进行可定制的类型转换。请参阅`RequestMappingHandlerAdapter`上的`webBindingInitializer`属性。默认情况下，这些命令对象及其验证结果将作为模型属性公开，使用命令类名称 – 例如。对于“some.package.OrderAddress”类型的命令对象的model属性“orderAddress”。 `ModelAttribute`注释可以用于方法参数来自定义所使用的模型属性名称。
 
@@ -86,49 +88,49 @@ public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| 支持JDK 1.8的`java.util.Optional`作为方法参数类型，其注解具有所需的属性（例如`@RequestParam`，`@RequestHeader`等）。 在这些情况下使用`java.util.Optional`相当于`required=false`。  |
+| 支持JDK 1.8的`java.util.Optional`作为方法参数类型，其注解具有所需的属性（例如`@RequestParam`，`@RequestHeader`等）。 在这些情况下使用`java.util.Optional`相当于`required=false`。 |
 
 #### 支持的方法返回类型
 
-The following are the supported return types:
+以下是支持的返回类型：
 
-* A`ModelAndView`object, with the model implicitly enriched with command objects and the results of`@ModelAttribute`annotated reference data accessor methods.
+* 一个`ModelAndView`对象，其中模型隐含地丰富了命令对象和`@ModelAttribute`注解引用数据访问器方法的结果。
 
-* A`Model`object, with the view name implicitly determined through a`RequestToViewNameTranslator`and the model implicitly enriched with command objects and the results of`@ModelAttribute`annotated reference data accessor methods.
+* 一个`Model`对象，其视图名称通过`RequestToViewNameTranslator`隐式确定，隐式丰富了命令对象的模型以及`@ModelAttribute`注解引用数据访问器方法的结果。
 
-* A`Map`object for exposing a model, with the view name implicitly determined through a`RequestToViewNameTranslator`and the model implicitly enriched with command objects and the results of`@ModelAttribute`annotated reference data accessor methods.
+* 用于暴露模型的`Map`对象，其视图名称通过`RequestToViewNameTranslator`隐式确定，隐式丰富了命令对象的模型以及`@ModelAttribute`注解引用数据访问器方法的结果。
 
-* A`View`object, with the model implicitly determined through command objects and`@ModelAttribute`annotated reference data accessor methods. The handler method may also programmatically enrich the model by declaring a`Model`argument \(see above\).
+* 一个`View`对象，其模型通过命令对象和`@ModelAttribute`注解引用数据访问器方法隐式确定。处理程序方法也可以通过声明一个`Model`参数（见上文）以编程方式丰富模型。
 
-* A`String`value that is interpreted as the logical view name, with the model implicitly determined through command objects and`@ModelAttribute`annotated reference data accessor methods. The handler method may also programmatically enrich the model by declaring a`Model`argument \(see above\).
+* 解释为逻辑视图名称的`String`值，模型通过命令对象和`@ModelAttribute`注解引用数据访问器方法隐式确定。处理程序方法也可以通过声明一个`Model`参数（见上文）以编程方式丰富模型。
 
-* `void`if the method handles the response itself \(by writing the response content directly, declaring an argument of type`ServletResponse`/`HttpServletResponse`for that purpose\) or if the view name is supposed to be implicitly determined through a`RequestToViewNameTranslator`\(not declaring a response argument in the handler method signature\).
+* 如果方法处理响应本身（通过直接写入响应内容，为此目的声明一个类型为`ServletResponse` / `HttpServletResponse`的参数），或者如果视图名称通过`RequestToViewNameTranslator`隐式确定（不在处理程序方法签名）。
 
-* If the method is annotated with`@ResponseBody`, the return type is written to the response HTTP body. The return value will be converted to the declared method argument type using`HttpMessageConverter`s. See[the section called “Mapping the response body with the @ResponseBody annotation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-responsebody).
+* 如果该方法用`@ResponseBody`注解，则返回类型将写入响应HTTP主体。返回值将使用`HttpMessageConverters`转换为声明的方法参数类型。请参阅 [the section called “Mapping the response body with the @ResponseBody annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-responsebody)。
 
-* An`HttpEntity`or`ResponseEntity`object to provide access to the Servlet response HTTP headers and contents. The entity body will be converted to the response stream using`HttpMessageConverter`s. See[the section called “Using HttpEntity”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity).
+* 一个`HttpEntity `或`ResponseEntity`对象来提供对Servlet响应HTTP头和内容的访问。实体将使用`HttpMessageConverters`转换为响应流。请参阅[the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity).
 
-* An`HttpHeaders`object to return a response with no body.
+* 一个`HttpHeaders`对象返回没有正文的响应。
 
-* A`Callable`can be returned when the application wants to produce the return value asynchronously in a thread managed by Spring MVC.
+* 当应用程序想要在由Spring MVC管理的线程中异步生成返回值时，可以返回`Callable`。
 
-* A`DeferredResult`can be returned when the application wants to produce the return value from a thread of its own choosing.
+* 当应用程序想从自己选择​​的线程生成返回值时，可以返回`DeferredResult `。
 
-* A`ListenableFuture`or`CompletableFuture`/`CompletionStage`can be returned when the application wants to produce the value from a thread pool submission.
+* 当应用程序想要从线程池提交中产生值时，可以返回`ListenableFuture `或`CompletableFuture`/ `CompletionStage` 。
 
-* A`ResponseBodyEmitter`can be returned to write multiple objects to the response asynchronously; also supported as the body within a`ResponseEntity`.
+* 可以返回`ResponseBodyEmitter`以异步地将多个对象写入响应;也支持作为`ResponseEntity`内的主体。
 
-* An`SseEmitter`can be returned to write Server-Sent Events to the response asynchronously; also supported as the body within a`ResponseEntity`.
+* 可以返回`SseEmitter`以将异步的Server-Sent事件写入响应;也支持作为`ResponseEntity`内的主体。
 
-* A`StreamingResponseBody`can be returned to write to the response OutputStream asynchronously; also supported as the body within a`ResponseEntity`.
+* 可以返回`StreamingResponseBody`以异步写入响应`OutputStream`;也支持作为`ResponseEntity`内的主体
 
-* Any other return type is considered to be a single model attribute to be exposed to the view, using the attribute name specified through`@ModelAttribute`at the method level \(or the default attribute name based on the return type class name\). The model is implicitly enriched with command objects and the results of`@ModelAttribute`annotated reference data accessor methods.
+* 任何其他返回类型都被认为是要暴露给视图的单一模型属性，使用在方法级别（或基于返回类型类名称的默认属性名称）中通过`@ModelAttribute`指定的属性名称。该模型隐含地丰富了命令对象和`@ModelAttribute`注解引用数据访问器方法的结果。
 
-#### Binding request parameters to method parameters with @RequestParam
+#### 通过@RequestParam绑定请求参数到方法
 
-Use the`@RequestParam`annotation to bind request parameters to a method parameter in your controller.
+使用`@RequestParam`注解将请求参数绑定到控制器中的方法参数。
 
-The following code snippet shows the usage:
+以下代码片段显示用法：
 
 ```java
 @Controller
@@ -150,15 +152,15 @@ public class EditPetForm {
 }
 ```
 
-Parameters using this annotation are required by default, but you can specify that a parameter is optional by setting`@RequestParam`'s`required`attribute to`false`\(e.g.,`@RequestParam(name="id", required=false)`\).
+默认情况下，使用此注解的参数是必需的，但您可以通过将`@RequestParam`的必需属性设置为`false`（例如`@RequestParam(name="id", required=false)`）来指定参数是可选的。
 
-Type conversion is applied automatically if the target method parameter type is not`String`. See[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion).
+如果目标方法参数类型不是`String`，则会自动应用类型转换。 请参阅[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion)。
 
-When an`@RequestParam`annotation is used on a`Map`or`MultiValueMap`argument, the map is populated with all request parameters.
+当在`Map<String，String>`或`MultiValueMap<String，String>`参数上使用`@RequestParam`注解时，映射将填充所有请求参数。
 
-#### Mapping the request body with the @RequestBody annotation
+#### 使用@RequestBody注解映射请求体
 
-The`@RequestBody`method parameter annotation indicates that a method parameter should be bound to the value of the HTTP request body. For example:
+`@RequestBody`方法参数注解表示方法参数应绑定到HTTP请求体的值。 例如：
 
 ```java
 @PutMapping("/something")
@@ -167,19 +169,19 @@ public void handle(@RequestBody String body, Writer writer) throws IOException {
 }
 ```
 
-You convert the request body to the method argument by using an`HttpMessageConverter`.`HttpMessageConverter`is responsible for converting from the HTTP request message to an object and converting from an object to the HTTP response body. The`RequestMappingHandlerAdapter`supports the`@RequestBody`annotation with the following default`HttpMessageConverters`:
+通过使用`HttpMessageConverter`将请求体转换为method参数。 `HttpMessageConverter`负责将HTTP请求消息转换为对象，并从对象转换为HTTP响应体。 RequestMappingHandlerAdapter支持带有以下默认`HttpMessageConverters`的`@RequestBody`注解：
 
-* `ByteArrayHttpMessageConverter`converts byte arrays.
+* `ByteArrayHttpMessageConverter`转换字节数组。
 
-* `StringHttpMessageConverter`converts strings.
+* `StringHttpMessageConverter`转换字符串。
 
-* `FormHttpMessageConverter`converts form data to/from a MultiValueMap&lt;String, String&gt;.
+* `FormHttpMessageConverter`将表单数据转换为MultiValueMap &lt;String，String&gt;。
 
 * `SourceHttpMessageConverter`converts to/from a javax.xml.transform.Source.
 
-For more information on these converters, see[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion). Also note that if using the MVC namespace or the MVC Java config, a wider range of message converters are registered by default. See[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)for more information.
+有关这些转换器的更多信息，请参[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。 另请注意，如果使用MVC命名空间或MVC Java配置，默认情况下会注册更广泛的消息转换器。 有关详细信息，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。 
 
-If you intend to read and write XML, you will need to configure the`MarshallingHttpMessageConverter`with a specific`Marshaller`and an`Unmarshaller`implementation from the`org.springframework.oxm`package. The example below shows how to do that directly in your configuration but if your application is configured through the MVC namespace or the MVC Java config see[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)instead.
+如果您打算读写XML，则需要使用`org.springframework.oxm`包中的特定`Marshaller`和`Unmarshaller`实现配置`MarshallingHttpMessageConverter`。 下面的示例显示了如何直接在配置中执行此操作，但是如果您的应用程序通过MVC命名空间或MVC Java配置进行配置，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。
 
 ```java
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -201,17 +203,17 @@ If you intend to read and write XML, you will need to configure the`MarshallingH
 </bean>
 ```
 
-An`@RequestBody`method parameter can be annotated with`@Valid`, in which case it will be validated using the configured`Validator`instance. When using the MVC namespace or the MVC Java config, a JSR-303 validator is configured automatically assuming a JSR-303 implementation is available on the classpath.
+`@RequestBody`方法参数可以用`@Valid`注解，在这种情况下，它将使用配置的`Validator`实例进行验证。 当使用MVC命名空间或MVC Java配置时，会自动配置一个JSR-303验证器，假设在类路径上可用JSR-303实现。
 
-Just like with`@ModelAttribute`parameters, an`Errors`argument can be used to examine the errors. If such an argument is not declared, a`MethodArgumentNotValidException`will be raised. The exception is handled in the`DefaultHandlerExceptionResolver`, which sends a`400`error back to the client.
+就像`@ModelAttribute`参数一样，可以使用一个`Errors`参数来检查错误。 如果未声明此类参数，则将引发`MethodArgumentNotValidException`异常。 该异常在`DefaultHandlerExceptionResolver`中处理，它将向客户端发送一个`400`错误。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Also see[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)for information on configuring message converters and a validator through the MVC namespace or the MVC Java config. |
+| 有关通过MVC命名空间或MVC Java配置配置消息转换器和验证器的信息，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。 |
 
-#### Mapping the response body with the @ResponseBody annotation
+#### 使用@ResponseBody注解映射响应体
 
-The`@ResponseBody`annotation is similar to`@RequestBody`. This annotation can be placed on a method and indicates that the return type should be written straight to the HTTP response body \(and not placed in a Model, or interpreted as a view name\). For example:
+`@ResponseBody`注解类似于`@RequestBody`。 这个注解可以放在一个方法上，并且指示返回类型应该直接写入HTTP响应体（而不是放置在模型中，或者解释为视图名称）。 例如：
 
 ```java
 @GetMapping("/something")
@@ -221,17 +223,17 @@ public String helloWorld() {
 }
 ```
 
-The above example will result in the text`Hello World`being written to the HTTP response stream.
+上面的例子将会导致文本`Hello World`被写入到HTTP响应流中。
 
-As with`@RequestBody`, Spring converts the returned object to a response body by using an`HttpMessageConverter`. For more information on these converters, see the previous section and[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion).
+与`@RequestBody`一样，Spring通过使用`HttpMessageConverter`将返回的对象转换为响应正文。 有关这些转换器的更多信息，请参阅上一节和[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。
 
-#### Creating REST Controllers with the @RestController annotation
+#### 使用@RestController注解创建REST控制器
 
-It’s a very common use case to have Controllers implement a REST API, thus serving only JSON, XML or custom MediaType content. For convenience, instead of annotating all your`@RequestMapping`methods with`@ResponseBody`, you can annotate your controller Class with`@RestController`.
+控制器实现REST API是一种非常普通的用例，因此只能提供JSON，XML或自定义的MediaType内容。 为了方便起见，您可以使用`@RestController`注解您的控制器类，而不是使用`@ResponseBody`注解所有的`@RequestMapping`方法。
 
-[`@RestController`](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/web/bind/annotation/RestController.html)is a stereotype annotation that combines`@ResponseBody`and`@Controller`. More than that, it gives more meaning to your Controller and also may carry additional semantics in future releases of the framework.
+[`@RestController`](#)是一个结合了`@ResponseBody`和 `@Controller`的构造型注解。 更重要的是，它给你的控制器带来了更多的意义，也可能在框架的未来版本中带来额外的语义。
 
-As with regular`@Controller`s, a`@RestController`may be assisted by`@ControllerAdvice`or`@RestControllerAdvice`beans. See the[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)section for more details.
+与常规`@Controller`s一样，`@RestController`可以由`@ControllerAdvice`或`@RestControllerAdvice` bean来协助。 有关详细信息，请参阅[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)部分。
 
 #### Using HttpEntity
 
