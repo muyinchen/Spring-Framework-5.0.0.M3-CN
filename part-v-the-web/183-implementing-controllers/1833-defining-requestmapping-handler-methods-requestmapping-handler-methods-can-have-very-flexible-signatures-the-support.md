@@ -57,7 +57,7 @@
 
 * `java.util.Map` / `org.springframework.ui.Model` / `org.springframework.ui.ModelMap`用于丰富暴露于Web视图的隐式模型。
 
-* `org.springframework.web.servlet.mvc.support.RedirectAttributes`来指定在重定向情况下使用的精确的属性集，并且还添加Flash属性（临时存储在服务器端的属性，使其可以在请求之后使用重定向）。请参见   
+* `org.springframework.web.servlet.mvc.support.RedirectAttributes`来指定在重定向情况下使用的精确的属性集，并且还添加Flash属性（临时存储在服务器端的属性，使其可以在请求之后使用重定向）。请参见  
   [the section called “Passing Data To the Redirect Target”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-passing-data)和[Section 18.6, “Using flash attributes”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)。
 
 * 根据`@InitBinder`方法和/或HandlerAdapter配置，命令或表单对象将请求参数绑定到bean属性（通过setter）或直接转换为字段，并进行可定制的类型转换。请参阅`RequestMappingHandlerAdapter`上的`webBindingInitializer`属性。默认情况下，这些命令对象及其验证结果将作为模型属性公开，使用命令类名称 – 例如。对于“some.package.OrderAddress”类型的命令对象的model属性“orderAddress”。 `ModelAttribute`注释可以用于方法参数来自定义所使用的模型属性名称。
@@ -106,17 +106,17 @@ public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result
 
 * 如果方法处理响应本身（通过直接写入响应内容，为此目的声明一个类型为`ServletResponse` / `HttpServletResponse`的参数），或者如果视图名称通过`RequestToViewNameTranslator`隐式确定（不在处理程序方法签名）。
 
-* 如果该方法用`@ResponseBody`注解，则返回类型将写入响应HTTP主体。返回值将使用`HttpMessageConverters`转换为声明的方法参数类型。请参阅 [the section called “Mapping the response body with the @ResponseBody annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-responsebody)。
+* 如果该方法用`@ResponseBody`注解，则返回类型将写入响应HTTP主体。返回值将使用`HttpMessageConverters`转换为声明的方法参数类型。请参阅 [the section called “Mapping the response body with the @ResponseBody annotation”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-responsebody)。
 
-* 一个`HttpEntity `或`ResponseEntity`对象来提供对Servlet响应HTTP头和内容的访问。实体将使用`HttpMessageConverters`转换为响应流。请参阅[the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity).
+* 一个`HttpEntity`或`ResponseEntity`对象来提供对Servlet响应HTTP头和内容的访问。实体将使用`HttpMessageConverters`转换为响应流。请参阅[the section called “Using HttpEntity”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity).
 
 * 一个`HttpHeaders`对象返回没有正文的响应。
 
 * 当应用程序想要在由Spring MVC管理的线程中异步生成返回值时，可以返回`Callable`。
 
-* 当应用程序想从自己选择​​的线程生成返回值时，可以返回`DeferredResult `。
+* 当应用程序想从自己选择​​的线程生成返回值时，可以返回`DeferredResult`。
 
-* 当应用程序想要从线程池提交中产生值时，可以返回`ListenableFuture `或`CompletableFuture`/ `CompletionStage` 。
+* 当应用程序想要从线程池提交中产生值时，可以返回`ListenableFuture`或`CompletableFuture`/ `CompletionStage` 。
 
 * 可以返回`ResponseBodyEmitter`以异步地将多个对象写入响应;也支持作为`ResponseEntity`内的主体。
 
@@ -179,7 +179,7 @@ public void handle(@RequestBody String body, Writer writer) throws IOException {
 
 * `SourceHttpMessageConverter`converts to/from a javax.xml.transform.Source.
 
-有关这些转换器的更多信息，请参[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。 另请注意，如果使用MVC命名空间或MVC Java配置，默认情况下会注册更广泛的消息转换器。 有关详细信息，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。 
+有关这些转换器的更多信息，请参[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。 另请注意，如果使用MVC命名空间或MVC Java配置，默认情况下会注册更广泛的消息转换器。 有关详细信息，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。
 
 如果您打算读写XML，则需要使用`org.springframework.oxm`包中的特定`Marshaller`和`Unmarshaller`实现配置`MarshallingHttpMessageConverter`。 下面的示例显示了如何直接在配置中执行此操作，但是如果您的应用程序通过MVC命名空间或MVC Java配置进行配置，请参见[Section18.16.1, “Enabling the MVC Java Config or the MVC XML Namespace”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-enable)。
 
@@ -225,7 +225,7 @@ public String helloWorld() {
 
 上面的例子将会导致文本`Hello World`被写入到HTTP响应流中。
 
-与`@RequestBody`一样，Spring通过使用`HttpMessageConverter`将返回的对象转换为响应正文。 有关这些转换器的更多信息，请参阅上一节和[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。
+与`@RequestBody`一样，Spring通过使用`HttpMessageConverter`将返回的对象转换为响应正文。 有关这些转换器的更多信息，请参阅上一节和[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。
 
 #### 使用@RestController注解创建REST控制器
 
@@ -235,9 +235,9 @@ public String helloWorld() {
 
 与常规`@Controller`s一样，`@RestController`可以由`@ControllerAdvice`或`@RestControllerAdvice` bean来协助。 有关详细信息，请参阅[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)部分。
 
-#### Using HttpEntity
+#### 使用HttpEntity
 
-The`HttpEntity`is similar to`@RequestBody`and`@ResponseBody`. Besides getting access to the request and response body,`HttpEntity`\(and the response-specific subclass`ResponseEntity`\) also allows access to the request and response headers, like so:
+这`HttpEntity`是相似的`@RequestBody`和`@ResponseBody`。除了访问请求和响应主体之外`HttpEntity`（和响应特定子类`ResponseEntity`）还允许访问请求和响应头，如下所示：
 
 ```java
 @RequestMapping("/something")
@@ -253,20 +253,20 @@ public ResponseEntity<String> handle(HttpEntity<byte[]> requestEntity) throws Un
 }
 ```
 
-The above example gets the value of the`MyRequestHeader`request header, and reads the body as a byte array. It adds the`MyResponseHeader`to the response, writes`Hello World`to the response stream, and sets the response status code to 201 \(Created\).
+上述示例获取`MyRequestHeader`请求标头的值，并将其作为字节数组读取。它将`MyResponseHeader`响应添加到`Hello World`响应流中，并将响应状态代码设置为201（已创建）。
 
-As with`@RequestBody`and`@ResponseBody`, Spring uses`HttpMessageConverter`to convert from and to the request and response streams. For more information on these converters, see the previous section and[Message Converters](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion).
+至于`@RequestBody`和`@ResponseBody`，Spring使用`HttpMessageConverter`从和请求和响应流转换。有关这些转换器的更多信息，请参阅上一部分和[消息转换器](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/remoting.html#rest-message-conversion)。
 
-#### Using @ModelAttribute on a method
+#### 在方法上使用@ModelAttribute
 
-The`@ModelAttribute`annotation can be used on methods or on method arguments. This section explains its usage on methods while the next section explains its usage on method arguments.
+该`@ModelAttribute`注解可以对方法或方法的参数来使用。本节将介绍其在方法上的用法，下一节将介绍其在方法参数上的用法。
 
-An`@ModelAttribute`on a method indicates the purpose of that method is to add one or more model attributes. Such methods support the same argument types as`@RequestMapping`methods but cannot be mapped directly to requests. Instead`@ModelAttribute`methods in a controller are invoked before`@RequestMapping`methods, within the same controller. A couple of examples:
+方法上的`@ModelAttribute`指示该方法的目的是添加一个或多个模型属性。 这些方法支持与`@RequestMapping`方法相同的参数类型，但不能直接映射到请求。 相反，控制器中的`@ModelAttribute`方法在相同控制器内的`@RequestMapping`方法之前被调用。 几个例子：
 
 ```java
-// Add one attribute
-// The return value of the method is added to the model under the name "account"
-// You can customize the name via @ModelAttribute("myAccount")
+//添加一个属性
+//该方法的返回值被添加到名为“account”的模型中
+//您可以通过@ModelAttribute（“myAccount”）
 
 @ModelAttribute
 public Account addAccount(@RequestParam String number) {
@@ -282,42 +282,42 @@ public void populateModel(@RequestParam String number, Model model) {
 }
 ```
 
-`@ModelAttribute`methods are used to populate the model with commonly needed attributes for example to fill a drop-down with states or with pet types, or to retrieve a command object like Account in order to use it to represent the data on an HTML form. The latter case is further discussed in the next section.
+`@ModelAttribute`方法用于填充具有常用属性的模型，例如使用状态或宠物类型填充下拉列表，或者检索诸如Account的命令对象，以便使用它来表示HTML表单上的数据。后一种情况在下一节进一步讨论。
 
-Note the two styles of`@ModelAttribute`methods. In the first, the method adds an attribute implicitly by returning it. In the second, the method accepts a`Model`and adds any number of model attributes to it. You can choose between the two styles depending on your needs.
+注意两种风格的`@ModelAttribute`方法。在第一个方法中，该方法通过返回它隐式地添加一个属性。在第二个方法中，该方法接受`Model`并添加任意数量的模型属性。您可以根据需要选择两种风格。
 
-A controller can have any number of`@ModelAttribute`methods. All such methods are invoked before`@RequestMapping`methods of the same controller.
+控制器可以有多种`@ModelAttribute`方法。所有这些方法都`@RequestMapping`在相同控制器的方法之前被调用。
 
-`@ModelAttribute`methods can also be defined in an`@ControllerAdvice`-annotated class and such methods apply to many controllers. See the[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)section for more details.
+`@ModelAttribute`方法也可以在一个`@ControllerAdvice`注释类中定义，并且这种方法适用于许多控制器。有关更多详细信息，请参阅[“使用@ControllerAdvice和@RestControllerAdvice建议控制器”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)一节。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| What happens when a model attribute name is not explicitly specified? In such cases a default name is assigned to the model attribute based on its type. For example if the method returns an object of type`Account`, the default name used is "account". You can change that through the value of the`@ModelAttribute`annotation. If adding attributes directly to the`Model`, use the appropriate overloaded`addAttribute(..)`method - i.e., with or without an attribute name. |
+| 当没有明确指定模型属性名称时会发生什么？在这种情况下，根据其类型将默认名称分配给模型属性。例如，如果该方法返回类型的对象`Account`，则使用的默认名称为“account”。您可以通过`@ModelAttribute`注释的值更改它。如果直接添加属性`Model`，请使用适当的重载`addAttribute(..)`方法 – 即，带有或不带有属性名称。 |
 
-The`@ModelAttribute`annotation can be used on`@RequestMapping`methods as well. In that case the return value of the`@RequestMapping`method is interpreted as a model attribute rather than as a view name. The view name is then derived based on view name conventions instead, much like for methods returning`void` — see[Section18.13.3, “The View - RequestToViewNameTranslator”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-coc-r2vnt).
+该`@ModelAttribute`注解可在使用`@RequestMapping`方法为好。在这种情况下，`@RequestMapping`方法的返回值将被解释为模型属性而不是视图名称。视图名称是基于视图名称约定导出的，非常类似于返回的方法`void`- 请参见[第18.13.3节“View – RequestToViewNameTranslator”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-coc-r2vnt)。
 
-#### Using @ModelAttribute on a method argument
+#### 在方法参数上使用@ModelAttribute
 
-As explained in the previous section`@ModelAttribute`can be used on methods or on method arguments. This section explains its usage on method arguments.
+如上一节所述`@ModelAttribute`，可以在方法或方法参数上使用。本节介绍了其在方法参数中的用法。
 
-An`@ModelAttribute`on a method argument indicates the argument should be retrieved from the model. If not present in the model, the argument should be instantiated first and then added to the model. Once present in the model, the argument’s fields should be populated from all request parameters that have matching names. This is known as data binding in Spring MVC, a very useful mechanism that saves you from having to parse each form field individually.
+一个`@ModelAttribute`上的方法参数指示参数应该从模型中检索。如果模型中不存在，参数首先被实例化，然后添加到模型中。一旦出现在模型中，参数的字段应该从具有匹配名称的所有请求参数中填充。这被称为Spring MVC中的数据绑定，这是一种非常有用的机制，可以节省您逐个解析每个表单字段。
 
 ```java
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
 public String processSubmit(@ModelAttribute Pet pet) { }
 ```
 
-Given the above example where can the Pet instance come from? There are several options:
+鉴于上述例子，Pet实例可以从哪里来？有几个选择：
 
-* It may already be in the model due to use of`@SessionAttributes` — see[the section called “Using @SessionAttributes to store model attributes in the HTTP session between requests”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-sessionattrib).
+* 由于使用`@SessionAttributes`- 可能已经在模型中- 请参阅[“使用@SessionAttributes将模型属性存储在请求之间的HTTP会话中”一节](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-sessionattrib)。
 
-* It may already be in the model due to an`@ModelAttribute`method in the same controller — as explained in the previous section.
+* 由于`@ModelAttribute`在同一控制器中的方法，它可能已经在模型中 – 如上一节所述。
 
-* It may be retrieved based on a URI template variable and type converter \(explained in more detail below\).
+* 它可以基于URI模板变量和类型转换器（下面更详细地解释）来检索。
 
-* It may be instantiated using its default constructor.
+* 它可以使用其默认构造函数实例化。
 
-An`@ModelAttribute`method is a common way to retrieve an attribute from the database, which may optionally be stored between requests through the use of`@SessionAttributes`. In some cases it may be convenient to retrieve the attribute by using an URI template variable and a type converter. Here is an example:
+一种`@ModelAttribute`方法是从数据库中检索属性的常用方法，可以通过使用可选地在请求之间存储属性`@SessionAttributes`。在某些情况下，通过使用URI模板变量和类型转换器来检索属性可能很方便。这是一个例子：
 
 ```java
 @PutMapping("/accounts/{account}")
@@ -326,11 +326,11 @@ public String save(@ModelAttribute("account") Account account) {
 }
 ```
 
-In this example the name of the model attribute \(i.e. "account"\) matches the name of a URI template variable. If you register`Converter`that can turn the`String`account value into an`Account`instance, then the above example will work without the need for an`@ModelAttribute`method.
+在此示例中，模型属性（即“account”）的名称与URI模板变量的名称相匹配。如果您注册`Converter`，可以将`String`帐户值转换为一个`Account`实例，则上述示例将无需使用`@ModelAttribute`方法。
 
-The next step is data binding. The`WebDataBinder`class matches request parameter names — including query string parameters and form fields — to model attribute fields by name. Matching fields are populated after type conversion \(from String to the target field type\) has been applied where necessary. Data binding and validation are covered in[Chapter5,_Validation, Data Binding, and Type Conversion_](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html). Customizing the data binding process for a controller level is covered in[the section called “Customizing WebDataBinder initialization”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder).
+下一步是数据绑定。该`WebDataBinder`级比赛要求参数名称-包括查询字符串参数和表单域-以模拟通过名称属性字段。在必要时已经应用了类型转换（从字符串到目标字段类型）之后填充匹配字段。数据绑定和验证在[第5章验证，数据绑定和类型转换中介绍](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html)。自定义控制器级别的数据绑定过程将在[“自定义WebDataBinder初始化”一节中介绍](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)。
 
-As a result of data binding there may be errors such as missing required fields or type conversion errors. To check for such errors add a`BindingResult`argument immediately following the`@ModelAttribute`argument:
+由于数据绑定，可能会出现错误，例如缺少必填字段或类型转换错误。要检查这些错误，请在`BindingResult`参数后立即添加一个`@ModelAttribute`参数：
 
 ```java
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
@@ -345,9 +345,9 @@ public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result
 }
 ```
 
-With a`BindingResult`you can check if errors were found in which case it’s common to render the same form where the errors can be shown with the help of Spring’s\`\`form tag.
+使用一个`BindingResult`你可以检查是否发现错误，在这种情况下，渲染相同的形式通常是在Spring的`<errors>`表单标签的帮助下显示错误的。
 
-Note that in some cases it may be useful to gain access to an attribute in the model without data binding. For such cases you may inject the`Model`into the controller or alternatively use the`binding`flag on the annotation:
+请注意，在某些情况下，在没有数据绑定的情况下获取模型中的属性可能是有用的。对于这种情况，您可以将其注入`Model`控制器，或者使用注释上的`binding`标志：
 
 ```java
 @ModelAttribute
@@ -368,7 +368,7 @@ public String update(@Valid AccountUpdateForm form, BindingResult result,
 }
 ```
 
-In addition to data binding you can also invoke validation using your own custom validator passing the same`BindingResult`that was used to record data binding errors. That allows for data binding and validation errors to be accumulated in one place and subsequently reported back to the user:
+除了数据绑定之外，您还可以使用自己的自定义验证器调用验证，传递与`BindingResult`用于记录数据绑定错误相同的验证器。这允许在一个地方累积数据绑定和验证错误，并随后向用户报告：
 
 ```java
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
@@ -384,7 +384,7 @@ public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result
 }
 ```
 
-Or you can have validation invoked automatically by adding the JSR-303`@Valid`annotation:
+或者您可以通过添加JSR-303`@Valid`注解自动调用验证：
 
 ```java
 @PostMapping("/owners/{ownerId}/pets/{petId}/edit")
@@ -399,13 +399,13 @@ public String processSubmit(@Valid @ModelAttribute("pet") Pet pet, BindingResult
 }
 ```
 
-See[Section5.8, “Spring Validation”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validation-beanvalidation)and[Chapter5,_Validation, Data Binding, and Type Conversion_](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html)for details on how to configure and use validation.
+有关如何配置和使用验证的详细信息，请参见[第5.8节“Spring验证”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validation-beanvalidation)和[第5章验证，数据绑定和类型](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html)转换。
 
-#### Using @SessionAttributes to store model attributes in the HTTP session between requests
+#### 使用@SessionAttributes将模型属性存储在请求之间的HTTP会话中
 
-The type-level`@SessionAttributes`annotation declares session attributes used by a specific handler. This will typically list the names of model attributes or types of model attributes which should be transparently stored in the session or some conversational storage, serving as form-backing beans between subsequent requests.
+类型级`@SessionAttributes`注释声明特定处理程序使用的会话属性。这通常将列出模型属性或模型属性的类型，这些模型属性或类型应该透明地存储在会话或某些会话存储中，作为后续请求之间的格式支持bean。
 
-The following code snippet shows the usage of this annotation, specifying the model attribute name:
+以下代码片段显示了此注解的用法，指定了模型属性名称：
 
 ```java
 @Controller
@@ -416,9 +416,9 @@ public class EditPetForm {
 }
 ```
 
-#### Using @SessionAttribute to access pre-existing global session attributes
+#### 使用@SessionAttribute访问预先存在的全局会话属性
 
-If you need access to pre-existing session attributes that are managed globally, i.e. outside the controller \(e.g. by a filter\), and may or may not be present use the`@SessionAttribute`annotation on a method parameter:
+如果您需要访问全局管理的预先存在的会话属性，即控制器外部（例如，通过过滤器），并且可能存在或可能不存在，`@SessionAttribute`则会使用方法参数上的注解：
 
 ```java
 @RequestMapping("/")
@@ -427,13 +427,13 @@ public String handle(@SessionAttribute User user) {
 }
 ```
 
-For use cases that require adding or removing session attributes consider injecting`org.springframework.web.context.request.WebRequest`or`javax.servlet.http.HttpSession`into the controller method.
+对于需要添加或删除会话属性的用例，请考虑注入`org.springframework.web.context.request.WebRequest`或`javax.servlet.http.HttpSession`控制方法。
 
-For temporary storage of model attributes in the session as part of a controller workflow consider using`SessionAttributes`as described in[the section called “Using @SessionAttributes to store model attributes in the HTTP session between requests”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-sessionattrib).
+为了在会话中临时存储模型属性作为控制器工作流的一部分，请考虑使用[“使用@SessionAttributes将模型属性存储在请求之间的HTTP会话中”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-sessionattrib)`SessionAttributes`中[所述的一节](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-sessionattrib)。
 
-#### Using @RequestAttribute to access request attributes
+#### 使用@RequestAttribute来访问请求属性
 
-Similar to`@SessionAttribute`the`@RequestAttribute`annotation can be used to access pre-existing request attributes created by a filter or interceptor:
+到类似`@SessionAttribute`的`@RequestAttribute`注解可以被用于访问由滤波器或拦截器创建的预先存在的请求属性：
 
 ```java
 @RequestMapping("/")
@@ -442,11 +442,11 @@ public String handle(@RequestAttribute Client client) {
 }
 ```
 
-#### Working with "application/x-www-form-urlencoded" data
+#### 使用“application / x-www-form-urlencoded”数据
 
-The previous sections covered use of`@ModelAttribute`to support form submission requests from browser clients. The same annotation is recommended for use with requests from non-browser clients as well. However there is one notable difference when it comes to working with HTTP PUT requests. Browsers can submit form data via HTTP GET or HTTP POST. Non-browser clients can also submit forms via HTTP PUT. This presents a challenge because the Servlet specification requires the`ServletRequest.getParameter*()`family of methods to support form field access only for HTTP POST, not for HTTP PUT.
+以前的章节介绍了`@ModelAttribute`如何支持浏览器客户端的表单提交请求。建议与非浏览器客户端的请求一起使用相同的注解。然而，在使用HTTP PUT请求时，有一个显着的区别。浏览器可以通过HTTP GET或HTTP POST提交表单数据。非浏览器客户端也可以通过HTTP PUT提交表单。这提出了一个挑战，因为Servlet规范要求`ServletRequest.getParameter*()`一系列方法仅支持HTTP POST的表单域访问，而不支持HTTP PUT。
 
-To support HTTP PUT and PATCH requests, the`spring-web`module provides the filter`HttpPutFormContentFilter`, which can be configured in`web.xml`:
+为了支持HTTP PUT和PATCH请求，该`spring-web`模块提供了`HttpPutFormContentFilter`可以在以下配置中的过滤器`web.xml`：
 
 ```java
 <filter>
@@ -467,9 +467,11 @@ To support HTTP PUT and PATCH requests, the`spring-web`module provides the filte
 
 The above filter intercepts HTTP PUT and PATCH requests with content type`application/x-www-form-urlencoded`, reads the form data from the body of the request, and wraps the`ServletRequest`in order to make the form data available through the`ServletRequest.getParameter*()`family of methods.
 
+上述过滤器拦截具有内容类型的HTTP PUT和PATCH请求`application/x-www-form-urlencoded`，从请求的正文 中读取表单数据，并包装`ServletRequest`以便通过`ServletRequest.getParameter*()`一系列方法使表单数据可用 。
+
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| As`HttpPutFormContentFilter`consumes the body of the request, it should not be configured for PUT or PATCH URLs that rely on other converters for`application/x-www-form-urlencoded`. This includes`@RequestBody MultiValueMap`and`HttpEntity>`. |
+| 由于`HttpPutFormContentFilter`消耗了请求的正文，因此不应配置为依赖其他转换器的PUT或PATCH URL `application/x-www-form-urlencoded`。这包括`@RequestBody MultiValueMap`and`HttpEntity>`。 |
 
 #### Mapping cookie values with the @CookieValue annotation
 
