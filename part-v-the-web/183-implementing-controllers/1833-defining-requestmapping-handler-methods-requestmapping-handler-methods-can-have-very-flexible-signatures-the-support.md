@@ -465,25 +465,23 @@ public String handle(@RequestAttribute Client client) {
 </servlet>
 ```
 
-The above filter intercepts HTTP PUT and PATCH requests with content type`application/x-www-form-urlencoded`, reads the form data from the body of the request, and wraps the`ServletRequest`in order to make the form data available through the`ServletRequest.getParameter*()`family of methods.
-
 上述过滤器拦截具有内容类型的HTTP PUT和PATCH请求`application/x-www-form-urlencoded`，从请求的正文 中读取表单数据，并包装`ServletRequest`以便通过`ServletRequest.getParameter*()`一系列方法使表单数据可用 。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| 由于`HttpPutFormContentFilter`消耗了请求的正文，因此不应配置为依赖其他转换器的PUT或PATCH URL `application/x-www-form-urlencoded`。这包括`@RequestBody MultiValueMap`and`HttpEntity>`。 |
+| 由于`HttpPutFormContentFilter`消耗了请求的正文，因此不应配置为依赖其他转换器的PUT或PATCH URL `application/x-www-form-urlencoded`。这包括`@RequestBody MultiValueMap`and`HttpEntity>`。 |
 
-#### Mapping cookie values with the @CookieValue annotation
+#### 使用@CookieValue注解映射Cookie值
 
-The`@CookieValue`annotation allows a method parameter to be bound to the value of an HTTP cookie.
+该`@CookieValue`注解允许将方法参数绑定到HTTP cookie的值。
 
-Let us consider that the following cookie has been received with an http request:
+让我们考虑以下cookie已被接收到http请求：
 
 ```java
 JSESSIONID=415A4AC178C59DACE0B2C9CA727CDD84
 ```
 
-The following code sample demonstrates how to get the value of the`JSESSIONID`cookie:
+以下代码示例演示如何获取`JSESSIONID`cookie 的值：
 
 ```java
 @RequestMapping("/displayHeaderInfo.do")
@@ -492,13 +490,13 @@ public void displayHeaderInfo(@CookieValue("JSESSIONID") String cookie) {
 }
 ```
 
-Type conversion is applied automatically if the target method parameter type is not`String`. See[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion).
+如果目标方法参数类型不是，则会自动应用类型转换`String`。请参阅[“方法参数和类型转换”一节](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion)。
 
-#### Mapping request header attributes with the @RequestHeader annotation
+#### 使用@RequestHeader注解映射请求标头属性
 
-The`@RequestHeader`annotation allows a method parameter to be bound to a request header.
+该`@RequestHeader`注解允许将一个方法参数绑定到请求头。
 
-Here is a sample request header:
+以下是一个示例请求标头：
 
 ```java
 Host                    localhost:8080
@@ -509,7 +507,7 @@ Accept-Charset          ISO-8859-1,utf-8;q=0.7,*;q=0.7
 Keep-Alive              300
 ```
 
-The following code sample demonstrates how to get the value of the`Accept-Encoding`and`Keep-Alive`headers:
+以下代码示例演示了如何获取`Accept-Encoding`和`Keep-Alive`标题的值：
 
 ```java
 @RequestMapping("/displayHeaderInfo.do")
@@ -519,29 +517,35 @@ public void displayHeaderInfo(@RequestHeader("Accept-Encoding") String encoding,
 }
 ```
 
-Type conversion is applied automatically if the method parameter is not`String`. See[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion).
+如果方法参数不是`String`，则会自动应用类型转换。 查看[the section called “Method Parameters And Type Conversion”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-typeconversion)一节。
 
-When an`@RequestHeader`annotation is used on a`Map`,`MultiValueMap`, or`HttpHeaders`argument, the map is populated with all header values.
+在`Map`，`MultiValueMap`或`HttpHeaders`参数上使用`@RequestHeader`注解时，映射将填充所有标题值。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/tip.png) |
 | :--- |
-| Built-in support is available for converting a comma-separated string into an array/collection of strings or other types known to the type conversion system. For example a method parameter annotated with`@RequestHeader("Accept")`may be of type`String`but also`String[]`or`List`. |
+| 内置支持可用于将逗号分隔的字符串转换为字符串或类型转换系统已知的其他类型的数组/集合。例如，注解的方法参数`@RequestHeader("Accept")`可以是类型`String`，也可以是`String[]`或`List`。 |
 
-#### Method Parameters And Type Conversion
+#### 方法参数和类型转换
 
-String-based values extracted from the request including request parameters, path variables, request headers, and cookie values may need to be converted to the target type of the method parameter or field \(e.g., binding a request parameter to a field in an`@ModelAttribute`parameter\) they’re bound to. If the target type is not`String`, Spring automatically converts to the appropriate type. All simple types such as int, long, Date, etc. are supported. You can further customize the conversion process through a`WebDataBinder`\(see[the section called “Customizing WebDataBinder initialization”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)\) or by registering`Formatters`with the`FormattingConversionService`\(see[Section 5.6, “Spring Field Formatting”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)\).
+从请求中提取的基于字符串的值（包括请求参数，路径变量，请求头和cookie值）可能需要转换为方法参数或字段的目标类型（例如，将请求参数绑定到参数中的字段`@ModelAttribute`）他们一定会。如果目标类型不是`String`，Spring将自动转换为相应的类型。支持所有简单的类型，如int，long，Date等。您可以进一步自定义通过转换过程`WebDataBinder`（见[称为“定制WebDataBinder初始化”一节](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-webdatabinder)），或者通过注册`Formatters`与`FormattingConversionService`（参见[5.6节，“春字段格式”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)）。
 
-#### Customizing WebDataBinder initialization
+#### 自定义WebDataBinder初始化
 
-To customize request parameter binding with PropertyEditors through Spring’s`WebDataBinder`, you can use`@InitBinder`-annotated methods within your controller,`@InitBinder`methods within an`@ControllerAdvice`class, or provide a custom`WebBindingInitializer`. See the[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)section for more details.
+要通过Spring定制与PropertyEditor的请求参数绑定`WebDataBinder`，可以使用`@InitBinder`控制器中的-annotated`@InitBinder`方法，`@ControllerAdvice`类中的方法或提供自定义`WebBindingInitializer`。有关更多详细信息，请参阅[“使用@ControllerAdvice和@RestControllerAdvice建议控制器”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)一节。
 
-##### Customizing data binding with @InitBinder
+##### 使用@InitBinder自定义数据绑定
 
 Annotating controller methods with`@InitBinder`allows you to configure web data binding directly within your controller class.`@InitBinder`identifies methods that initialize the`WebDataBinder`that will be used to populate command and form object arguments of annotated handler methods.
 
 Such init-binder methods support all arguments that`@RequestMapping`methods support, except for command/form objects and corresponding validation result objects. Init-binder methods must not have a return value. Thus, they are usually declared as`void`. Typical arguments include`WebDataBinder`in combination with`WebRequest`or`java.util.Locale`, allowing code to register context-specific editors.
 
 The following example demonstrates the use of`@InitBinder`to configure a`CustomDateEditor`for all`java.util.Date`form properties.
+
+注解控制器方法，`@InitBinder`允许您直接在控制器类中配置Web数据绑定。`@InitBinder`识别用于初始化`WebDataBinder`将用于填充命名和表示注解处理程序方法的对象参数的方法。
+
+这种init-binder方法支持方法支持的所有参数`@RequestMapping`，除了命令/表单对象和相应的验证结果对象。Init-binder方法不能有返回值。因此，它们通常被声明为`void`。典型的参数包括`WebDataBinder`与`WebRequest`或者`java.util.Locale`允许代码注册上下文相关的编辑器。
+
+以下示例演示如何使用`@InitBinder`为所有`java.util.Date`表单属性配置`CustomDateEditor`。
 
 ```java
 @Controller
@@ -558,7 +562,7 @@ public class MyFormController {
 }
 ```
 
-Alternatively, as of Spring 4.2, consider using`addCustomFormatter`to specify`Formatter`implementations instead of`PropertyEditor`instances. This is particularly useful if you happen to have a`Formatter`-based setup in a shared`FormattingConversionService`as well, with the same approach to be reused for controller-specific tweaking of the binding rules.
+或者，从Spring 4.2起，考虑使用`addCustomFormatter`来指定`Formatter`实现而不是`PropertyEditor`实例。如果您碰巧`Formatter`在共享`FormattingConversionService`中安装一个基于安装程序的 方法，那么特别有用的方法可以重用于控制器特定的绑定规则调整。
 
 ```java
 @Controller
@@ -573,11 +577,11 @@ public class MyFormController {
 }
 ```
 
-##### Configuring a custom WebBindingInitializer
+##### 配置自定义WebBindingInitializer
 
-To externalize data binding initialization, you can provide a custom implementation of the`WebBindingInitializer`interface, which you then enable by supplying a custom bean configuration for an`RequestMappingHandlerAdapter`, thus overriding the default configuration.
+要外部化数据绑定初始化，您可以提供`WebBindingInitializer`接口的自定义实现，然后通过为其提供自定义bean配置来启用`RequestMappingHandlerAdapter`，从而覆盖默认配置。
 
-The following example from the PetClinic application shows a configuration using a custom implementation of the`WebBindingInitializer`interface,`org.springframework.samples.petclinic.web.ClinicBindingInitializer`, which configures PropertyEditors required by several of the PetClinic controllers.
+PetClinic应用程序中的以下示例显示了使用该接口的自定义实现的`WebBindingInitializer`配置`org.springframework.samples.petclinic.web.ClinicBindingInitializer`，它配置了几个PetClinic控制器所需的PropertyEditor。
 
 ```java
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -588,17 +592,17 @@ The following example from the PetClinic application shows a configuration using
 </bean>
 ```
 
-`@InitBinder`methods can also be defined in an`@ControllerAdvice`-annotated class in which case they apply to matching controllers. This provides an alternative to using a`WebBindingInitializer`. See the[the section called “Advising controllers with @ControllerAdvice and @RestControllerAdvice”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)section for more details.
+`@InitBinder`方法也可以在`@ControllerAdvice`注解类中定义，在这种情况下，它们适用于匹配的控制器。 这提供了使用`WebBindingInitializer`的替代方法。有关更多详细信息，请参阅[“使用@ControllerAdvice和@RestControllerAdvice建议控制器”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-controller-advice)一节。
 
-#### Advising controllers with @ControllerAdvice and @RestControllerAdvice
+#### 通过@ControllerAdvice和@RestControllerAdvice为控制器提供建议
 
-The`@ControllerAdvice`annotation is a component annotation allowing implementation classes to be auto-detected through classpath scanning. It is automatically enabled when using the MVC namespace or the MVC Java config.
+`@ControllerAdvice`注解是一个组件注解允许实现类自动检测通过类路径扫描。当使用MVC命名空间或MVC Java配置时，它将自动启用。
 
-Classes annotated with`@ControllerAdvice`can contain`@ExceptionHandler`,`@InitBinder`, and`@ModelAttribute`annotated methods, and these methods will apply to`@RequestMapping`methods across all controller hierarchies as opposed to the controller hierarchy within which they are declared.
+使用`@ControllerAdvice`注解的类可以包含`@ExceptionHandler`，`@InitBinder`和`@ModelAttribute`注解的方法，这些方法将适用于`@RequestMapping`所有控制器的层次结构的方法，而不是内声明它们控制器层次。
 
-`@RestControllerAdvice`is an alternative where`@ExceptionHandler`methods assume`@ResponseBody`semantics by default.
+`@RestControllerAdvice`是`@ExceptionHandler`方法默认使用`@ResponseBody`语义的替代方案。
 
-Both`@ControllerAdvice`and`@RestControllerAdvice`can target a subset of controllers:
+`@ControllerAdvice`和`@RestControllerAdvice`都可以定位控制器的一个子集：
 
 ```java
 // Target all Controllers annotated with @RestController
@@ -614,13 +618,13 @@ public class BasePackageAdvice {}
 public class AssignableTypesAdvice {}
 ```
 
-Check out the[`@ControllerAdvice`documentation](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html)for more details.
+查看[`@ControllerAdvice`文档](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html)了解更多详细信息。
 
-#### Jackson Serialization View Support
+#### Jackson序列化视图支持
 
-It can sometimes be useful to filter contextually the object that will be serialized to the HTTP response body. In order to provide such capability, Spring MVC has built-in support for rendering with[Jackson’s Serialization Views](http://wiki.fasterxml.com/JacksonJsonViews).
+有时将内容过滤将被序列化到HTTP响应主体的对象有时是有用的。为了提供这样的功能，Spring MVC内置了对[Jackson的Serialization Views](http://wiki.fasterxml.com/JacksonJsonViews)进行渲染的支持。
 
-To use it with an`@ResponseBody`controller method or controller methods that return`ResponseEntity`, simply add the`@JsonView`annotation with a class argument specifying the view class or interface to be used:
+要将它用于返回`ResponseEntity`的`@ResponseBody`控制器方法或控制器方法，只需添加`@JsonView`注解，并指定要使用的视图类或接口的类参数即可：
 
 ```java
 @RestController
