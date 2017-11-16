@@ -667,9 +667,9 @@ public class User {
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Note that despite`@JsonView`allowing for more than one class to be specified, the use on a controller method is only supported with exactly one class argument. Consider the use of a composite interface if you need to enable multiple views. |
+| 请注意，尽管`@JsonView`允许指定多个类，但在控制器方法上的使用只支持一个类参数。如果需要启用多个视图，请考虑使用复合接口。 |
 
-For controllers relying on view resolution, simply add the serialization view class to the model:
+对于依赖于视图分辨率的控制器，只需将序列化视图类添加到模型中：
 
 ```java
 @Controller
@@ -684,9 +684,9 @@ public class UserController extends AbstractController {
 }
 ```
 
-#### Jackson JSONP Support
+#### Jackson JSONP 支持
 
-In order to enable[JSONP](https://en.wikipedia.org/wiki/JSONP)support for`@ResponseBody`and`ResponseEntity`methods, declare an`@ControllerAdvice`bean that extends`AbstractJsonpResponseBodyAdvice`as shown below where the constructor argument indicates the JSONP query parameter name\(s\):
+为了启用[JSONP](https://en.wikipedia.org/wiki/JSONP)支持`@ResponseBody`和`ResponseEntity`方法，声明一个`@ControllerAdvice`扩展的bean，`AbstractJsonpResponseBodyAdvice`如下所示，构造函数参数指示JSONP查询参数名称：
 
 ```java
 @ControllerAdvice
@@ -698,5 +698,5 @@ public class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
 }
 ```
 
-For controllers relying on view resolution, JSONP is automatically enabled when the request has a query parameter named`jsonp`or`callback`. Those names can be customized through`jsonpParameterNames`property.
+对于依赖于视图分辨率的控制器，当请求具有名为`jsonp`或者的查询参数时，将自动启用JSONP`callback`。这些名字可以通过`jsonpParameterNames`财产定制。
 
