@@ -51,8 +51,6 @@ deferredResult.setResult(data);
 
 * `DispatcherServlet`被再次调用，处理从`Callable`异步产生的结果中恢复。
 
-
-
 `DeferredResult`的序列非常相似，除非由应用程序生成任何线程的异步结果：
 
 * 控制器返回一个`DeferredResult`并将其保存在某些内存中的队列或列表中，可以访问它。
@@ -69,25 +67,25 @@ deferredResult.setResult(data);
 
 #### 异步请求异常处理
 
-What happens if a`Callable`returned from a controller method raises an Exception while being executed? The short answer is the same as what happens when a controller method raises an exception. It goes through the regular exception handling mechanism. The longer explanation is that when a`Callable`raises an Exception Spring MVC dispatches to the Servlet container with the`Exception`as the result and that leads to resume request processing with the`Exception`instead of a controller method return value. When using a`DeferredResult`you have a choice whether to call`setResult`or`setErrorResult`with an`Exception`instance.
+如果从控制器方法返回的`Callable`在执行时引发异常，会发生什么情况？ 简短的答案与控制器方法引发异常时发生的情况相同。 它经历了常规的异常处理机制。 更长的解释是，当`Callable`引发异常Spring MVC调度到Servlet容器与异常的结果，并导致恢复请求处理与异常，而不是一个控制器方法的返回值。 当使用`DeferredResources`时，您可以选择是否使用`Exception`实例调用`setResult`或`setErrorResult`。
 
-#### Intercepting Async Requests
+#### 拦截异步请求
 
-A`HandlerInterceptor`can also implement`AsyncHandlerInterceptor`in order to implement the`afterConcurrentHandlingStarted`callback, which is called instead of`postHandle`and`afterCompletion`when asynchronous processing starts.
+`HandlerInterceptor`还可以实现`AsyncHandlerInterceptor`以实现`afterConcurrentHandlingStarted`回调，在异步处理启动时调用，而不是`postHandle`和`afterCompletion`。
 
-A`HandlerInterceptor`can also register a`CallableProcessingInterceptor`or a`DeferredResultProcessingInterceptor`in order to integrate more deeply with the lifecycle of an asynchronous request and for example handle a timeout event. See the Javadoc of`AsyncHandlerInterceptor`for more details.
+HandlerInterceptor也可以注册一个`CallableProcessingInterceptor`或者一个`DeferredResultProcessingInterceptor`，以便更深入地集成异步请求的生命周期，例如处理超时事件。 有关更多详细信息，请参阅`AsyncHandlerInterceptor`的Javadoc。
 
-The`DeferredResult`type also provides methods such as`onTimeout(Runnable)`and`onCompletion(Runnable)`. See the Javadoc of`DeferredResult`for more details.
+`DeferredResult`类型还提供诸如`onTimeout(Runnable)`和`onCompletion(Runnable)`等方法。 有关更多详细信息，请参阅`DeferredResult`的Javadoc。
 
-When using a`Callable`you can wrap it with an instance of`WebAsyncTask`which also provides registration methods for timeout and completion.
+使用`Callable`时，可以用`WebAsyncTask`的实例包装它，该实例还提供了超时和完成的注册方法。
 
-#### HTTP Streaming
+#### HTTP 流式传输
 
-A controller method can use`DeferredResult`and`Callable`to produce its return value asynchronously and that can be used to implement techniques such as[long polling](https://spring.io/blog/2012/05/08/spring-mvc-3-2-preview-techniques-for-real-time-updates/)where the server can push an event to the client as soon as possible.
+控制器方法可以异步地使用`DeferredResult`和`Callable`产生其返回值，并且可以用于实现诸如[长轮询的技术](https://spring.io/blog/2012/05/08/spring-mvc-3-2-preview-techniques-for-real-time-updates/)，其中服务器可以尽快将事件推送到客户端。
 
-What if you wanted to push multiple events on a single HTTP response? This is a technique related to "Long Polling" that is known as "HTTP Streaming". Spring MVC makes this possible through the`ResponseBodyEmitter`return value type which can be used to send multiple Objects, instead of one as is normally the case with`@ResponseBody`, where each Object sent is written to the response with an`HttpMessageConverter`.
+如果您想在单个HTTP响应中推送多个事件怎么办？这是一个与“长查询”相关的技术，被称为“HTTP流”。Spring MVC可以通过`ResponseBodyEmitter`可以用于发送多个对象的返回值类型来实现，而不是像通常情况那样`@ResponseBody`发送的对象，其中每个发送的对象都被写入到响应中`HttpMessageConverter`。
 
-Here is an example of that:
+这是一个例子：
 
 ```java
 RequestMapping("/events")
@@ -107,21 +105,21 @@ emitter.send("Hello again");
 emitter.complete();
 ```
 
-Note that`ResponseBodyEmitter`can also be used as the body in a`ResponseEntity`in order to customize the status and headers of the response.
+请注意，`ResponseBodyEmitter`也可以用作`ResponseEntity`中的主体，以便自定义响应的状态和标题。
 
-#### HTTP Streaming With Server-Sent Events
+#### HTTP流与服务器发送的事件
 
-`SseEmitter`is a sub-class of`ResponseBodyEmitter`providing support for[Server-Sent Events](https://www.w3.org/TR/eventsource/). Server-sent events is a just another variation on the same "HTTP Streaming" technique except events pushed from the server are formatted according to the W3C Server-Sent Events specification.
+SseEmitter是ResponseBodyEmitter的一个子类，为[服务器发送事件](https://www.w3.org/TR/eventsource/)提供支持。 服务器发送的事件是相同的“HTTP流式传输”技术的另一种变体，除了从服务器推送的事件根据W3C服务器发送的事件规范格式化。
 
-Server-Sent Events can be used for their intended purpose, that is to push events from the server to clients. It is quite easy to do in Spring MVC and requires simply returning a value of type`SseEmitter`.
+服务器发送的事件可用于其预期的目的，即将事件从服务器推送到客户端。 在Spring MVC中很容易，只需要返回一个`SseEmitter`类型的值。
 
-Note however that Internet Explorer does not support Server-Sent Events and that for more advanced web application messaging scenarios such as online games, collaboration, financial applicatinos, and others it’s better to consider Spring’s WebSocket support that includes SockJS-style WebSocket emulation falling back to a very wide range of browsers \(including Internet Explorer\) and also higher-level messaging patterns for interacting with clients through a publish-subscribe model within a more messaging-centric architecture. For further background on this see[the following blog post](http://blog.pivotal.io/pivotal/products/websocket-architecture-in-spring-4-0).
+请注意，Internet Explorer不支持服务器发送事件，而对于更高级的Web应用程序消息传递场景（如在线游戏，协作，财务应用程序等），最好考虑Spring的WebSocket支持，其中包括SockJS风格的WebSocket仿真回落到非常广泛的浏览器（包括Internet Explorer）以及更高级别的消息传递模式，用于通过更多以消息为中心的体系结构中的发布订阅模型与客户端进行交互。有关进一步的背景，请参阅[以下博文](http://blog.pivotal.io/pivotal/products/websocket-architecture-in-spring-4-0)。
 
-#### HTTP Streaming Directly To The OutputStream
+#### HTTP直接流向OutputStream
 
-`ResponseBodyEmitter`allows sending events by writing Objects to the response through an`HttpMessageConverter`. This is probably the most common case, for example when writing JSON data. However sometimes it is useful to bypass message conversion and write directly to the response`OutputStream`for example for a file download. This can be done with the help of the`StreamingResponseBody`return value type.
+`ResponseBodyEmitter`允许通过`HttpMessageConverter`将对象写入响应来发送事件。 这可能是最常见的情况，例如编写JSON数据时。 但是有时候绕过消息转换并直接写入响应`OutputStream`（例如文件下载）是有用的。 这可以通过`StreamingResponseBody`返回值类型来完成。
 
-Here is an example of that:
+这是一个例子：
 
 ```java
 @RequestMapping("/download")
@@ -135,13 +133,13 @@ public StreamingResponseBody handle() {
 }
 ```
 
-Note that`StreamingResponseBody`can also be used as the body in a`ResponseEntity`in order to customize the status and headers of the response.
+请注意，`StreamingResponseBody`也可以用作`ResponseEntity`中的主体，以便自定义响应的状态和标题。
 
-#### Configuring Asynchronous Request Processing
+#### 配置异步请求处理
 
-##### Servlet Container Configuration
+##### Servlet容器配置
 
-For applications configured with a`web.xml`be sure to update to version 3.0:
+对于配置`web.xml`为确保更新到版本3.0的应用程序：
 
 ```java
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -155,9 +153,9 @@ For applications configured with a`web.xml`be sure to update to version 3.0:
 </web-app>
 ```
 
-Asynchronous support must be enabled on the`DispatcherServlet`through the`true`sub-element in`web.xml`. Additionally any`Filter`that participates in asyncrequest processing must be configured to support the ASYNC dispatcher type. It should be safe to enable the ASYNC dispatcher type for all filters provided with the Spring Framework since they usually extend`OncePerRequestFilter`and that has runtime checks for whether the filter needs to be involved in async dispatches or not.
+必须在`DispatcherServlet`上通过`web.xml`中的`<async-supported>true</async-supported>`子元素启用异步支持。 另外，任何参与异步请求处理的`Filter`都必须配置为支持ASYNC分派器类型。 为Spring Framework提供的所有过滤器启用ASYNC分派器类型应该是安全的，因为它们通常会扩展`OncePerRequestFilter`，并且运行时检查过滤器是否需要参与异步调度。
 
-Below is some example web.xml configuration:
+以下是一些web.xml配置示例：
 
 ```java
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -183,13 +181,13 @@ Below is some example web.xml configuration:
 </web-app>
 ```
 
-If using Servlet 3, Java based configuration for example via`WebApplicationInitializer`, you’ll also need to set the "asyncSupported" flag as well as the ASYNC dispatcher type just like with`web.xml`. To simplify all this configuration, consider extending`AbstractDispatcherServletInitializer`, or better`AbstractAnnotationConfigDispatcherServletInitializer`which automatically set those options and make it very easy to register`Filter`instances.
+如果通过`WebApplicationInitializer`使用Servlet 3，基于Java的配置，则还需要像`web.xml`一样设置“asyncSupported”标志以及ASYNC分派器类型。 为了简化所有这些配置，可以考虑扩展`AbstractDispatcherServletInitializer`，或者更好的`AbstractAnnotationConfigDispatcherServletInitializer`，它可以自动设置这些选项，并且可以很容易地注册`Filter`实例。
 
-##### Spring MVC Configuration
+##### Spring MVC 配置
 
-The MVC Java config and the MVC namespace provide options for configuring asynchronous request processing.`WebMvcConfigurer`has the method`configureAsyncSupport`while`<mvc:annotation-driven>`has an`<async-support>`sub-element.
+MVC Java配置和MVC命名空间提供了用于配置异步请求处理的选项。`WebMvcConfigurer`具有`configureAsyncSupport`方法，而`<mvc:annotation-driven>`具有`<async-support>`子元素。
 
-Those allow you to configure the default timeout value to use for async requests, which if not set depends on the underlying Servlet container \(e.g. 10 seconds on Tomcat\). You can also configure an`AsyncTaskExecutor`to use for executing`Callable`instances returned from controller methods. It is highly recommended to configure this property since by default Spring MVC uses`SimpleAsyncTaskExecutor`. The MVC Java config and the MVC namespace also allow you to register`CallableProcessingInterceptor`and`DeferredResultProcessingInterceptor`instances.
+这些允许你配置默认的超时值用于异步请求，如果没有设置则取决于底层的Servlet容器（例如Tomcat上的10秒）。 你也可以配置一个`AsyncTaskExecutor`来执行从控制器方法返回的`Callable`实例。 强烈建议配置此属性，因为默认情况下，Spring MVC使用`SimpleAsyncTaskExecutor`。 MVC Java配置和MVC命名空间还允许您注册`CallableProcessingInterceptor`和`DeferredResultProcessingInterceptor`实例。
 
-If you need to override the default timeout value for a specific`DeferredResult`, you can do so by using the appropriate class constructor. Similarly, for a`Callable`, you can wrap it in a`WebAsyncTask`and use the appropriate class constructor to customize the timeout value. The class constructor of`WebAsyncTask`also allows providing an`AsyncTaskExecutor`.
+如果您需要覆盖特定`DeferredResult`的默认超时值，可以使用适当的类构造函数来完成。 同样，对于`Callable`，可以将其包装在`WebAsyncTask`中，并使用适当的类构造函数来自定义超时值。 `WebAsyncTask`的类构造函数也允许提供一个`AsyncTaskExecutor`。
 
