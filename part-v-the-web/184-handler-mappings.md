@@ -1,26 +1,26 @@
-## 18.4Handler mappings
+## 18.4处理程序映射
 
-In previous versions of Spring, users were required to define one or more`HandlerMapping`beans in the web application context to map incoming web requests to appropriate handlers. With the introduction of annotated controllers, you generally don’t need to do that because the`RequestMappingHandlerMapping`automatically looks for`@RequestMapping`annotations on all`@Controller`beans. However, do keep in mind that all`HandlerMapping`classes extending from`AbstractHandlerMapping`have the following properties that you can use to customize their behavior:
+在以前的Spring版本中，用户需要在Web应用程序上下文中定义一个或多个`HandlerMapping` bean，以将传入的Web请求映射到适当的处理程序。 随着注解控制器的引入，您通常不需要这样做，因为`RequestMappingHandlerMapping`自动在所有`@Controller` bean上查找`@RequestMapping`注解。 但请记住，从`AbstractHandlerMapping`扩展的所有`HandlerMapping`类都具有以下可用于自定义其行为的属性：
 
-* `interceptors`List of interceptors to use.`HandlerInterceptor`s are discussed in[Section18.4.1, “Intercepting requests with a HandlerInterceptor”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-handlermapping-interceptor).
+* `interceptors`使用的拦截器列表。`HandlerInterceptor`在[Section18.4.1, “Intercepting requests with a HandlerInterceptor”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-handlermapping-interceptor)中讨论。
 
-* `defaultHandler`Default handler to use, when this handler mapping does not result in a matching handler.
+* `defaultHandler`当此处理程序映射不会导致匹配处理程序时使用的缺省处理程序。
 
-* `order`Based on the value of the order property \(see the`org.springframework.core.Ordered`interface\), Spring sorts all handler mappings available in the context and applies the first matching handler.
+* order基于order属性的值（请参阅`org.springframework.core.Ordered`接口），Spring对上下文中可用的所有处理程序映射进行排序，并应用第一个匹配的处理程序。
 
-* `alwaysUseFullPath`If`true`, Spring uses the full path within the current Servlet context to find an appropriate handler. If`false`\(the default\), the path within the current Servlet mapping is used. For example, if a Servlet is mapped using`/testing/*`and the`alwaysUseFullPath`property is set to true,`/testing/viewPage.html`is used, whereas if the property is set to false,`/viewPage.html`is used.
+* `alwaysUseFullPath`如果为`true`，则Spring将使用当前Servlet上下文中的完整路径来查找合适的处理程序。 如果为`false`（默认），则使用当前Servlet映射中的路径。 例如，如果使用`/testing/*`映射Servlet，并且`alwaysUseFullPath`属性设置为`true`，则使用`/testing/viewPage.html`，而如果该属性设置为`false`，则使用`/viewPage.html`。
 
-* `urlDecode`Defaults to`true`, as of Spring 2.5. If you prefer to compare encoded paths, set this flag to`false`. However, the`HttpServletRequest`always exposes the Servlet path in decoded form. Be aware that the Servlet path will not match when compared with encoded paths.
+* 从Spring 2.5开始，`urlDecode`默认为`true`。 如果您想比较编码路径，请将此标志设置为`false`。 但是，`HttpServletRequest`总是以解码形式公开Servlet路径。 请注意，与编码路径相比，Servlet路径不匹配。
 
-The following example shows how to configure an interceptor:
+以下示例显示如何配置拦截器：
 
 ```java
 <beans>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-		<property name="interceptors">
-			<bean class="example.MyInterceptor"/>
-		</property>
-	</bean>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="interceptors">
+            <bean class="example.MyInterceptor"/>
+        </property>
+    </bean>
 </beans>
 ```
 
