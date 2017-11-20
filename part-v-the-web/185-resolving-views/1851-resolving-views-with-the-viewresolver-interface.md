@@ -14,7 +14,7 @@
 | `FreeMarkerViewResolver` | `UrlBasedViewResolver`方便的子类，支持`FreeMarkerView`和它们的自定义子类。 |
 | `ContentNegotiatingViewResolver` | 实现基于请求文件名或`Accept`头来解析视图的`ViewResolver`接口。 请参见[第18.5.4节“ContentNegotiatingViewResolver”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-multiple-representations)。 |
 
-例如，使用JSP作为视图技术，可以使用`UrlBasedViewResolver`。此视图解析器将视图名称转换为URL，并将请求转交给RequestDispatcher以呈现视图。
+例如，使用JSP作为视图技术，可以使用`UrlBasedViewResolver`。此视图解析器将视图名称转换为URL，并将请求转交给`RequestDispatcher`以呈现视图。
 
 ```java
 <bean id="viewResolver"

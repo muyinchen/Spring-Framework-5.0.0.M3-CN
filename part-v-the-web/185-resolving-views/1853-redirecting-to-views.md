@@ -1,14 +1,14 @@
-### 18.5.3 Redirecting to Views
+### 18.5.3 重定向到视图
 
-As mentioned previously, a controller typically returns a logical view name, which a view resolver resolves to a particular view technology. For view technologies such as JSPs that are processed through the Servlet or JSP engine, this resolution is usually handled through the combination of`InternalResourceViewResolver`and`InternalResourceView`, which issues an internal forward or include via the Servlet API’s`RequestDispatcher.forward(..)`method or`RequestDispatcher.include()`method. For other view technologies, such as FreeMarker, XSLT, and so on, the view itself writes the content directly to the response stream.
+如前所述，控制器通常返回一个逻辑视图名称，视图解析器解析为一个特定的视图技术。 对于通过Servlet或JSP引擎处理的JSP等视图技术，此解决方案通常通过`InternalResourceViewResolver`和`InternalResourceView`的组合来处理，`InternalResourceView`和`InternalResourceView`通过Servlet API的`RequestDispatcher.forward(..)`方法或`RequestDispatcher.include()`方法。 对于其他视图技术，如FreeMarker，XSLT等，视图本身直接将内容写入响应流。
 
-It is sometimes desirable to issue an HTTP redirect back to the client, before the view is rendered. This is desirable, for example, when one controller has been called with`POST`data, and the response is actually a delegation to another controller \(for example on a successful form submission\). In this case, a normal internal forward will mean that the other controller will also see the same`POST`data, which is potentially problematic if it can confuse it with other expected data. Another reason to perform a redirect before displaying the result is to eliminate the possibility of the user submitting the form data multiple times. In this scenario, the browser will first send an initial`POST`; it will then receive a response to redirect to a different URL; and finally the browser will perform a subsequent`GET`for the URL named in the redirect response. Thus, from the perspective of the browser, the current page does not reflect the result of a`POST`but rather of a`GET`. The end effect is that there is no way the user can accidentally re-`POST`the same data by performing a refresh. The refresh forces a`GET`of the result page, not a resend of the initial`POST`data.
+在呈现视图之前，有时需要发送HTTP重定向回客户端。例如，当使用`POST`数据调用一个控制器时，这是可取的，而响应实际上是对另一个控制器的委托（例如成功的表单提交）。在这种情况下，正常的内部转发意味着另一个控制器也会看到相同的`POST`数据，如果可能会将其与其他预期数据混淆，则这可能会造成问题。在显示结果之前执行重定向的另一个原因是消除了用户多次提交表单数据的可能性。在这种情况下，浏览器将首先发送一个初始`POST`;它会接收到重定向到不同的URL的响应;最后浏览器会对重定向响应中的URL进行后续的`GET`操作。因此，从浏览器的角度来看，当前页面并不反映`POST`的结果，而是`GET`的结果。最终的效果是用户无法通过`POST`执行刷新而意外地重新发布相同的数据。刷新强制结果页面的`GET`，而不是重新发送初始`POST`数据。
 
 #### RedirectView
 
-One way to force a redirect as the result of a controller response is for the controller to create and return an instance of Spring’s`RedirectView`. In this case,`DispatcherServlet`does not use the normal view resolution mechanism. Rather because it has been given the \(redirect\) view already, the`DispatcherServlet`simply instructs the view to do its work. The`RedirectView`in turn calls`HttpServletResponse.sendRedirect()`to send an HTTP redirect to the client browser.
+作为控制器响应的结果，强制重定向的一种方法是让控制器创建并返回Spring的`RedirectView`实例。 在这种情况下，`DispatcherServlet`不使用普通视图解析机制。 而是因为它已经被赋予了（重定向）视图，`DispatcherServlet`只是指示视图来完成它的工作。 `RedirectView`依次调用`HttpServletResponse.sendRedirect()`向客户端浏览器发送HTTP重定向。
 
-If you use`RedirectView`and the view is created by the controller itself, it is recommended that you configure the redirect URL to be injected into the controller so that it is not baked into the controller but configured in the context along with the view names. The[the section called “The redirect: prefix”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-redirect-prefix)facilitates this decoupling.
+如果使用RedirectView并且视图是由控制器本身创建的，则建议您将重定向URL配置为注入控制器，以使其不会被烘焙到控制器中，而是在上下文中与视图名称一起配置。 在[一节“重定向：前缀”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-redirect-prefix)有利于这种脱钩。
 
 ##### Passing Data To the Redirect Target
 
@@ -23,8 +23,8 @@ Note that URI template variables from the present request are automatically made
 ```java
 @PostMapping("/files/{path}")
 public String upload(...) {
-	// ...
-	return "redirect:files/{path}";
+    // ...
+    return "redirect:files/{path}";
 }
 ```
 
