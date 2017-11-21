@@ -10,15 +10,17 @@
 
 如果使用RedirectView并且视图是由控制器本身创建的，则建议您将重定向URL配置为注入控制器，以使其不会被烘焙到控制器中，而是在上下文中与视图名称一起配置。 在[一节“重定向：前缀”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-redirecting-redirect-prefix)有利于这种脱钩。
 
-##### Passing Data To the Redirect Target
+##### 将数据传递到重定向目标
 
-By default all model attributes are considered to be exposed as URI template variables in the redirect URL. Of the remaining attributes those that are primitive types or collections/arrays of primitive types are automatically appended as query parameters.
+默认情况下，所有的模型属性都被认为是作为重定向URL中的URI模板变量公开的。 其余属性是原始类型或集合/基本类型数组，都自动附加为查询参数。
 
-Appending primitive type attributes as query parameters may be the desired result if a model instance was prepared specifically for the redirect. However, in annotated controllers the model may contain additional attributes added for rendering purposes \(e.g. drop-down field values\). To avoid the possibility of having such attributes appear in the URL, an`@RequestMapping`method can declare an argument of type`RedirectAttributes`and use it to specify the exact attributes to make available to`RedirectView`. If the method does redirect, the content of`RedirectAttributes`is used. Otherwise the content of the model is used.
+如果为重定向专门准备了模型实例，那么将基元类型属性附加为查询参数可能是期望的结果。 但是，在带注解的控制器中，模型可能包含为渲染目的而添加的附加属性（例如，下拉字段值）。 为了避免在URL中出现这样的属性，`@RequestMapping`方法可以声明`RedirectAttributes`类型的参数，并使用它来指定可用于`RedirectView`的确切属性。 如果方法确实重定向，则使用`RedirectAttributes`的内容。 否则使用模型的内容。
 
-The`RequestMappingHandlerAdapter`provides a flag called`"ignoreDefaultModelOnRedirect"`that can be used to indicate the content of the default`Model`should never be used if a controller method redirects. Instead the controller method should declare an attribute of type`RedirectAttributes`or if it doesn’t do so no attributes should be passed on to`RedirectView`. Both the MVC namespace and the MVC Java config keep this flag set to`false`in order to maintain backwards compatibility. However, for new applications we recommend setting it to`true`
+如果为重定向准备了模型实例，则将原始类型属性作为查询参数附加可能是所需的结果。然而，在注解控制器中，模型可能包含为渲染目的添加的附加属性（例如下拉字段值）。为了避免这种属性出现在URL中的可能性，一种`@RequestMapping`方法可以声明一个类型的参数，`RedirectAttributes`并使用它来指定可供使用的确切属性`RedirectView`。如果方法重定向，则使用内容`RedirectAttributes`。否则使用模型的内容。
 
-Note that URI template variables from the present request are automatically made available when expanding a redirect URL and do not need to be added explicitly neither through`Model`nor`RedirectAttributes`. For example:
+`RequestMappingHandlerAdapter`提供了一个名为`“ignoreDefaultModelOnRedirect”`的标志，可用于指示默认`Model`的内容，如果控制器方法重定向，则永远不要使用该模型。 相反，控制器方法应声明`RedirectAttributes`类型的属性，或者如果不这样做，则不应将任何属性传递给`RedirectView`。 MVC命名空间和MVC Java配置都将此标志设置为`false`，以保持向后兼容性。 但是，对于新应用程序，我们建议将其设置为`true`
+
+请注意，当前请求中的URI模板变量在扩展重定向URL时自动可用，不需要通过`Model`或`RedirectAttributes`显式添加。 例如：
 
 ```java
 @PostMapping("/files/{path}")
@@ -28,21 +30,23 @@ public String upload(...) {
 }
 ```
 
-Another way of passing data to the redirect target is via_Flash Attributes_. Unlike other redirect attributes, flash attributes are saved in the HTTP session \(and hence do not appear in the URL\). See[Section18.6, “Using flash attributes”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)for more information.
+将数据传递到重定向目标的另一种方法是通过_Flash属性_。与其他重定向属性不同，Flash属性保存在HTTP会话中（因此不会出现在URL中）。有关详细信息，请参见[第18.6节“使用Flash属性”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-flash-attributes)。
 
-#### The redirect: prefix
+#### 重定向：前缀
 
-While the use of`RedirectView`works fine, if the controller itself creates the`RedirectView`, there is no avoiding the fact that the controller is aware that a redirection is happening. This is really suboptimal and couples things too tightly. The controller should not really care about how the response gets handled. In general it should operate only in terms of view names that have been injected into it.
+虽然使用RedirectView可以正常工作，但如果控制器本身创建RedirectView，则不会避免控制器意识到重定向正在发生。 这实在是不理想，让事情太紧密。 控制器不应该在乎如何处理响应。 一般来说，它只能在注入视图名称的情况下运行。
 
-The special`redirect:`prefix allows you to accomplish this. If a view name is returned that has the prefix`redirect:`, the`UrlBasedViewResolver`\(and all subclasses\) will recognize this as a special indication that a redirect is needed. The rest of the view name will be treated as the redirect URL.
+特殊的`redirect:`前缀可以让你做到这一点。 如果返回具有前缀`redirect：`的视图名称，则`UrlBasedViewResolver`（和所有子类）将认识到这是需要重定向的特殊指示。 视图名称的其余部分将被视为重定向URL。
 
-The net effect is the same as if the controller had returned a`RedirectView`, but now the controller itself can simply operate in terms of logical view names. A logical view name such as`redirect:/myapp/some/resource`will redirect relative to the current Servlet context, while a name such as`redirect:http://myhost.com/some/arbitrary/path`will redirect to an absolute URL.
+请注意，控制器处理程序使用注释`@ResponseStatus`，注释值优先于设置的响应状态`RedirectView`。
 
-Note that the controller handler is annotated with the`@ResponseStatus`, the annotation value takes precedence over the response status set by`RedirectView`.
+实际效果与控制器返回`RedirectView`的效果相同，但现在控制器本身可以简单地按照逻辑视图名称操作。 逻辑视图名称，例如`redirect:/myapp/some/resource`将相对于当前Servlet上下文重定向，而诸如`redirect:http://myhost.com/some/arbitrary/path`之类的名称将重定向到绝对URL。
 
-#### The forward: prefix
+请注意，控制器处理程序使用`@ResponseStatus`注解，注解值优先于`RedirectView`设置的响应状态。
 
-It is also possible to use a special`forward:`prefix for view names that are ultimately resolved by`UrlBasedViewResolver`and subclasses. This creates an`InternalResourceView`\(which ultimately does a`RequestDispatcher.forward()`\) around the rest of the view name, which is considered a URL. Therefore, this prefix is not useful with`InternalResourceViewResolver`and`InternalResourceView`\(for JSPs for example\). But the prefix can be helpful when you are primarily using another view technology, but still want to force a forward of a resource to be handled by the Servlet/JSP engine. \(Note that you may also chain multiple view resolvers, instead.\)
+#### 转发：前缀
 
-As with the`redirect:`prefix, if the view name with the`forward:`prefix is injected into the controller, the controller does not detect that anything special is happening in terms of handling the response.
+对于最终由`UrlBasedViewResolver`和子类解析的视图名称，也可以使用特殊的`forward：`前缀。 这将创建一个内部`ResourceView`（最终执行一个`RequestDispatcher.forward()`），其余的视图名称被视为一个URL。 因此，这个前缀对于`InternalResourceViewResolver`和`InternalResourceView`（例如JSP）是没有用的。 但是，当您主要使用其他视图技术时，前缀可能会很有帮助，但仍希望强制转发资源，以便由Servlet/JSP引擎处理。 （请注意，您也可以链接多个视图解析器）。
+
+与`redirect:`前缀一样，如果带有`forward：`前缀的视图名称被注入到控制器中，则控制器不会检测到处理响应方面的任何特殊情况。
 
