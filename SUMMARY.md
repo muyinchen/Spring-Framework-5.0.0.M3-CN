@@ -309,7 +309,7 @@
       * [18.5.2 链接视图解析器](part-v-the-web/185-resolving-views/1852-chaining-viewresolvers.md)
       * [18.5.3 重定向到视图](part-v-the-web/185-resolving-views/1853-redirecting-to-views.md)
       * [18.5.4 ContentNegotiatingViewResolver](part-v-the-web/185-resolving-views/1854-contentnegotiatingviewresolver.md)
-    * [18.6 Using flash attributes](part-v-the-web/186-using-flash-attributes.md)
+    * [18.6 使用flash属性](part-v-the-web/186-using-flash-attributes.md)
     * [18.7 Building URIs](part-v-the-web/187-building-uris.md)
       * [18.7.1 Building URIs to Controllers and methods](part-v-the-web/187-building-uris/1871-building-uris-to-controllers-and-methods.md)
       * [18.7.2 Building URIs to Controllers and methods from views](part-v-the-web/187-building-uris/1872-building-uris-to-controllers-and-methods-from-views.md)
