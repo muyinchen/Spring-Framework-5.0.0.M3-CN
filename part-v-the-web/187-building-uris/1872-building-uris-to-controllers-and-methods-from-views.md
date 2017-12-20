@@ -1,16 +1,16 @@
-### 18.7.2Building URIs to Controllers and methods from views
+### 18.7.2构建来自视图的控制器和方法的URI
 
-You can also build links to annotated controllers from views such as JSP, Thymeleaf, FreeMarker. This can be done using the`fromMappingName`method in`MvcUriComponentsBuilder`which refers to mappings by name.
+您还可以从视图（如JSP，Thymeleaf，FreeMarker）建立到注解控制器的链接。 这可以使用`MvcUriComponentsBuilder`中的`fromMappingName`方法来完成，该方法引用按名称映射。
 
-Every`@RequestMapping`is assigned a default name based on the capital letters of the class and the full method name. For example, the method`getFoo`in class`FooController`is assigned the name "FC\#getFoo". This strategy can be replaced or customized by creating an instance of`HandlerMethodMappingNamingStrategy`and plugging it into your`RequestMappingHandlerMapping`. The default strategy implementation also looks at the name attribute on`@RequestMapping`and uses that if present. That means if the default mapping name assigned conflicts with another \(e.g. overloaded methods\) you can assign a name explicitly on the`@RequestMapping`.
+每个`@RequestMapping`被分配一个基于类的大写字母和完整的方法名称的默认名称。 例如，类`FooController`中的方法`getFoo`被分配名称“FC＃getFoo”。 可以通过创建`HandlerMethodMappingNamingStrategy`实例并将其插入到`RequestMappingHandlerMapping`中来替换或定制此策略。 默认策略实现也查看`@RequestMapping`上的名称属性，并使用它（如果存在）。 这意味着，如果分配的默认映射名称与另一个映射名称（例如重载的方法）冲突，则可以在`@RequestMapping`上明确指定一个名称。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| The assigned request mapping names are logged at TRACE level on startup. |
+| 分配的请求映射名称在启动时将记录在TRACE级别。 |
 
-The Spring JSP tag library provides a function called`mvcUrl`that can be used to prepare links to controller methods based on this mechanism.
+Spring JSP标记库提供了一个名为`mvcUrl`的函数，可用于根据此机制来准备控制器方法的链接。
 
-For example given:
+例如给出：
 
 ```java
 @RequestMapping("/people/{id}/addresses")
@@ -21,7 +21,7 @@ public class PersonAddressController {
 }
 ```
 
-You can prepare a link from a JSP as follows:
+您可以从JSP准备一个链接，如下所示：
 
 ```java
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
@@ -29,5 +29,5 @@ You can prepare a link from a JSP as follows:
 <a href="${s:mvcUrl('PAC#getAddress').arg(0,'US').buildAndExpand('123')}">Get Address</a>
 ```
 
-The above example relies on the`mvcUrl`JSP function declared in the Spring tag library \(i.e. META-INF/spring.tld\). For more advanced cases \(e.g. a custom base URL as explained in the previous section\), it is easy to define your own function, or use a custom tag file, in order to use a specific instance of`MvcUriComponentsBuilder`with a custom base URL.
+上面的例子依赖于Spring标记库中声明的`mvcUrl` JSP函数（即META-INF / spring.tld）。 对于更高级的情况（例如上一节中介绍的自定义基本URL），可以很容易地定义自己的函数或使用自定义标记文件，以便使用具有自定义基本URL的特定`MvcUriComponentsBuilder`实例。
 
