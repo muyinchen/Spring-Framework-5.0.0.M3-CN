@@ -1,4 +1,4 @@
-### 18.8.2 AcceptHeaderLocaleResolver
+### 18.8.2 AcceptHeaderLocaleResolver
 
-This locale resolver inspects the`accept-language`header in the request that was sent by the client \(e.g., a web browser\). Usually this header field contains the locale of the client’s operating system._Note that this resolver does not support time zone information._
+此语言环境解析程序检查客户端（例如，Web浏览器）发送的请求中的`accept-language`标头。 通常这个头域包含客户端操作系统的语言环境。_请注意，此解析器不支持时区信息。_
 

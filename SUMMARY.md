@@ -314,7 +314,7 @@
       * [18.7.1 构建控制器和方法的URI](part-v-the-web/187-building-uris/1871-building-uris-to-controllers-and-methods.md)
       * [18.7.2 构建来自视图的控制器和方法的URI](part-v-the-web/187-building-uris/1872-building-uris-to-controllers-and-methods-from-views.md)
     * [18.8 使用区域设置](part-v-the-web/188-using-locales.md)
-      * [18.8.1 Obtaining Time Zone Information](part-v-the-web/188-using-locales/1881-obtaining-time-zone-information.md)
+      * [18.8.1 获取时区信息](part-v-the-web/188-using-locales/1881-obtaining-time-zone-information.md)
       * [18.8.2 AcceptHeaderLocaleResolver](part-v-the-web/188-using-locales/1882-acceptheaderlocaleresolver.md)
       * [18.8.3 CookieLocaleResolver](part-v-the-web/188-using-locales/1883-cookielocaleresolver.md)
       * [18.8.4 SessionLocaleResolver](part-v-the-web/188-using-locales/1884-sessionlocaleresolver.md)
