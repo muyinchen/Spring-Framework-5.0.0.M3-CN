@@ -1,4 +1,4 @@
-### 18.9.1 Overview of themes
+### 18.9.1 主题概述
 
-You can apply Spring Web MVC framework themes to set the overall look-and-feel of your application, thereby enhancing user experience. A theme is a collection of static resources, typically style sheets and images, that affect the visual style of the application.
+您可以应用Spring Web MVC框架主题来设置应用程序的整体外观，从而提高用户体验。 主题是静态资源的集合，通常是样式表和图像，它们会影响应用程序的视觉风格。
 

@@ -319,10 +319,10 @@
       * [18.8.3 CookieLocaleResolver](part-v-the-web/188-using-locales/1883-cookielocaleresolver.md)
       * [18.8.4 SessionLocaleResolver](part-v-the-web/188-using-locales/1884-sessionlocaleresolver.md)
       * [18.8.5 LocaleChangeInterceptor](part-v-the-web/188-using-locales/1885-localechangeinterceptor.md)
-    * 18.9 Using themes
-      * [18.9.1 Overview of themes](part-v-the-web/1891-overview-of-themes.md)
-      * [18.9.2 Defining themes](part-v-the-web/1892-defining-themes.md)
-      * [18.9.3 Theme resolvers](part-v-the-web/1893-theme-resolvers.md)
+    * [18.9 使用主题](part-v-the-web/189-using-themes.md)
+      * [18.9.1 主题概述](part-v-the-web/1891-overview-of-themes.md)
+      * [18.9.2 定义主题](part-v-the-web/1892-defining-themes.md)
+      * [18.9.3 主题解析器](part-v-the-web/1893-theme-resolvers.md)
     * 18.10 Spring’s multipart \(file upload\) support
       * [18.10.1 Introduction](part-v-the-web/18101-introduction.md)
       * [18.10.2 Using a MultipartResolver with Commons FileUpload](part-v-the-web/18102-using-a-multipartresolver-with-commons-fileupload.md)
