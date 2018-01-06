@@ -1,6 +1,10 @@
-### 18.10.1 Introduction
+### 18.10.1 介绍
 
-Spring’s built-in multipart support handles file uploads in web applications. You enable this multipart support with pluggable`MultipartResolver`objects, defined in the`org.springframework.web.multipart`package. Spring provides one`MultipartResolver`implementation for use with[_Commons FileUpload_](https://jakarta.apache.org/commons/fileupload)and another for use with Servlet 3.0 multipart request parsing.
+Spring的内置多部分支持处理Web应用程序中的文件上传。 您可以使用`org.springframework.web.multipart`包中定义的可插入`MultipartResolver`对象来启用此多部分支持。 Spring提供了一个`MultipartResolver`实现，用于与[_Commons FileUpload的实现_](https://jakarta.apache.org/commons/fileupload)一起使用，另一个用于Servlet 3.0多部分请求分析。
 
-By default, Spring does no multipart handling, because some developers want to handle multiparts themselves. You enable Spring multipart handling by adding a multipart resolver to the web application’s context. Each request is inspected to see if it contains a multipart. If no multipart is found, the request continues as expected. If a multipart is found in the request, the`MultipartResolver`that has been declared in your context is used. After that, the multipart attribute in your request is treated like any other attribute.
+默认情况下，Spring没有多部分处理，因为有些开发人员想要自己处理多部分。 通过将多部分解析器添加到Web应用程序的上下文中来启用Spring多部分处理。 检查每个请求以查看它是否包含多部分。 如果找不到多部分，请求将按预期继续。 如果在请求中找到multipart，则使用在上下文中声明的`MultipartResolver`。 之后，请求中的多部分属性就像任何其他属性一样处理。
+
+###  
+
+
 

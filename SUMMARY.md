@@ -323,12 +323,12 @@
       * [18.9.1 主题概述](part-v-the-web/1891-overview-of-themes.md)
       * [18.9.2 定义主题](part-v-the-web/1892-defining-themes.md)
       * [18.9.3 主题解析器](part-v-the-web/1893-theme-resolvers.md)
-    * 18.10 Spring’s multipart \(file upload\) support
-      * [18.10.1 Introduction](part-v-the-web/18101-introduction.md)
-      * [18.10.2 Using a MultipartResolver with Commons FileUpload](part-v-the-web/18102-using-a-multipartresolver-with-commons-fileupload.md)
-      * [18.10.3 Using a MultipartResolver with Servlet 3.0](part-v-the-web/18103-using-a-multipartresolver-with-servlet-30.md)
-      * [18.10.4 Handling a file upload in a form](part-v-the-web/18104-handling-a-file-upload-in-a-form.md)
-      * [18.10.5 Handling a file upload request from programmatic clients](part-v-the-web/18105-handling-a-file-upload-request-from-programmatic-clients.md)
+    * [18.10 Spring的多部分（文件上传）支持](part-v-the-web/1810-springs-multipart-file-upload-support.md)
+      * [18.10.1 介绍](part-v-the-web/18101-introduction.md)
+      * [18.10.2 与Commons FileUpload一起使用MultipartResolver](part-v-the-web/18102-using-a-multipartresolver-with-commons-fileupload.md)
+      * [18.10.3 在Servlet 3.0中使用MultipartResolver](part-v-the-web/18103-using-a-multipartresolver-with-servlet-30.md)
+      * [18.10.4 处理表单中的文件上传](part-v-the-web/18104-handling-a-file-upload-in-a-form.md)
+      * [18.10.5 处理来自编程客户端的文件上传请求](part-v-the-web/18105-handling-a-file-upload-request-from-programmatic-clients.md)
     * 18.11 Handling exceptions
       * [18.11.1 HandlerExceptionResolver](part-v-the-web/18111-handlerexceptionresolver.md)
       * [18.11.2 @ExceptionHandler](part-v-the-web/18112-exceptionhandler.md)

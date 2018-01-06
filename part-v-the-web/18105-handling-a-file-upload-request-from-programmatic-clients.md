@@ -1,6 +1,6 @@
-### 18.10.5Handling a file upload request from programmatic clients
+### 18.10.5处理来自编程客户端的文件上传请求
 
-Multipart requests can also be submitted from non-browser clients in a RESTful service scenario. All of the above examples and configuration apply here as well. However, unlike browsers that typically submit files and simple form fields, a programmatic client can also send more complex data of a specific content type — for example a multipart request with a file and second part with JSON formatted data:
+也可以从RESTful服务场景中的非浏览器客户端提交多部分请求。 以上所有示例和配置都适用于此。 但是，与通常提交文件和简单表单域的浏览器不同，编程客户机还可以发送更复杂的特定内容类型的数据 - 例如带文件的多部分请求，带JSON格式数据的第二部分：
 
 ```java
 POST /someUrl
@@ -12,7 +12,7 @@ Content-Type: application/json; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 {
-	"name": "value"
+    "name": "value"
 }
 --edt7Tfrdusa7r3lNQc79vXuhIIMlatb7PQg7Vp
 Content-Disposition: form-data; name="file-data"; filename="file.properties"
@@ -25,15 +25,19 @@ You could access the part named "meta-data" with a`@RequestParam("meta-data") St
 
 You can use the`@RequestPart`annotation instead of the`@RequestParam`annotation for this purpose. It allows you to have the content of a specific multipart passed through an`HttpMessageConverter`taking into consideration the`'Content-Type'`header of the multipart:
 
+您可以使用`@RequestParam("meta-data") String metadata`控制器方法参数来访问名为"meta-data" 的部分。 但是，您可能更愿意接受一个从请求部分主体中的JSON格式的数据初始化的强类型对象，这与`@RequestBody`在非帮助的情况下将非多部分请求的主体转换为目标对象的方式非常相似 一个`HttpMessageConverter`。
+
+您可以使用`@RequestPart`注解而不是`@RequestParam`注解来达到此目的。 它允许您通过`HttpMessageConverter`考虑多部分的`'Content-Type'`标题来传递特定多部分的内容：
+
 ```java
 @PostMapping("/someUrl")
 public String onSubmit(@RequestPart("meta-data") MetaData metadata,
-		@RequestPart("file-data") MultipartFile file) {
+        @RequestPart("file-data") MultipartFile file) {
 
-	// ...
+    // ...
 
 }
 ```
 
-Notice how`MultipartFile`method arguments can be accessed with`@RequestParam`or with`@RequestPart`interchangeably. However, the`@RequestPart("meta-data") MetaData`method argument in this case is read as JSON content based on its`'Content-Type'`header and converted with the help of the`MappingJackson2HttpMessageConverter`.
+请注意，`MultipartFile`方法参数如何通过`@RequestParam`或`@RequestPart`可互换地访问。 然而，在这种情况下，`@RequestPart("meta-data") MetaData`方法参数被读取为基于其`'Content-Type'`头的JSON内容，并且借助于`MappingJackson2HttpMessageConverter`进行转换。
 
