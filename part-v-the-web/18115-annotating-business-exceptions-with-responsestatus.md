@@ -1,4 +1,4 @@
-### 18.11.5 Annotating Business Exceptions With @ResponseStatus
+### 18.11.5 使用@ResponseStatus注解业务异常
 
-A business exception can be annotated with`@ResponseStatus`. When the exception is raised, the`ResponseStatusExceptionResolver`handles it by setting the status of the response accordingly. By default the`DispatcherServlet`registers the`ResponseStatusExceptionResolver`and it is available for use.
+业务异常可以使用`@ResponseStatus`进行注释。 当引发异常时，`ResponseStatusExceptionResolver`通过相应地设置响应的状态来处理它。 默认情况下，`DispatcherServlet`注册`ResponseStatusExceptionResolver`，并可供使用。
 
