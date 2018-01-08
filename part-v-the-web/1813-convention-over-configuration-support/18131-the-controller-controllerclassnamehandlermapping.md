@@ -1,48 +1,48 @@
 ### 18.13.1The Controller ControllerClassNameHandlerMapping
 
-The`ControllerClassNameHandlerMapping`class is a`HandlerMapping`implementation that uses a convention to determine the mapping between request URLs and the`Controller`instances that are to handle those requests.
+`ControllerClassNameHandlerMapping`类是`HandlerMapping`实现，它使用约定来确定请求URL和处理这些请求的`Controller`实例之间的映射。
 
-Consider the following simple`Controller`implementation. Take special notice of the_name_of the class.
+考虑以下简单的`Controller`实现。 请特别注意class的名称。
 
 ```java
 public class ViewShoppingCartController implements Controller {
 
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		// the implementation is not hugely important for this example...
-	}
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        // the implementation is not hugely important for this example...
+    }
 
 }
 ```
 
-Here is a snippet from the corresponding Spring Web MVC configuration file:
+这里是相应的Spring Web MVC配置文件的一个片段：
 
 ```java
 <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
 <bean id="viewShoppingCart" class="x.y.z.ViewShoppingCartController">
-	<!-- inject dependencies as required... -->
+    <!-- 根据需要注入依赖关系... -->
 </bean>
 ```
 
-The`ControllerClassNameHandlerMapping`finds all of the various handler \(or`Controller`\) beans defined in its application context and strips`Controller`off the name to define its handler mappings. Thus,`ViewShoppingCartController`maps to the`/viewshoppingcart*`request URL.
+`ControllerClassNameHandlerMapping`查找在其应用程序上下文中定义的所有各种处理程序（或`Controller`）Bean，并从名称中除去`Controller`以定义其处理程序映射。 因此，`ViewShoppingCartController`映射到`/viewshoppingcart *`请求URL。
 
-Let’s look at some more examples so that the central idea becomes immediately familiar. \(Notice all lowercase in the URLs, in contrast to camel-cased`Controller`class names.\)
+让我们来看一些更多的例子，让中心思想变得非常熟悉。 （请注意URL中的所有小写字母，而不是骆驼式的`Controller`类名称。）
 
-* `WelcomeController`maps to the`/welcome*`request URL
+* `WelcomeController`映射到`/welcome*`请求URL
 
-* `HomeController`maps to the`/home*`request URL
+* `HomeController`映射到`/home*`请求URL
 
-* `IndexController`maps to the`/index*`request URL
+* `IndexController`映射到`/index*`请求URL
 
-* `RegisterController`maps to the`/register*`request URL
+* `RegisterController`映射到`/register*`请求URL
 
-In the case of`MultiActionController`handler classes, the mappings generated are slightly more complex. The`Controller`names in the following examples are assumed to be`MultiActionController`implementations:
+在`MultiActionController`处理程序类的情况下，生成的映射稍微复杂一些。 以下示例中的`Controller`名称假定为`MultiActionController`实现：
 
-* `AdminController`maps to the`/admin/*`request URL
+* `AdminController`映射到`/admin/*`请求URL
 
-* `CatalogController`maps to the`/catalog/*`request URL
+* `CatalogController`映射到`/catalog/*`请求URL
 
-If you follow the convention of naming your`Controller`implementations as`xxxController`, the`ControllerClassNameHandlerMapping`saves you the tedium of defining and maintaining a potentially_looooong_`SimpleUrlHandlerMapping`\(or suchlike\).
+如果按照惯例将`Controller`实现命名为`xxxController`，那么`ControllerClassNameHandlerMapping`将为您节省定义和维护`SimpleUrlHandlerMapping`（或类似的）的繁琐工作。
 
-The`ControllerClassNameHandlerMapping`class extends the`AbstractHandlerMapping`base class so you can define`HandlerInterceptor`instances and everything else just as you would with many other`HandlerMapping`implementations.
+`ControllerClassNameHandlerMapping`类扩展了`AbstractHandlerMapping`基类，因此您可以像处理许多其他`HandlerMapping`实现一样定义`HandlerInterceptor`实例和其他所有内容。
 

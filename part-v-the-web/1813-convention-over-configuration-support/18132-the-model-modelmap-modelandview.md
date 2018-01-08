@@ -1,54 +1,54 @@
 ### 18.13.2The Model ModelMap \(ModelAndView\)
 
-The`ModelMap`class is essentially a glorified`Map`that can make adding objects that are to be displayed in \(or on\) a`View`adhere to a common naming convention. Consider the following`Controller`implementation; notice that objects are added to the`ModelAndView`without any associated name specified.
+`ModelMap`类本质上是一个荣耀的`Map`，它可以使添加的对象在`View`中（或在其上）显示，并遵循一个通用的命名约定。 考虑下面的控制器实现; 注意到对象被添加到`ModelAndView`而没有指定任何关联的名字。
 
 ```java
 public class DisplayShoppingCartController implements Controller {
 
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		List cartItems = // get a List of CartItem objects
-		User user = // get the User doing the shopping
+        List cartItems = // 获取CartItem对象的列表
+        User user = // 让用户进行购物
 
-		ModelAndView mav = new ModelAndView("displayShoppingCart"); <-- the logical view name
+        ModelAndView mav = new ModelAndView("displayShoppingCart"); <-- 逻辑视图名称
 
-		mav.addObject(cartItems); <-- look ma, no name, just the object
-		mav.addObject(user); <-- and again ma!
+        mav.addObject(cartItems); <-- 看ma，没有名字，只是对象
+        mav.addObject(user); <-- and again ma!
 
-		return mav;
-	}
+        return mav;
+    }
 }
 ```
 
-The`ModelAndView`class uses a`ModelMap`class that is a custom`Map`implementation that automatically generates a key for an object when an object is added to it. The strategy for determining the name for an added object is, in the case of a scalar object such as`User`, to use the short class name of the object’s class. The following examples are names that are generated for scalar objects put into a`ModelMap`instance.
+`ModelAndView`类使用一个`ModelMap`类，它是一个自定义的`Map`实现，当一个对象被添加到它时，该实现自动为一个对象生成一个键。 在像`User`这样的标量对象的情况下，为添加对象确定名称的策略是使用对象类的简短类名称。 以下示例是为放置在`ModelMap`实例中的标量对象生成的名称。
 
-* An`x.y.User`instance added will have the name`user`generated.
+* `x.y.User`添加 的实例将生成名称`user`。
 
-* An`x.y.Registration`instance added will have the name`registration`generated.
+* `x.y.Registration`添加 的实例将生成名称`registration`。
 
-* An`x.y.Foo`instance added will have the name`foo`generated.
+* `x.y.Foo`添加 的实例将生成名称`foo`。
 
-* A`java.util.HashMap`instance added will have the name`hashMap`generated. You probably want to be explicit about the name in this case because`hashMap`is less than intuitive.
+* `java.util.HashMap`添加的实例将生成名称`hashMap`。 你可能想在这种情况下明确名称，因为`hashMap`不是直观的。
 
-* Adding`null`will result in an`IllegalArgumentException`being thrown. If the object \(or objects\) that you are adding could be`null`, then you will also want to be explicit about the name.
+* 添加`null`将导致引发`IllegalArgumentException`。 如果要添加的对象（或多个对象）可能为`null`，那么您还需要明确名称。
 
-**What, no automatic pluralization?**
+**什么，没有自动多元化？**
 
-Spring Web MVC’s convention-over-configuration support does not support automatic pluralization. That is, you cannot add a`List`of`Person`objects to a`ModelAndView`and have the generated name be`people`.
+Spring Web MVC的常规配置支持支持不支持自动多元化。 也就是说，不能将一个`List`的`Person`对象列表添加到`ModelAndView`中，并将生成的名称作为`people`。
 
-This decision was made after some debate, with the "Principle of Least Surprise" winning out in the end.
+这个决定是经过一番辩论后做出来的，最后以“最低惊奇原则”获胜。
 
-The strategy for generating a name after adding a`Set`or a`List`is to peek into the collection, take the short class name of the first object in the collection, and use that with`List`appended to the name. The same applies to arrays although with arrays it is not necessary to peek into the array contents. A few examples will make the semantics of name generation for collections clearer:
+添加一个`Set`或者一个`List`之后生成一个名字的策略就是查看这个集合，获取这个集合中第一个对象的简短类名，并且在名字后面加上`List`。 对于数组也是如此，但是对于数组，不需要查看数组的内容。 一些例子会使集合的名字生成的语义更清晰：
 
-* An`x.y.User[]`array with zero or more`x.y.User`elements added will have the name`userList`generated.
+* 添加了零个或多个`x.y.User`元素的`x.y.User[]`数组将生成名称`userList`。
 
-* An`x.y.Foo[]`array with zero or more`x.y.User`elements added will have the name`fooList`generated.
+* 添加了零个或多个`x.y.User`元素的`x.y.Foo[]`数组将会生成名称`fooList`。
 
-* A`java.util.ArrayList`with one or more`x.y.User`elements added will have the name`userList`generated.
+* 添加了一个或多个`x.y.User`元素的`java.util.ArrayList`将生成的名称`userList`。
 
-* A`java.util.HashSet`with one or more`x.y.Foo`elements added will have the name`fooList`generated.
+* 添加了一个或多个`x.y.Foo`元素的`java.util.HashSet`将具有生成的名称`fooList`。
 
-* An_empty_`java.util.ArrayList`will not be added at all \(in effect, the`addObject(..)`call will essentially be a no-op\).
+* 根本不会添加 一个_空_`java.util.ArrayList`（实际上，`addObject(..)`调用本质上是无操作的）。
 
 
 

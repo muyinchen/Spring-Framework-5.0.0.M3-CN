@@ -1,6 +1,6 @@
-## 18.12 Web Security
+## 18.12 网络安全
 
-The[Spring Security](http://projects.spring.io/spring-security/)project provides features to protect web applications from malicious exploits. Check out the reference documentation in the sections on["CSRF protection"](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#csrf),["Security Response Headers"](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#headers), and also["Spring MVC Integration"](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#mvc). Note that using Spring Security to secure the application is not necessarily required for all features. For example CSRF protection can be added simply by adding the`CsrfFilter`and`CsrfRequestDataValueProcessor`to your configuration. See the[Spring MVC Showcase](https://github.com/spring-projects/spring-mvc-showcase/commit/361adc124c05a8187b84f25e8a57550bb7d9f8e4)for an example.
+[Spring Security](http://projects.spring.io/spring-security/)项目提供了保护Web应用程序免受恶意攻击的功能。 查看[“CSRF保护”](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#csrf)，[“安全响应头”](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#headers)以及[“Spring MVC集成”部分中的参考文档](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#mvc)。 请注意，使用Spring Security来保护应用程序不一定是所有功能都需要的。 例如，可以通过将`CsrfFilter`和`CsrfRequestDataValueProcessor`添加到您的配置来添加CSRF保护。 请参阅[Spring MVC展示](https://github.com/spring-projects/spring-mvc-showcase/commit/361adc124c05a8187b84f25e8a57550bb7d9f8e4)示例。
 
-Another option is to use a framework dedicated to Web Security.[HDIV](http://hdiv.org/)is one such framework and integrates with Spring MVC.
+另一个选择是使用专用于Web Security的框架。[HDIV](http://hdiv.org/)就是一个这样的框架，并且与Spring MVC集成在一起。
 
