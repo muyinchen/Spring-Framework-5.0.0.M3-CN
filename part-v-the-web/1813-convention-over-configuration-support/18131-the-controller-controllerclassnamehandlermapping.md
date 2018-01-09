@@ -1,4 +1,4 @@
-### 18.13.1The Controller ControllerClassNameHandlerMapping
+### 18.13.1Controller ControllerClassNameHandlerMapping
 
 `ControllerClassNameHandlerMapping`类是`HandlerMapping`实现，它使用约定来确定请求URL和处理这些请求的`Controller`实例之间的映射。
 

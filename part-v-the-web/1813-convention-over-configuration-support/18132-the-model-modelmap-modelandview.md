@@ -1,4 +1,4 @@
-### 18.13.2The Model ModelMap \(ModelAndView\)
+### 18.13.2Model ModelMap \(ModelAndView\)
 
 `ModelMap`类本质上是一个荣耀的`Map`，它可以使添加的对象在`View`中（或在其上）显示，并遵循一个通用的命名约定。 考虑下面的控制器实现; 注意到对象被添加到`ModelAndView`而没有指定任何关联的名字。
 
