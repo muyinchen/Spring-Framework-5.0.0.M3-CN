@@ -1,54 +1,54 @@
-### 18.14.3Support for the Cache-Control, ETag and Last-Modified response headers in Controllers
+### 18.14.3支持控制器中的Cache-Control，ETag和Last-Modified响应头
 
-Controllers can support`'Cache-Control'`,`'ETag'`, and/or`'If-Modified-Since'`HTTP requests; this is indeed recommended if a`'Cache-Control'`header is to be set on the response. This involves calculating a lastModified`long`and/or an Etag value for a given request, comparing it against the`'If-Modified-Since'`request header value, and potentially returning a response with status code 304 \(Not Modified\).
+控制器可以支持`'Cache-Control'`，`'ETag'`和/或`'If-Modified-Since'`HTTP请求。 如果在响应中设置`'Cache-Control'`头部，这确实是推荐的。 这包括计算给定请求的lastmodified `long`和/或Etag值，并将其与`'If-Modified-Since'`请求标头值进行比较，并可能返回状态码304（未修改）的响应。
 
-As described in[the section called “Using HttpEntity”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity), controllers can interact with the request/response using`HttpEntity`types. Controllers returning`ResponseEntity`can include HTTP caching information in responses like this:
+如[“使用HttpEntity”一节所述](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-httpentity)，控制器可以使用`HttpEntity`类型与请求/响应进行交互。 返回`ResponseEntity`的控制器可以包含HTTP缓存信息，如下所示：
 
 ```java
 @GetMapping("/book/{id}")
 public ResponseEntity<Book> showBook(@PathVariable Long id) {
 
-	Book book = findBook(id);
-	String version = book.getVersion();
+    Book book = findBook(id);
+    String version = book.getVersion();
 
-	return ResponseEntity
-				.ok()
-				.cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
-				.eTag(version) // lastModified is also available
-				.body(book);
+    return ResponseEntity
+                .ok()
+                .cacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
+                .eTag(version) // lastModified is also available
+                .body(book);
 }
 ```
 
-Doing this will not only include`'ETag'`and`'Cache-Control'`headers in the response, it will**also convert the response to anHTTP 304 Not Modifiedresponse with an empty body**if the conditional headers sent by the client match the caching information set by the Controller.
+如果客户端发送的条件标头与控制器设置的缓存信息匹配，这样做将不仅包括响应中的头`'ETag'`和`'Cache-Control'`头，**还会将响应转换`HTTP 304 Not Modified`为空体**。
 
-An`@RequestMapping`method may also wish to support the same behavior. This can be achieved as follows:
+`@RequestMapping`方法也可能希望支持相同的行为。 这可以实现如下：
 
 ```java
 @RequestMapping
 public String myHandleMethod(WebRequest webRequest, Model model) {
 
-	long lastModified = // 1. application-specific calculation
+    long lastModified = // 1. 应用程序特定的计算
 
-	if (request.checkNotModified(lastModified)) {
-		// 2. shortcut exit - no further processing necessary
-		return null;
-	}
+    if (request.checkNotModified(lastModified)) {
+        // 2. 快捷方式退出 - 无需进一步处理必需
+        return null;
+    }
 
-	// 3. or otherwise further request processing, actually preparing content
-	model.addAttribute(...);
-	return "myViewName";
+    // 3. 或另外请求处理，实际准备内容
+    model.addAttribute(...);
+    return "myViewName";
 }
 ```
 
-There are two key elements here: calling`request.checkNotModified(lastModified)`and returning`null`. The former sets the appropriate response status and headers before it returns`true`. The latter, in combination with the former, causes Spring MVC to do no further processing of the request.
+这里有两个关键元素：调用`request.checkNotModified(lastModified)`并返回`null`。 前者在返回`true`之前设置适当的响应状态和标题。 后者与前者结合使得Spring MVC不再对请求做进一步的处理。
 
-Note that there are 3 variants for this:
+请注意，有3种变体：
 
-* `request.checkNotModified(lastModified)`compares lastModified with the`'If-Modified-Since'`or`'If-Unmodified-Since'`request header
+* `request.checkNotModified(lastModified)`将lastModified与`'If-Modified-Since'`或`'If-Unmodified-Since'`请求头进行比较
 
-* `request.checkNotModified(eTag)`compares eTag with the`'If-None-Match'`request header
+* `request.checkNotModified(eTag)`将eTag与`'If-None-Match'`请求标头进行比较
 
-* `request.checkNotModified(eTag, lastModified)`does both, meaning that both conditions should be valid
+* `request.checkNotModified(eTag, lastModified)`同时具有这两个条件，这意味着两个条件都应该是有效的
 
-When receiving conditional`'GET'`/`'HEAD'`requests,`checkNotModified`will check that the resource has not been modified and if so, it will result in a`HTTP 304 Not Modified`response. In case of conditional`'POST'`/`'PUT'`/`'DELETE'`requests,`checkNotModified`will check that the resource has not been modified and if it has been, it will result in a`HTTP 409 Precondition Failed`response to prevent concurrent modifications.
+当接收到有条件的`'GET'`/`'HEAD'`请求时，`checkNotModified`将检查资源是否未被修改，如果是的话，将导致`HTTP 304 Not Modified`响应。 如果出现`'POST'`/`'PUT'`/`'DELETE'`请求，`checkNotModified`将检查资源是否未被修改，如果已经被修改，将导致`HTTP 409 Precondition Failed`响应阻止并发修改。
 
