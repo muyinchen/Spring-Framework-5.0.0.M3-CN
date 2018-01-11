@@ -1,6 +1,6 @@
-### 18.16.1Enabling the MVC Java Config or the MVC XML Namespace
+### 18.16.1启用MVC Java Config或MVC XML命名空间
 
-To enable MVC Java config add the annotation`@EnableWebMvc`to one of your`@Configuration`classes:
+要启用MVC Java配置，请将注解`@EnableWebMvc`添加到其中一个`@Configuration`类中：
 
 ```java
 @Configuration
@@ -10,63 +10,63 @@ public class WebConfig {
 }
 ```
 
-To achieve the same in XML use the`mvc:annotation-driven`element in your DispatcherServlet context \(or in your root context if you have no DispatcherServlet context defined\):
+要在XML中实现相同的效果，请在DispatcherServlet上下文中使用`mvc:annotation-driven`元素（如果没有定义DispatcherServlet上下文，则在根上下文中）：
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<mvc:annotation-driven/>
+    <mvc:annotation-driven/>
 
 </beans>
 ```
 
-The above registers a`RequestMappingHandlerMapping`, a`RequestMappingHandlerAdapter`, and an`ExceptionHandlerExceptionResolver`\(among others\) in support of processing requests with annotated controller methods using annotations such as`@RequestMapping`,`@ExceptionHandler`, and others.
+上面注册了一个`RequestMappingHandlerMapping`，一个`RequestMappingHandlerAdapter`和一个`ExceptionHandlerExceptionResolver`（以及其他），以支持使用注解的控制器方法（如`@RequestMapping`，`@ExceptionHandler`等）处理请求。
 
-It also enables the following:
+它还支持以下功能：
 
-1. Spring 3 style type conversion through a[ConversionService](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#core-convert)instance in addition to the JavaBeans PropertyEditors used for Data Binding.
+1. 除了用于数据绑定的JavaBean PropertyEditor之外，还通过[ConversionService](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#core-convert)实例进行Spring 3样式类型转换。
 
-2. Support for[formatting](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)Number fields using the`@NumberFormat`annotation through the`ConversionService`.
+2. 支持通过`ConversionService`使用`@NumberFormat`注解[格式](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)数字字段。
 
-3. Support for[formatting](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)`Date`,`Calendar`,`Long`, and Joda Time fields using the`@DateTimeFormat`annotation.
+3. 支持使用`@DateTimeFormat`注解[格式](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#format)化`Date`,`Calendar`,`Long`和Joda时间字段。
 
-4. Support for[validating](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-validation)`@Controller`inputs with`@Valid`, if a JSR-303 Provider is present on the classpath.
+4. 如果JSR-303提供程序存在于类路径中，则支持[validating](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-validation)使用`@Valid`验证`@Controller`输入。
 
-5. `HttpMessageConverter`support for`@RequestBody`method parameters and`@ResponseBody`method return values from`@RequestMapping`or`@ExceptionHandler`methods.
+5. `HttpMessageConverter`支持`@RequestBody`方法参数和`@ResponseBody`方法从`@RequestMapping`或`@ExceptionHandler`方法返回值。
 
-   This is the complete list of HttpMessageConverters set up by mvc:annotation-driven:
+This is the complete list of HttpMessageConverters set up by mvc:annotation-driven:
 
-   1. `ByteArrayHttpMessageConverter`converts byte arrays.
+1. `ByteArrayHttpMessageConverter`converts byte arrays.
 
-   2. `StringHttpMessageConverter`converts strings.
+2. `StringHttpMessageConverter`converts strings.
 
-   3. `ResourceHttpMessageConverter`converts to/from`org.springframework.core.io.Resource`for all media types.
+3. `ResourceHttpMessageConverter`converts to/from`org.springframework.core.io.Resource`for all media types.
 
-   4. `SourceHttpMessageConverter`converts to/from a`javax.xml.transform.Source`.
+4. `SourceHttpMessageConverter`converts to/from a`javax.xml.transform.Source`.
 
-   5. `FormHttpMessageConverter`converts form data to/from a`MultiValueMap`.
+5. `FormHttpMessageConverter`converts form data to/from a`MultiValueMap`.
 
-   6. `Jaxb2RootElementHttpMessageConverter`converts Java objects to/from XML — added if JAXB2 is present and Jackson 2 XML extension is not present on the classpath.
+6. `Jaxb2RootElementHttpMessageConverter`converts Java objects to/from XML — added if JAXB2 is present and Jackson 2 XML extension is not present on the classpath.
 
-   7. `MappingJackson2HttpMessageConverter`converts to/from JSON — added if Jackson 2 is present on the classpath.
+7. `MappingJackson2HttpMessageConverter`converts to/from JSON — added if Jackson 2 is present on the classpath.
 
-   8. `MappingJackson2XmlHttpMessageConverter`converts to/from XML — added if[Jackson 2 XML extension](https://github.com/FasterXML/jackson-dataformat-xml)is present on the classpath.
+8. `MappingJackson2XmlHttpMessageConverter`converts to/from XML — added if[Jackson 2 XML extension](https://github.com/FasterXML/jackson-dataformat-xml)is present on the classpath.
 
-   9. `MappingJackson2SmileHttpMessageConverter`converts to/from Smile \(binary JSON\) — added if[Jackson 2 Smile extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/smile)is present on the classpath.
+9. `MappingJackson2SmileHttpMessageConverter`converts to/from Smile \(binary JSON\) — added if[Jackson 2 Smile extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/smile)is present on the classpath.
 
-   10. `MappingJackson2CborHttpMessageConverter`converts to/from CBOR — added if[Jackson 2 CBOR extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/cbor)is present on the classpath.
+10. `MappingJackson2CborHttpMessageConverter`converts to/from CBOR — added if[Jackson 2 CBOR extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/cbor)is present on the classpath.
 
-   11. `AtomFeedHttpMessageConverter`converts Atom feeds — added if Rome is present on the classpath.
+11. `AtomFeedHttpMessageConverter`converts Atom feeds — added if Rome is present on the classpath.
 
-   12. `RssChannelHttpMessageConverter`converts RSS feeds — added if Rome is present on the classpath.
+12. `RssChannelHttpMessageConverter`converts RSS feeds — added if Rome is present on the classpath.
 
 See[Section18.16.12, “Message Converters”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-message-converters)for more information about how to customize these default converters.
 

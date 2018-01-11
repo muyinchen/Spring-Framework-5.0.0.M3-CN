@@ -1,8 +1,8 @@
-## 18.16 Configuring Spring MVC
+## 18.16 配置Spring MVC
 
-[Section 18.2.1, “Special Bean Types In the WebApplicationContext”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-servlet-special-bean-types)and[Section 18.2.2, “Default DispatcherServlet Configuration”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-servlet-config)explained about Spring MVC’s special beans and the default implementations used by the`DispatcherServlet`. In this section you’ll learn about two additional ways of configuring Spring MVC. Namely the MVC Java config and the MVC XML namespace.
+[第18.2.1节“WebApplicationContext中的特殊Bean类型”](#)和[第18.2.2节“默认DispatcherServlet配置”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-servlet-config)介绍了Spring MVC的特殊bean以及`DispatcherServlet`使用的默认实现。 在本节中，您将学习到另外两种配置Spring MVC的方法。 即MVC Java配置和MVC XML命名空间。
 
-The MVC Java config and the MVC namespace provide similar default configuration that overrides the`DispatcherServlet`defaults. The goal is to spare most applications from having to create the same configuration and also to provide higher-level constructs for configuring Spring MVC that serve as a simple starting point and require little or no prior knowledge of the underlying configuration.
+MVC Java配置和MVC命名空间提供了类似的默认配置，覆盖了`DispatcherServlet`的默认设置。 我们的目标是让大多数应用程序不必创建相同的配置，也可以提供更高级别的构造，用于配置Spring MVC，作为一个简单的起点，并且不需要事先知道底层配置。
 
-You can choose either the MVC Java config or the MVC namespace depending on your preference. Also as you will see further below, with the MVC Java config it is easier to see the underlying configuration as well as to make fine-grained customizations directly to the created Spring MVC beans. But let’s start from the beginning.
+您可以根据您的偏好选择MVC Java配置或MVC命名空间。 同样如您将在下面看到的，使用MVC Java配置，可以更容易地看到底层配置以及直接对创建的Spring MVC bean进行细粒度的自定义。 但是我们从头开始。
 
