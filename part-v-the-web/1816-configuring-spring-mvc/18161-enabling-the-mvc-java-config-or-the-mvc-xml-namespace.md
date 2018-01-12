@@ -42,37 +42,37 @@ public class WebConfig {
 
 5. `HttpMessageConverter`支持`@RequestBody`方法参数和`@ResponseBody`方法从`@RequestMapping`或`@ExceptionHandler`方法返回值。
 
-This is the complete list of HttpMessageConverters set up by mvc:annotation-driven:
+   这是由mvc设置的HttpMessageConverters的完整列表：annotation-driven：
 
-1. `ByteArrayHttpMessageConverter`converts byte arrays.
+   1. `ByteArrayHttpMessageConverter`转换字节数组。
 
-2. `StringHttpMessageConverter`converts strings.
+   2. `StringHttpMessageConverter`转换字符串。
 
-3. `ResourceHttpMessageConverter`converts to/from`org.springframework.core.io.Resource`for all media types.
+   3. `ResourceHttpMessageConverter`为所有媒体类型转换为`org.springframework.core.io.Resource`。
 
-4. `SourceHttpMessageConverter`converts to/from a`javax.xml.transform.Source`.
+   4. `SourceHttpMessageConverter转换为/从一个javax.xml.transform.Source`。
 
-5. `FormHttpMessageConverter`converts form data to/from a`MultiValueMap`.
+   5. `FormHttpMessageConverter`将表单数据转换为`MultiValueMap`或从`MultiValueMap`转换而来。
 
-6. `Jaxb2RootElementHttpMessageConverter`converts Java objects to/from XML — added if JAXB2 is present and Jackson 2 XML extension is not present on the classpath.
+   6. `Jaxb2RootElementHttpMessageConverter`将Java对象转换为/从XML转换 - 如果存在JAXB2并且类路径中不存在Jackson 2 XML扩展，则添加它。
 
-7. `MappingJackson2HttpMessageConverter`converts to/from JSON — added if Jackson 2 is present on the classpath.
+   7. `MappingJackson2HttpMessageConverter`转换为/从JSON - 如果Jackson 2存在于类路径中，则添加。
 
-8. `MappingJackson2XmlHttpMessageConverter`converts to/from XML — added if[Jackson 2 XML extension](https://github.com/FasterXML/jackson-dataformat-xml)is present on the classpath.
+   8. `MappingJackson2XmlHttpMessageConverter`转换为/从XML - 如果[Jackson 2 XML扩展](https://github.com/FasterXML/jackson-dataformat-xml)存在于类路径中，则添加。
 
-9. `MappingJackson2SmileHttpMessageConverter`converts to/from Smile \(binary JSON\) — added if[Jackson 2 Smile extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/smile)is present on the classpath.
+   9. `MappingJackson2SmileHttpMessageConverter`converts to/from Smile \(binary JSON\) — added if[Jackson 2 Smile extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/smile)is present on the classpath.
 
-10. `MappingJackson2CborHttpMessageConverter`converts to/from CBOR — added if[Jackson 2 CBOR extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/cbor)is present on the classpath.
+   10.  `MappingJackson2SmileHttpMessageConverter`转换为/从Smile（二进制JSON） - 添加如果[Jackson 2 CBOR extension](https://github.com/FasterXML/jackson-dataformats-binary/tree/master/cbor)存在于类路径。
 
-11. `AtomFeedHttpMessageConverter`converts Atom feeds — added if Rome is present on the classpath.
+   11. `AtomFeedHttpMessageConverter`转换Atom提要 - 如果Rome出现在类路径中，则添加Atom提要。
 
-12. `RssChannelHttpMessageConverter`converts RSS feeds — added if Rome is present on the classpath.
+   12. `RssChannelHttpMessageConverter`转换RSS源 - 如果Rome出现在类路径中，则添加。
 
-See[Section18.16.12, “Message Converters”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-message-converters)for more information about how to customize these default converters.
+   有关如何定制这些默认转换器的更多信息，请参见[第18.16.12节“消息转换器”](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-message-converters)。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Jackson JSON and XML converters are created using`ObjectMapper`instances created by[`Jackson2ObjectMapperBuilder`](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperBuilder.html)in order to provide a better default configuration.This builder customizes Jackson’s default properties with the following ones:[`DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES`](https://fasterxml.github.io/jackson-databind/javadoc/2.6/com/fasterxml/jackson/databind/DeserializationFeature.html#FAIL_ON_UNKNOWN_PROPERTIES)is disabled.[`MapperFeature.DEFAULT_VIEW_INCLUSION`](https://fasterxml.github.io/jackson-databind/javadoc/2.6/com/fasterxml/jackson/databind/MapperFeature.html#DEFAULT_VIEW_INCLUSION)is disabled.It also automatically registers the following well-known modules if they are detected on the classpath:[jackson-datatype-jdk7](https://github.com/FasterXML/jackson-datatype-jdk7): support for Java 7 types like`java.nio.file.Path`.[jackson-datatype-joda](https://github.com/FasterXML/jackson-datatype-joda): support for Joda-Time types.[jackson-datatype-jsr310](https://github.com/FasterXML/jackson-datatype-jsr310): support for Java 8 Date & Time API types.[jackson-datatype-jdk8](https://github.com/FasterXML/jackson-datatype-jdk8): support for other Java 8 types like`Optional`. |
+|  Jackson JSON和XML转换器是使用[`Jackson2ObjectMapperBuilder`](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperBuilder.html)创建的`ObjectMapper`实例创建的，以便提供更好的默认配置。此构建器使用以下几种方法自定义Jackson的默认属性：[`DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES`](https://fasterxml.github.io/jackson-databind/javadoc/2.6/com/fasterxml/jackson/databind/DeserializationFeature.html#FAIL_ON_UNKNOWN_PROPERTIES)被禁用。 [`MapperFeature.DEFAULT_VIEW_INCLUSION`](https://fasterxml.github.io/jackson-databind/javadoc/2.6/com/fasterxml/jackson/databind/MapperFeature.html#DEFAULT_VIEW_INCLUSION)被禁用。如果在类路径中检测到以下模块，它将自动注册下列已知模块：[jackson-datatype-jdk7](https://github.com/FasterXML/jackson-datatype-jdk7)：支持`java.nio.file.Path`等Java 7类型。[jackson-datatype-joda](https://github.com/FasterXML/jackson-datatype-joda)：支持Joda-Time类型。[jackson-datatype-jsr310](https://github.com/FasterXML/jackson-datatype-jsr310)：支持Java 8 Date＆Time API类型。[jackson-datatype-jdk8](https://github.com/FasterXML/jackson-datatype-jdk8)：支持其他Java 8类型，如`Optional`。 |
 
 
 
