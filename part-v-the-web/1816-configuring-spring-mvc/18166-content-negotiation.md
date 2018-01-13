@@ -1,6 +1,8 @@
-### 18.16.6Content Negotiation
+### 18.16.6内容谈判
 
 You can configure how Spring MVC determines the requested media types from the request. The available options are to check the URL path for a file extension, check the "Accept" header, a specific query parameter, or to fall back on a default content type when nothing is requested. By default the path extension in the request URI is checked first and the "Accept" header is checked second.
+
+您可以配置Spring MVC如何根据请求确定请求的媒体类型。 可用的选项是检查文件扩展名的URL路径，检查“Accept”头，特定的查询参数，或者在没有请求时返回默认的内容类型。 默认情况下，首先检查请求URI中的路径扩展，然后检查“Accept”标头。
 
 The MVC Java config and the MVC namespace register`json`,`xml`,`rss`,`atom`by default if corresponding dependencies are on the classpath. Additional path extension-to-media type mappings may also be registered explicitly and that also has the effect of whitelisting them as safe extensions for the purpose of RFD attack detection \(see[the section called “Suffix Pattern Matching and RFD”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-rfd)for more detail\).
 
@@ -11,10 +13,10 @@ Below is an example of customizing content negotiation options through the MVC J
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.mediaType("json", MediaType.APPLICATION_JSON);
-	}
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.mediaType("json", MediaType.APPLICATION_JSON);
+    }
 }
 ```
 
@@ -24,12 +26,12 @@ In the MVC namespace, the```element has a``content-negotiation-manager`attribute
 <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
 
 <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-	<property name="mediaTypes">
-		<value>
-			json=application/json
-			xml=application/xml
-		</value>
-	</property>
+    <property name="mediaTypes">
+        <value>
+            json=application/json
+            xml=application/xml
+        </value>
+    </property>
 </bean>
 ```
 

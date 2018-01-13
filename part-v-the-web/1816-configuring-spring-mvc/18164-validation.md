@@ -1,64 +1,61 @@
-### 18.16.4Validation
+### 18.16.4验证
 
-Spring provides a[Validator interface](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validator)that can be used for validation in all layers of an application. In Spring MVC you can configure it for use as a global`Validator`instance, to be used whenever an`@Valid`or`@Validated`controller method argument is encountered, and/or as a local`Validator`within a controller through an`@InitBinder`method. Global and local validator instances can be combined to provide composite validation.
+Spring提供了一个[验证器接口](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validator)，可用于在应用程序的所有层进行验证。 在Spring MVC中，您可以将其配置为用作全局`Validator`实例，以便在遇到`@Valid`或`@Validated`控制器方法参数时使用该实例，并且/或者通过`@InitBinder`方法将其用作控制器内的本地`Validator`程序。 全局和本地验证器实例可以组合起来提供复合验证。
 
-Spring also[supports JSR-303/JSR-349](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validation-beanvalidation-overview)Bean Validation via`LocalValidatorFactoryBean`which adapts the Spring`org.springframework.validation.Validator`interface to the Bean Validation`javax.validation.Validator`contract. This class can be plugged into Spring MVC as a global validator as described next.
+Spring还[支持JSR-303 / JSR-349](http://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/validation.html#validation-beanvalidation-overview)Bean验证，通过`LocalValidatorFactoryBean`使Spring `org.springframework.validation.Validator`接口适应Bean验证`javax.validation.Validator`契约。 这个类可以作为一个全局验证器插入到Spring MVC中，如下所述。
 
-By default use of`@EnableWebMvc`or```automatically registers Bean Validation support in Spring MVC through the``LocalValidatorFactoryBean\`when a Bean Validation provider such as Hibernate Validator is detected on the classpath.
+默认情况下，使用`@EnableWebMvc`或者`<mvc:annotation-driven>`当在类路径上检测到一个Bean验证提供程序（如Hibernate Validator）时，通过`LocalValidatorFactoryBean`在Spring MVC中自动注册Bean验证支持。
 
 | ![](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/images/note.png) |
 | :--- |
-| Sometimes it’s convenient to have a`LocalValidatorFactoryBean`injected into a controller or another class. The easiest way to do that is to declare your own`@Bean`and also mark it with`@Primary`in order to avoid a conflict with the one provided with the MVC Java config.If you prefer to use the one from the MVC Java config, you’ll need to override the`mvcValidator`method from`WebMvcConfigurationSupport`and declare the method to explicitly return`LocalValidatorFactory`rather than`Validator`. See[Section18.16.13, “Advanced Customizations with MVC Java Config”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-advanced-java)for information on how to switch to extend the provided configuration. |
+| 有时将`LocalValidatorFactoryBean`注入到控制器或其他类中很方便。 最简单的方法是声明自己的`@Bean`，并用`@Primary`标记以避免与MVC Java配置提供的冲突。如果您更喜欢使用MVC Java配置中的那个，那么您 将需要重写`WebMvcConfigurationSupport`中的`mvcValidator`方法，并声明该方法显式返回`LocalValidatorFactory`而不是`Validator`。 有关如何切换以扩展提供的配置的信息，请参见[Section18.16.13, “Advanced Customizations with MVC Java Config”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-config-advanced-java)。 |
 
-Alternatively you can configure your own global`Validator`instance:
+或者，您可以配置您自己的全局`Validator`实例：
 
 ```java
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public Validator getValidator(); {
-		// return "global" validator
-	}
+    @Override
+    public Validator getValidator(); {
+        // return "global" validator
+    }
 
 }
 ```
 
-and in XML:
+和XML：
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<mvc:annotation-driven validator="globalValidator"/>
+    <mvc:annotation-driven validator="globalValidator"/>
 
 </beans>
 ```
 
-To combine global with local validation, simply add one or more local validator\(s\):
+要将全局和本地验证相结合，只需添加一个或多个本地验证程序即可：
 
 ```java
 @Controller
 public class MyController {
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(new FooValidator());
-	}
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new FooValidator());
+    }
 
 }
 ```
 
-With this minimal configuration any time an`@Valid`or`@Validated`method argument is encountered, it will be validated by the configured validators. Any validation violations will automatically be exposed as errors in the`BindingResult`accessible as a method argument and also renderable in Spring MVC HTML views.
-
-  
-
+有了这个最小的配置，任何时候遇到`@Valid`或`@Validated`方法参数，它都将被配置的验证器验证。 任何验证违规将自动作为方法参数可访问的`BindingResult`中的错误公开，也可以在Spring MVC HTML视图中呈现。
 
