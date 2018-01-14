@@ -1,12 +1,10 @@
 ### 18.16.6内容谈判
 
-You can configure how Spring MVC determines the requested media types from the request. The available options are to check the URL path for a file extension, check the "Accept" header, a specific query parameter, or to fall back on a default content type when nothing is requested. By default the path extension in the request URI is checked first and the "Accept" header is checked second.
-
 您可以配置Spring MVC如何根据请求确定请求的媒体类型。 可用的选项是检查文件扩展名的URL路径，检查“Accept”头，特定的查询参数，或者在没有请求时返回默认的内容类型。 默认情况下，首先检查请求URI中的路径扩展，然后检查“Accept”标头。
 
-The MVC Java config and the MVC namespace register`json`,`xml`,`rss`,`atom`by default if corresponding dependencies are on the classpath. Additional path extension-to-media type mappings may also be registered explicitly and that also has the effect of whitelisting them as safe extensions for the purpose of RFD attack detection \(see[the section called “Suffix Pattern Matching and RFD”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-rfd)for more detail\).
+MVC Java配置和MVC命名空间默认情况下注册json，xml，rss，atom，如果相应的依赖关系在类路径上。 额外的路径扩展到媒体类型的映射也可以被明确注册，并且为了RFD攻击检测的目的（参见[“后缀模式匹配和RFD”](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-rfd)部分以获得更多细节）也具有将它们白名单作为安全扩展的效果。
 
-Below is an example of customizing content negotiation options through the MVC Java config:
+以下是通过MVC Java配置自定义内容协商选项的示例：
 
 ```java
 @Configuration
@@ -20,7 +18,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 }
 ```
 
-In the MVC namespace, the```element has a``content-negotiation-manager`attribute, which expects a`ContentNegotiationManager`that in turn can be created with a`ContentNegotiationManagerFactoryBean\`:
+在MVC名称空间中，`<mvc:annotation-driven>`元素具有`content-negotiation-manager`属性，该属性需要一个`ContentNegotiationManager`，而`ContentNegotiationManager`又可以使用`ContentNegotiationManagerFactoryBean`创建：
 
 ```java
 <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
@@ -35,9 +33,9 @@ In the MVC namespace, the```element has a``content-negotiation-manager`attribute
 </bean>
 ```
 
-If not using the MVC Java config or the MVC namespace, you’ll need to create an instance of`ContentNegotiationManager`and use it to configure`RequestMappingHandlerMapping`for request mapping purposes, and`RequestMappingHandlerAdapter`and`ExceptionHandlerExceptionResolver`for content negotiation purposes.
+如果不使用MVC Java配置或MVC命名空间，则需要创建`ContentNegotiationManager`的一个实例，并使用它来配置`RequestMappingHandlerMapping`以实现请求映射，`RequestMappingHandlerAdapter`和`ExceptionHandlerExceptionResolver`实现内容协商。
 
-Note that`ContentNegotiatingViewResolver`now can also be configured with a`ContentNegotiationManager`, so you can use one shared instance throughout Spring MVC.
+请注意，`ContentNegotiatingViewResolver`现在也可以使用`ContentNegotiationManager`进行配置，因此您可以在整个Spring MVC中使用一个共享实例。
 
-In more advanced cases, it may be useful to configure multiple`ContentNegotiationManager`instances that in turn may contain custom`ContentNegotiationStrategy`implementations. For example you could configure`ExceptionHandlerExceptionResolver`with a`ContentNegotiationManager`that always resolves the requested media type to`"application/json"`. Or you may want to plug a custom strategy that has some logic to select a default content type \(e.g. either XML or JSON\) if no content types were requested.
+在更高级的情况下，配置多个`ContentNegotiationManager`实例可能会很有用，而这些实例又可能包含自定义的`ContentNegotiationStrategy`实现。 例如，你可以配置`ExceptionHandlerExceptionResolver`和一个`ContentNegotiationManager`，它始终将请求的媒体类型解析为`"application/json"`。 或者，如果没有请求内容类型，您可能需要插入具有逻辑的自定义策略来选择默认内容类型（例如XML或JSON）。
 

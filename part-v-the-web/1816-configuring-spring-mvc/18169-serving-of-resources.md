@@ -1,74 +1,76 @@
-### 18.16.9Serving of Resources
+### 18.16.9服务于资源
 
-This option allows static resource requests following a particular URL pattern to be served by a`ResourceHttpRequestHandler`from any of a list of`Resource`locations. This provides a convenient way to serve static resources from locations other than the web application root, including locations on the classpath. The`cache-period`property may be used to set far future expiration headers \(1 year is the recommendation of optimization tools such as Page Speed and YSlow\) so that they will be more efficiently utilized by the client. The handler also properly evaluates the`Last-Modified`header \(if present\) so that a`304`status code will be returned as appropriate, avoiding unnecessary overhead for resources that are already cached by the client. For example, to serve resource requests with a URL pattern of`/resources/**`from a`public-resources`directory within the web application root you would use:
+这个选项允许一个特定的URL模式之后的静态资源请求由一个`ResourceHttpRequestHandler`从任何一个资源位置列表中提供。 这提供了一种方便的方式来提供来自Web应用程序根目录以外的位置的静态资源，包括类路径上的位置。 `cache-period`属性可以用来设置将来过期头（1年是诸如Page Speed和YSlow等优化工具的推荐），以便客户更有效地使用它们。 该处理程序还可以正确评估`Last-Modified`标头（如果存在），以便适当地返回`304`状态码，避免客户端已经缓存的资源产生不必要的开销。 例如，要使用Web应用程序根目录中`public-resources`目录中的`/resources/**`的URL模式提供资源请求，可以使用：
 
 ```java
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/");
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/");
+    }
 
 }
 ```
 
-And the same in XML:
+和XML一样：
 
 ```java
 <mvc:resources mapping="/resources/**" location="/public-resources/"/>
 ```
 
-To serve these resources with a 1-year future expiration to ensure maximum use of the browser cache and a reduction in HTTP requests made by the browser:
+要为这些资源提供1年的将来期限，以确保最大限度地利用浏览器缓存并减少浏览器发出的HTTP请求：
 
 ```java
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/").setCachePeriod(31556926);
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/").setCachePeriod(31556926);
+    }
 
 }
 ```
 
-And in XML:
+在XML中：
 
 ```java
 <mvc:resources mapping="/resources/**" location="/public-resources/" cache-period="31556926"/>
 ```
 
-For more details, see[HTTP caching support for static resources](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-caching-static-resources).
+有关更多详细信息，请参阅[HTTP缓存对静态资源的支持](https://docs.spring.io/spring/docs/5.0.0.M5/spring-framework-reference/html/mvc.html#mvc-caching-static-resources)。
 
-The`mapping`attribute must be an Ant pattern that can be used by`SimpleUrlHandlerMapping`, and the`location`attribute must specify one or more valid resource directory locations. Multiple resource locations may be specified using a comma-separated list of values. The locations specified will be checked in the specified order for the presence of the resource for any given request. For example, to enable the serving of resources from both the web application root and from a known path of`/META-INF/public-web-resources/`in any jar on the classpath use:
+`mapping`属性必须是可由`SimpleUrlHandlerMapping`使用的Ant模式，而`location`属性必须指定一个或多个有效的资源目录位置。 可以使用逗号分隔的值列表来指定多个资源位置。 指定的位置将按照指定的顺序检查任何给定请求是否存在资源。 例如，要启用来自Web应用程序根目录和来自`/META-INF/public-web-resources/`的已知路径的资源，请在类路径的任何jar中使用：
 
 ```java
 @EnableWebMvc
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**")
-				.addResourceLocations("/", "classpath:/META-INF/public-web-resources/");
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/", "classpath:/META-INF/public-web-resources/");
+    }
 
 }
 ```
 
-And in XML:
+在XML中：
 
 ```java
 <mvc:resources mapping="/resources/**" location="/, classpath:/META-INF/public-web-resources/"/>
 ```
 
-When serving resources that may change when a new version of the application is deployed it is recommended that you incorporate a version string into the mapping pattern used to request the resources so that you may force clients to request the newly deployed version of your application’s resources. Support for versioned URLs is built into the framework and can be enabled by configuring a resource chain on the resource handler. The chain consists of one more`ResourceResolver`instances followed by one or more`ResourceTransformer`instances. Together they can provide arbitrary resolution and transformation of resources.
+当部署应用程序的新版本时可能会更改资源时，建议您将版本字符串并入用于请求资源的映射模式，以便您可以强制客户端请求新部署的应用程序资源版本。 对版本化URL的支持已内置到框架中，并且可以通过在资源处理程序上配置资源链来启用。 该链由多个`ResourceResolver`实例组成，后面紧跟着一个或多个`ResourceTransformer`实例。 他们一起可以提供任意的解决方案和资源转换。
 
 The built-in`VersionResourceResolver`can be configured with different strategies. For example a`FixedVersionStrategy`can use a property, a date, or other as the version. A`ContentVersionStrategy`uses an MD5 hash computed from the content of the resource \(known as "fingerprinting" URLs\). Note that the`VersionResourceResolver`will automatically use the resolved version strings as HTTP ETag header values when serving resources.
+
+内置的`VersionResourceResolver`可以配置不同的策略。 例如，`FixedVersionStrategy`可以使用属性，日期或其他作为版本。 `ContentVersionStrategy`使用从资源内容（称为“fingerprinting”URL）计算出的MD5哈希值。 请注意，在服务资源时，`VersionResourceResolver`将自动使用已解析的版本字符串作为HTTP ETag标头值。
 
 `ContentVersionStrategy`is a good default choice to use except in cases where it cannot be used \(e.g. with JavaScript module loaders\). You can configure different version strategies against different patterns as shown below. Keep in mind also that computing content-based versions is expensive and therefore resource chain caching should be enabled in production.
 
@@ -79,13 +81,13 @@ Java config example;
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**")
-				.addResourceLocations("/public-resources/")
-				.resourceChain(true).addResolver(
-					new VersionResourceResolver().addContentVersionStrategy("/**"));
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/public-resources/")
+                .resourceChain(true).addResolver(
+                    new VersionResourceResolver().addContentVersionStrategy("/**"));
+    }
 
 }
 ```
@@ -94,14 +96,14 @@ XML example:
 
 ```java
 <mvc:resources mapping="/resources/**" location="/public-resources/">
-	<mvc:resource-chain>
-		<mvc:resource-cache/>
-		<mvc:resolvers>
-			<mvc:version-resolver>
-				<mvc:content-version-strategy patterns="/**"/>
-			</mvc:version-resolver>
-		</mvc:resolvers>
-	</mvc:resource-chain>
+    <mvc:resource-chain>
+        <mvc:resource-cache/>
+        <mvc:resolvers>
+            <mvc:version-resolver>
+                <mvc:content-version-strategy patterns="/**"/>
+            </mvc:version-resolver>
+        </mvc:resolvers>
+    </mvc:resource-chain>
 </mvc:resources>
 ```
 
