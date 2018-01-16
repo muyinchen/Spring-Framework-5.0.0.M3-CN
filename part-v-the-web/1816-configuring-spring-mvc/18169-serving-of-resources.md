@@ -68,13 +68,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 当部署应用程序的新版本时可能会更改资源时，建议您将版本字符串并入用于请求资源的映射模式，以便您可以强制客户端请求新部署的应用程序资源版本。 对版本化URL的支持已内置到框架中，并且可以通过在资源处理程序上配置资源链来启用。 该链由多个`ResourceResolver`实例组成，后面紧跟着一个或多个`ResourceTransformer`实例。 他们一起可以提供任意的解决方案和资源转换。
 
-The built-in`VersionResourceResolver`can be configured with different strategies. For example a`FixedVersionStrategy`can use a property, a date, or other as the version. A`ContentVersionStrategy`uses an MD5 hash computed from the content of the resource \(known as "fingerprinting" URLs\). Note that the`VersionResourceResolver`will automatically use the resolved version strings as HTTP ETag header values when serving resources.
-
 内置的`VersionResourceResolver`可以配置不同的策略。 例如，`FixedVersionStrategy`可以使用属性，日期或其他作为版本。 `ContentVersionStrategy`使用从资源内容（称为“fingerprinting”URL）计算出的MD5哈希值。 请注意，在服务资源时，`VersionResourceResolver`将自动使用已解析的版本字符串作为HTTP ETag标头值。
 
-`ContentVersionStrategy`is a good default choice to use except in cases where it cannot be used \(e.g. with JavaScript module loaders\). You can configure different version strategies against different patterns as shown below. Keep in mind also that computing content-based versions is expensive and therefore resource chain caching should be enabled in production.
+`ContentVersionStrategy`是一个很好的默认选择，除非无法使用（例如使用JavaScript模块加载器）。 您可以针对不同的模式配置不同的版本策略，如下所示。 请记住，计算基于内容的版本是昂贵的，因此应该在生产中启用资源链高速缓存。
 
-Java config example;
+Java配置示例;
 
 ```java
 @Configuration
@@ -107,7 +105,7 @@ XML example:
 </mvc:resources>
 ```
 
-In order for the above to work the application must also render URLs with versions. The easiest way to do that is to configure the`ResourceUrlEncodingFilter`which wraps the response and overrides its`encodeURL`method. This will work in JSPs, FreeMarker, and any other view technology that calls the response`encodeURL`method. Alternatively, an application can also inject and use directly the`ResourceUrlProvider`bean, which is automatically declared with the MVC Java config and the MVC namespace.
+为了上述工作，应用程序还必须呈现带有版本的URL。 最简单的方法是配置包装响应的`ResourceUrlEncodingFilter`，并覆盖`encodeURL`方法。 这将在JSP，FreeMarker和其他任何调用`encodeURL`方法的视图技术中起作用。 或者，应用程序也可以直接注入并使用`ResourceUrlProvider` bean，该bean是使用MVC Java配置和MVC命名空间自动声明的。
 
-Webjars are also supported with`WebJarsResourceResolver`, which is automatically registered when the`"org.webjars:webjars-locator"`library is on classpath. This resolver allows the resource chain to resolve version agnostic libraries from HTTP GET requests`"GET /jquery/jquery.min.js"`will return resource`"/jquery/1.2.0/jquery.min.js"`. It also works by rewriting resource URLs in templates`→`.
+WebJars也支持`WebJarsResourceResolver`，当`"org.webjars:webjars-locator"`库位于类路径上时，会自动注册。 此解析器允许资源链从HTTP GET请求解析版本不可知的库`"GET /jquery/jquery.min.js"`将返回资源`"/jquery/1.2.0/jquery.min.js"`。 它还通过在模板→重写资源URL来工作。
 
