@@ -1,38 +1,38 @@
-### 18.16.11Path Matching
+### 18.16.11路径匹配
 
-This allows customizing various settings related to URL mapping and path matching. For details on the individual options check out the[PathMatchConfigurer](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/web/servlet/config/annotation/PathMatchConfigurer.html)API.
+这允许自定义与URL映射和路径匹配相关的各种设置。 有关各个选项的详细信息，请查看[PathMatchConfigurer](http://docs.spring.io/spring-framework/docs/5.0.0.M5/javadoc-api/org/springframework/web/servlet/config/annotation/PathMatchConfigurer.html)API。
 
-Below is an example in Java config:
+以下是Java配置中的一个例子：
 
 ```java
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void configurePathMatch(PathMatchConfigurer configurer) {
-		configurer
-		    .setUseSuffixPatternMatch(true)
-		    .setUseTrailingSlashMatch(false)
-		    .setUseRegisteredSuffixPatternMatch(true)
-		    .setPathMatcher(antPathMatcher())
-		    .setUrlPathHelper(urlPathHelper());
-	}
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer
+            .setUseSuffixPatternMatch(true)
+            .setUseTrailingSlashMatch(false)
+            .setUseRegisteredSuffixPatternMatch(true)
+            .setPathMatcher(antPathMatcher())
+            .setUrlPathHelper(urlPathHelper());
+    }
 
-	@Bean
-	public UrlPathHelper urlPathHelper() {
-	    //...
-	}
+    @Bean
+    public UrlPathHelper urlPathHelper() {
+        //...
+    }
 
-	@Bean
-	public PathMatcher antPathMatcher() {
-	    //...
-	}
+    @Bean
+    public PathMatcher antPathMatcher() {
+        //...
+    }
 
 }
 ```
 
-And the same in XML, use the `<mvc:path-matching>` element:
+和XML一样，使用`<mvc:path-matching>`元素：
 
 ```java
 <mvc:annotation-driven>

@@ -357,9 +357,9 @@
       * [18.16.7 视图控制器](part-v-the-web/1816-configuring-spring-mvc/18167-view-controllers.md)
       * [18.16.8 查看解析器](part-v-the-web/1816-configuring-spring-mvc/18168-view-resolvers.md)
       * [18.16.9 服务于资源](part-v-the-web/1816-configuring-spring-mvc/18169-serving-of-resources.md)
-      * [18.16.10 Falling Back On the "Default" Servlet To Serve Resources](part-v-the-web/1816-configuring-spring-mvc/181610-falling-back-on-the-default-servlet-to-serve-resources.md)
-      * [18.16.11 Path Matching](part-v-the-web/1816-configuring-spring-mvc/181611-path-matching.md)
-      * [18.16.12 Message Converters](part-v-the-web/1816-configuring-spring-mvc/181612-message-converters.md)
+      * [18.16.10 回到“Default”Servlet服务资源](part-v-the-web/1816-configuring-spring-mvc/181610-falling-back-on-the-default-servlet-to-serve-resources.md)
+      * [18.16.11 路径匹配](part-v-the-web/1816-configuring-spring-mvc/181611-path-matching.md)
+      * [18.16.12 消息转换器](part-v-the-web/1816-configuring-spring-mvc/181612-message-converters.md)
       * [18.16.13 Advanced Customizations with MVC Java Config](part-v-the-web/1816-configuring-spring-mvc/181613-advanced-customizations-with-mvc-java-config.md)
       * [18.16.14 Advanced Customizations with the MVC Namespace](part-v-the-web/1816-configuring-spring-mvc/181614-advanced-customizations-with-the-mvc-namespace.md)
 
