@@ -360,6 +360,6 @@
       * [18.16.10 回到“Default”Servlet服务资源](part-v-the-web/1816-configuring-spring-mvc/181610-falling-back-on-the-default-servlet-to-serve-resources.md)
       * [18.16.11 路径匹配](part-v-the-web/1816-configuring-spring-mvc/181611-path-matching.md)
       * [18.16.12 消息转换器](part-v-the-web/1816-configuring-spring-mvc/181612-message-converters.md)
-      * [18.16.13 Advanced Customizations with MVC Java Config](part-v-the-web/1816-configuring-spring-mvc/181613-advanced-customizations-with-mvc-java-config.md)
-      * [18.16.14 Advanced Customizations with the MVC Namespace](part-v-the-web/1816-configuring-spring-mvc/181614-advanced-customizations-with-the-mvc-namespace.md)
+      * [18.16.13 使用MVC Java配置进行高级自定义](part-v-the-web/1816-configuring-spring-mvc/181613-advanced-customizations-with-mvc-java-config.md)
+      * [18.16.14 使用MVC命名空间进行高级自定义](part-v-the-web/1816-configuring-spring-mvc/181614-advanced-customizations-with-the-mvc-namespace.md)
 
