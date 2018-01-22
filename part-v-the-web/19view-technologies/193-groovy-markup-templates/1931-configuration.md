@@ -1,6 +1,6 @@
-### 19.3.1Configuration
+### 19.3.1配置
 
-Configuring the Groovy Markup Template Engine is quite easy:
+配置 Groovy Markup Template Engine相当容易:
 
 ```java
 @Configuration
@@ -8,26 +8,26 @@ Configuring the Groovy Markup Template Engine is quite easy:
 public class WebConfig extends WebMvcConfigurerAdapter {
 
        @Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.groovy();
-	}
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.groovy();
+    }
 
-	@Bean
-	public GroovyMarkupConfigurer groovyMarkupConfigurer() {
-		GroovyMarkupConfigurer configurer = new GroovyMarkupConfigurer();
-		configurer.setResourceLoaderPath("/WEB-INF/");
-		return configurer;
-	}
+    @Bean
+    public GroovyMarkupConfigurer groovyMarkupConfigurer() {
+        GroovyMarkupConfigurer configurer = new GroovyMarkupConfigurer();
+        configurer.setResourceLoaderPath("/WEB-INF/");
+        return configurer;
+    }
 }
 ```
 
-The XML counterpart using the MVC namespace is:
+使用MVC命名空间的XML文本:
 
 ```java
 <mvc:annotation-driven/>
 
 <mvc:view-resolvers>
-	<mvc:groovy/>
+    <mvc:groovy/>
 </mvc:view-resolvers>
 
 <mvc:groovy-configurer resource-loader-path="/WEB-INF/"/>

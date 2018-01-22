@@ -1,22 +1,19 @@
-### 19.4.4Advanced FreeMarker configuration
+### 19.4.4高级FreeMarker配置
 
-FreeMarker 'Settings' and 'SharedVariables' can be passed directly to the FreeMarker`Configuration`object managed by Spring by setting the appropriate bean properties on the`FreeMarkerConfigurer`bean. The`freemarkerSettings`property requires a`java.util.Properties`object and the`freemarkerVariables`property requires a`java.util.Map`.
+通过在`FreeMarkerConfigurer` bean上设置合适的bean属性，FreeMarker的'Settings'和'SharedVariables'可以直接传递给Spring管理的FreeMarker`Configuration`对象。 `freemarkerSettings`属性需要一个`java.util.Properties`对象，`freemarkerVariables`属性需要一个`java.util.Map`。
 
 ```java
 <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-	<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
-	<property name="freemarkerVariables">
-		<map>
-			<entry key="xml_escape" value-ref="fmXmlEscape"/>
-		</map>
-	</property>
+    <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+    <property name="freemarkerVariables">
+        <map>
+            <entry key="xml_escape" value-ref="fmXmlEscape"/>
+        </map>
+    </property>
 </bean>
 
 <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
 ```
 
-See the FreeMarker documentation for details of settings and variables as they apply to the`Configuration`object.
-
-  
-
+有关适用于`Configuration`对象的设置和变量的详细信息，请参阅FreeMarker文档。
 

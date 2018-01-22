@@ -1,4 +1,4 @@
-## 19.4 FreeMarker
+## 19.4 FreeMarker
 
-[FreeMarker](http://www.freemarker.org/)is a templating language that can be used as a view technology within Spring MVC applications. For details on the template language, see the[FreeMarker](http://www.freemarker.org/)web site.
+FreeMarker是一种模板语言，可以用作Spring MVC应用程序中的视图技术. 更多关于模板语言的信息，请点击站点 [FreeMarker](http://www.freemarker.org/).
 
