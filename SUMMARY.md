@@ -373,7 +373,7 @@
       * [19.4.2 上下文配置](part-v-the-web/19view-technologies/194-freemarker/1942-context-configuration.md)
       * [19.4.3 创建模板](part-v-the-web/19view-technologies/194-freemarker/1943-creating-templates.md)
       * [19.4.4 高级FreeMarker配置](part-v-the-web/19view-technologies/194-freemarker/1944-advanced-freemarker-configuration.md)
-      * [19.4.5 Bind support and form handling](part-v-the-web/19view-technologies/194-freemarker/1945-bind-support-and-form-handling.md)
+      * [19.4.5 绑定支持和表单处理](part-v-the-web/19view-technologies/194-freemarker/1945-bind-support-and-form-handling.md)
     * [19.5 JSP & JSTL](part-v-the-web/19view-technologies/195-jsp-and-jstl.md)
       * [19.5.1 View resolvers](part-v-the-web/19view-technologies/195-jsp-and-jstl/1951-view-resolvers.md)
       * [19.5.2 'Plain-old' JSPs versus JSTL](part-v-the-web/19view-technologies/195-jsp-and-jstl/1952-plain-old-jsps-versus-jstl.md)
