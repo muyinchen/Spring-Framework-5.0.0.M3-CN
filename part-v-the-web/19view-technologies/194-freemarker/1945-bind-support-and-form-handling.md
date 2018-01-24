@@ -62,11 +62,11 @@ macro的可选形式称为`<@spring.bindEscaped>`接受第二个参数，并明�
 
 * path: 要绑定的字段的名称（即“command.name”）
 
-* options: a Map of all the available values that can be selected from in the input field. The keys to the map represent the values that will be POSTed back from the form and bound to the command object. Map objects stored against the keys are the labels displayed on the form to the user and may be different from the corresponding values posted back by the form. Usually such a map is supplied as reference data by the controller. Any Map implementation can be used depending on required behavior. For strictly sorted maps, a`SortedMap`such as a`TreeMap`with a suitable Comparator may be used and for arbitrary Maps that should return values in insertion order, use a`LinkedHashMap`or a`LinkedMap`from commons-collections.
+* 选项：可以在输入字段中选择的所有可用值的映射。 映射关键字表示将从表单中返回并绑定到命令对象的值。 映射存储在键上的映射对象是表单上显示给用户的标签，可能与表单发回的相应值不同。 通常这种映射是由控制器提供的参考数据。 任何Map实现可以根据需求的行为选择。 对于严格排序的映射，可以使用`SortedMap`（如带有合适的Comparator的`TreeMap`），对于任何应该以插入顺序返回值的Maps，请使用`LinkedHashMap`或Commons-Collection中的`LinkedMap`。
 
-* separator: where multiple options are available as discreet elements \(radio buttons or checkboxes\), the sequence of characters used to separate each one in the list \(ie "&lt;br&gt;"\).
+* 分隔符：其中多个选项可用作离散元素（单选按钮或复选框），用于分隔列表中的每一个（即“&lt;br&gt;”）的字符序列。
 
-* attributes: an additional string of arbitrary tags or text to be included within the HTML tag itself. This string is echoed literally by the macro. For example, in a textarea field you may supply attributes as 'rows="5" cols="60"' or you could pass style information such as 'style="border:1px solid silver"'.
+* 属性：包含在HTML标签本身内的任意标签或文本的附加字符串。 这个字符串被macro指令回显。 例如，在textarea字段中您可以将属性设置为“rows =”5“ cols =”60”或者可以传递样式信息，例如'style="border:1px solid silver"'。
 
 * classOrStyle: for the showErrors macro, the name of the CSS class that the span tag wrapping each error will use. If no information is supplied \(or the value is empty\) then the errors will be wrapped in&lt;b&gt;&lt;/b&gt;tags.
 
