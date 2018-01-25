@@ -68,24 +68,24 @@ macro的可选形式称为`<@spring.bindEscaped>`接受第二个参数，并明�
 
 * 属性：包含在HTML标签本身内的任意标签或文本的附加字符串。 这个字符串被macro指令回显。 例如，在textarea字段中您可以将属性设置为“rows =”5“ cols =”60”或者可以传递样式信息，例如'style="border:1px solid silver"'。
 
-* classOrStyle: for the showErrors macro, the name of the CSS class that the span tag wrapping each error will use. If no information is supplied \(or the value is empty\) then the errors will be wrapped in&lt;b&gt;&lt;/b&gt;tags.
+* classOrStyle：对于showErrors宏，包含每个错误的span标签将使用的CSS类的名称。如果没有提供信息（或值为空），那么错误将被包裹在&lt;b&gt;&lt;/ b&gt;标签中。
 
-Examples of the macros are outlined below some in FTL and some in VTL. Where usage differences exist between the two languages, they are explained in the notes.
+这些宏的例子在FTL中列出了一些，在VTL中列出了一些。 在两种语言之间存在使用差异的地方，他们在笔记中解释。
 
-##### Input Fields
+##### 输入的值
 
-The formInput macro takes the path parameter \(command.name\) and an additional attributes parameter which is empty in the example above. The macro, along with all other form generation macros, performs an implicit spring bind on the path parameter. The binding remains valid until a new bind occurs so the showErrors macro doesn’t need to pass the path parameter again - it simply operates on whichever field a bind was last created for.
+formInput宏接受路径参数（command.name）和一个在上例中为空的附加属性参数。 该宏以及所有其他表单生成宏，对路径参数执行隐式弹簧绑定。 绑定保持有效，直到发生新的绑定为止，所以showErrors宏不需要再次传递路径参数 - 它只是在绑定上次创建的任何字段上运行。
 
-The showErrors macro takes a separator parameter \(the characters that will be used to separate multiple errors on a given field\) and also accepts a second parameter, this time a class name or style attribute. Note that FreeMarker is able to specify default values for the attributes parameter.
+showErrors宏需要一个分隔符参数（将用于分隔给定字段上的多个错误的字符），并且还接受第二个参数，这次是类名称或样式属性。 请注意，FreeMarker能够为attributes参数指定默认值。
 
 ```java
 <@spring.formInput "command.name"/>
 <@spring.showErrors "<br>"/>
 ```
 
-Output is shown below of the form fragment generating the name field, and displaying a validation error after the form was submitted with no value in the field. Validation occurs through Spring’s Validation framework.
+输出显示在生成名称字段的表单片段中，并且在字段中提交表单时没有值时显示验证错误。 验证通过Spring的验证框架进行。
 
-The generated HTML looks like this:
+生成的HTML如下所示：
 
 ```java
 Name:
@@ -98,9 +98,11 @@ Name:
 
 The formTextarea macro works the same way as the formInput macro and accepts the same parameter list. Commonly, the second parameter \(attributes\) will be used to pass style information or rows and cols attributes for the textarea.
 
-##### Selection Fields
+formTextarea宏与formInput宏的工作方式相同，并接受相同的参数列表。 通常，第二个参数（属性）将用于传递文本区域的样式信息或行和列属性。
 
-Four selection field macros can be used to generate common UI value selection inputs in your HTML forms.
+##### 选择字段
+
+四个选择字段宏可用于在HTML表单中生成常见的UI值选择输入。
 
 * formSingleSelect
 
@@ -110,9 +112,9 @@ Four selection field macros can be used to generate common UI value selection in
 
 * formCheckboxes
 
-Each of the four macros accepts a Map of options containing the value for the form field, and the label corresponding to that value. The value and the label can be the same.
+四个宏中的每一个都接受一个包含表单字段值的选项的Map，以及与该值相对应的标签。 值和标签可以是相同的。
 
-An example of radio buttons in FTL is below. The form backing object specifies a default value of 'London' for this field and so no validation is necessary. When the form is rendered, the entire list of cities to choose from is supplied as reference data in the model under the name 'cityMap'.
+FTL中的单选按钮示例如下。 表单支持对象为该字段指定默认值'London'，因此不需要验证。 当表单呈现时，整个城市列表将作为模型中的参考数据以'cityMap'名称提供。
 
 ```java
 ...
@@ -120,7 +122,7 @@ Town:
 <@spring.formRadioButtons "command.address.town", cityMap, ""/><br><br>
 ```
 
-This renders a line of radio buttons, one for each value in`cityMap`using the separator "". No additional attributes are supplied \(the last parameter to the macro is missing\). The cityMap uses the same String for each key-value pair in the map. The map’s keys are what the form actually submits as POSTed request parameters, map values are the labels that the user sees. In the example above, given a list of three well known cities and a default value in the form backing object, the HTML would be
+这将呈现一行单选按钮，每个城市地图中的值使用分隔符""。 没有提供额外的属性（缺少宏的最后一个参数）。 cityMap对地图中的每个键值对使用相同的字符串。 地图的键是表单实际提交的POST请求参数，map值是用户看到的标签。 在上面的例子中，给定一个三个知名城市的列表，并在窗体支持对象中使用一个默认值，HTML将会是
 
 ```js
 Town:
@@ -129,7 +131,7 @@ Town:
 <input type="radio" name="address.town" value="New York">New York</input>
 ```
 
-If your application expects to handle cities by internal codes for example, the map of codes would be created with suitable keys like the example below.
+例如，如果您的应用程序希望通过内部代码处理城市，则可以使用适当的键（如下面的示例）创建代码map。
 
 ```java
 protected Map<String, String> referenceData(HttpServletRequest request) throws Exception {
@@ -144,7 +146,7 @@ protected Map<String, String> referenceData(HttpServletRequest request) throws E
 }
 ```
 
-The code would now produce output where the radio values are the relevant codes but the user still sees the more user friendly city names.
+现在代码将产生输出，其中无线电值是相关的代码，但是用户仍然看到更多用户友好的城市名称。
 
 ```js
 Town:
