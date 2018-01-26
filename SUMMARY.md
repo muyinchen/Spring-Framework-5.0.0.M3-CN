@@ -375,7 +375,7 @@
       * [19.4.4 高级FreeMarker配置](part-v-the-web/19view-technologies/194-freemarker/1944-advanced-freemarker-configuration.md)
       * [19.4.5 绑定支持和表单处理](part-v-the-web/19view-technologies/194-freemarker/1945-bind-support-and-form-handling.md)
     * [19.5 JSP & JSTL](part-v-the-web/19view-technologies/195-jsp-and-jstl.md)
-      * [19.5.1 View resolvers](part-v-the-web/19view-technologies/195-jsp-and-jstl/1951-view-resolvers.md)
+      * [19.5.1 视图解析](part-v-the-web/19view-technologies/195-jsp-and-jstl/1951-view-resolvers.md)
       * [19.5.2 'Plain-old' JSPs versus JSTL](part-v-the-web/19view-technologies/195-jsp-and-jstl/1952-plain-old-jsps-versus-jstl.md)
       * [19.5.3 Additional tags facilitating development](part-v-the-web/19view-technologies/195-jsp-and-jstl/1953-additional-tags-facilitating-development.md)
       * [19.5.4 Using Spring’s form tag library](part-v-the-web/19view-technologies/195-jsp-and-jstl/1954-using-springs-form-tag-library.md)
