@@ -1,46 +1,46 @@
-### 19.5.4 Using Spring’s form tag library
+### 19.5.4 使用Spring的表单标签库
 
-As of version 2.0, Spring provides a comprehensive set of data binding-aware tags for handling form elements when using JSP and Spring Web MVC. Each tag provides support for the set of attributes of its corresponding HTML tag counterpart, making the tags familiar and intuitive to use. The tag-generated HTML is HTML 4.01/XHTML 1.0 compliant.
+从版本2.0开始，Spring提供了一套全面的数据绑定感知标签，用于处理使用JSP和Spring Web MVC的表单元素。 每个标签都提供对其对应的HTML标签对应的一组属性的支持，使标签变得熟悉和直观地使用。 标签生成的HTML符合HTML 4.01 / XHTML 1.0。
 
-Unlike other form/input tag libraries, Spring’s form tag library is integrated with Spring Web MVC, giving the tags access to the command object and reference data your controller deals with. As you will see in the following examples, the form tags make JSPs easier to develop, read and maintain.
+与其他form / input标签库不同，Spring的form标签库与Spring Web MVC集成，使标签可以访问控制器处理的命令对象和引用数据。 正如您在下面的示例中所看到的，表单标签使得JSP更易于开发，读取和维护。
 
-Let’s go through the form tags and look at an example of how each tag is used. We have included generated HTML snippets where certain tags require further commentary.
+让我们通过表单标签，看看每个标签是如何使用的例子。 我们已经包括生成的HTML片段，其中某些标签需要进一步的评论。
 
-#### Configuration
+#### 配置
 
-The form tag library comes bundled in`spring-webmvc.jar`. The library descriptor is called`spring-form.tld`.
+表单标签库捆绑在`spring-webmvc.jar`中。 库描述符称为`spring-form.tld`。
 
-To use the tags from this library, add the following directive to the top of your JSP page:
+要使用此库中的标签，请将以下指令添加到JSP页面的顶部：
 
 ```js
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 ```
 
-where`form`is the tag name prefix you want to use for the tags from this library.
+其中`form`是要用于来自此库的标记的标记名称前缀。
 
-#### The form tag
+#### form标签
 
-This tag renders an HTML 'form' tag and exposes a binding path to inner tags for binding. It puts the command object in the`PageContext`so that the command object can be accessed by inner tags._All the other tags in this library are nested tags of theformtag_.
+这个标签呈现一个HTML的'form'标签，并暴露一个绑定路径到内部标签进行绑定。 它将命令对象放在`PageContext`中，以便命令对象可以被内部标签访问。这个库中的所有其他标签都是标签的嵌套标签。
 
-Let’s assume we have a domain object called`User`. It is a JavaBean with properties such as`firstName`and`lastName`. We will use it as the form backing object of our form controller which returns`form.jsp`. Below is an example of what`form.jsp`would look like:
+假设我们有一个名为`User`的域对象。 它是一个具有诸如`firstName`和`lastName`之类的属性的JavaBean。 我们将使用它作为我们的form控制器返回`form.jsp`的形式支持对象。 下面是`form.jsp`的一个例子：
 
 ```js
 <form:form>
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><form:input path="firstName"/></td>
-		</tr>
-		<tr>
-			<td>Last Name:</td>
-			<td><form:input path="lastName"/></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><form:input path="firstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><form:input path="lastName"/></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -50,21 +50,21 @@ The generated HTML looks like a standard form:
 
 ```js
 <form method="POST">
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><input name="firstName" type="text" value="Harry"/></td>
-		</tr>
-		<tr>
-			<td>Last Name:</td>
-			<td><input name="lastName" type="text" value="Potter"/></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input name="firstName" type="text" value="Harry"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input name="lastName" type="text" value="Potter"/></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form>
 ```
 
@@ -72,21 +72,21 @@ The preceding JSP assumes that the variable name of the form backing object is`'
 
 ```js
 <form:form modelAttribute="user">
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><form:input path="firstName"/></td>
-		</tr>
-		<tr>
-			<td>Last Name:</td>
-			<td><form:input path="lastName"/></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><form:input path="firstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><form:input path="lastName"/></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -103,33 +103,33 @@ Let’s assume our`User`has preferences such as newsletter subscription and a li
 ```java
 public class Preferences {
 
-	private boolean receiveNewsletter;
-	private String[] interests;
-	private String favouriteWord;
+    private boolean receiveNewsletter;
+    private String[] interests;
+    private String favouriteWord;
 
-	public boolean isReceiveNewsletter() {
-		return receiveNewsletter;
-	}
+    public boolean isReceiveNewsletter() {
+        return receiveNewsletter;
+    }
 
-	public void setReceiveNewsletter(boolean receiveNewsletter) {
-		this.receiveNewsletter = receiveNewsletter;
-	}
+    public void setReceiveNewsletter(boolean receiveNewsletter) {
+        this.receiveNewsletter = receiveNewsletter;
+    }
 
-	public String[] getInterests() {
-		return interests;
-	}
+    public String[] getInterests() {
+        return interests;
+    }
 
-	public void setInterests(String[] interests) {
-		this.interests = interests;
-	}
+    public void setInterests(String[] interests) {
+        this.interests = interests;
+    }
 
-	public String getFavouriteWord() {
-		return favouriteWord;
-	}
+    public String getFavouriteWord() {
+        return favouriteWord;
+    }
 
-	public void setFavouriteWord(String favouriteWord) {
-		this.favouriteWord = favouriteWord;
-	}
+    public void setFavouriteWord(String favouriteWord) {
+        this.favouriteWord = favouriteWord;
+    }
 }
 ```
 
@@ -137,31 +137,31 @@ The`form.jsp`would look like:
 
 ```js
 <form:form>
-	<table>
-		<tr>
-			<td>Subscribe to newsletter?:</td>
-			<%-- Approach 1: Property is of type java.lang.Boolean --%>
-			<td><form:checkbox path="preferences.receiveNewsletter"/></td>
-		</tr>
+    <table>
+        <tr>
+            <td>Subscribe to newsletter?:</td>
+            <%-- Approach 1: Property is of type java.lang.Boolean --%>
+            <td><form:checkbox path="preferences.receiveNewsletter"/></td>
+        </tr>
 
-		<tr>
-			<td>Interests:</td>
-			<%-- Approach 2: Property is of an array or of type java.util.Collection --%>
-			<td>
-				Quidditch: <form:checkbox path="preferences.interests" value="Quidditch"/>
-				Herbology: <form:checkbox path="preferences.interests" value="Herbology"/>
-				Defence Against the Dark Arts: <form:checkbox path="preferences.interests" value="Defence Against the Dark Arts"/>
-			</td>
-		</tr>
+        <tr>
+            <td>Interests:</td>
+            <%-- Approach 2: Property is of an array or of type java.util.Collection --%>
+            <td>
+                Quidditch: <form:checkbox path="preferences.interests" value="Quidditch"/>
+                Herbology: <form:checkbox path="preferences.interests" value="Herbology"/>
+                Defence Against the Dark Arts: <form:checkbox path="preferences.interests" value="Defence Against the Dark Arts"/>
+            </td>
+        </tr>
 
-		<tr>
-			<td>Favourite Word:</td>
-			<%-- Approach 3: Property is of type java.lang.Object --%>
-			<td>
-				Magic: <form:checkbox path="preferences.favouriteWord" value="Magic"/>
-			</td>
-		</tr>
-	</table>
+        <tr>
+            <td>Favourite Word:</td>
+            <%-- Approach 3: Property is of type java.lang.Object --%>
+            <td>
+                Magic: <form:checkbox path="preferences.favouriteWord" value="Magic"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -177,19 +177,19 @@ Note that regardless of the approach, the same HTML structure is generated. Belo
 
 ```js
 <tr>
-	<td>Interests:</td>
-	<td>
-		Quidditch: <input name="preferences.interests" type="checkbox" value="Quidditch"/>
-		<input type="hidden" value="1" name="_preferences.interests"/>
-		Herbology: <input name="preferences.interests" type="checkbox" value="Herbology"/>
-		<input type="hidden" value="1" name="_preferences.interests"/>
-		Defence Against the Dark Arts: <input name="preferences.interests" type="checkbox" value="Defence Against the Dark Arts"/>
-		<input type="hidden" value="1" name="_preferences.interests"/>
-	</td>
+    <td>Interests:</td>
+    <td>
+        Quidditch: <input name="preferences.interests" type="checkbox" value="Quidditch"/>
+        <input type="hidden" value="1" name="_preferences.interests"/>
+        Herbology: <input name="preferences.interests" type="checkbox" value="Herbology"/>
+        <input type="hidden" value="1" name="_preferences.interests"/>
+        Defence Against the Dark Arts: <input name="preferences.interests" type="checkbox" value="Defence Against the Dark Arts"/>
+        <input type="hidden" value="1" name="_preferences.interests"/>
+    </td>
 </tr>
 ```
 
-What you might not expect to see is the additional hidden field after each checkbox. When a checkbox in an HTML page is_not_checked, its value will not be sent to the server as part of the HTTP request parameters once the form is submitted, so we need a workaround for this quirk in HTML in order for Spring form data binding to work. The`checkbox`tag follows the existing Spring convention of including a hidden parameter prefixed by an underscore \("\_"\) for each checkbox. By doing this, you are effectively telling Spring that "_the checkbox was visible in the form and I want my object to which the form data will be bound to reflect the state of the checkbox no matter what_".
+What you might not expect to see is the additional hidden field after each checkbox. When a checkbox in an HTML page is_not\_checked, its value will not be sent to the server as part of the HTTP request parameters once the form is submitted, so we need a workaround for this quirk in HTML in order for Spring form data binding to work. The_`checkbox`_tag follows the existing Spring convention of including a hidden parameter prefixed by an underscore \("\_"\) for each checkbox. By doing this, you are effectively telling Spring that "_the checkbox was visible in the form and I want my object to which the form data will be bound to reflect the state of the checkbox no matter what_".
 
 #### The checkboxes tag
 
@@ -199,15 +199,15 @@ Building on the example from the previous`checkbox`tag section. Sometimes you pr
 
 ```js
 <form:form>
-	<table>
-		<tr>
-			<td>Interests:</td>
-			<td>
-				<%-- Property is of an array or of type java.util.Collection --%>
-				<form:checkboxes path="preferences.interests" items="${interestList}"/>
-			</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td>Interests:</td>
+            <td>
+                <%-- Property is of an array or of type java.util.Collection --%>
+                <form:checkboxes path="preferences.interests" items="${interestList}"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -221,11 +221,11 @@ A typical usage pattern will involve multiple tag instances bound to the same pr
 
 ```js
 <tr>
-	<td>Sex:</td>
-	<td>
-		Male: <form:radiobutton path="sex" value="M"/> <br/>
-		Female: <form:radiobutton path="sex" value="F"/>
-	</td>
+    <td>Sex:</td>
+    <td>
+        Male: <form:radiobutton path="sex" value="M"/> <br/>
+        Female: <form:radiobutton path="sex" value="F"/>
+    </td>
 </tr>
 ```
 
@@ -237,8 +237,8 @@ Just like the`checkboxes`tag above, you might want to pass in the available opti
 
 ```js
 <tr>
-	<td>Sex:</td>
-	<td><form:radiobuttons path="sex" items="${sexOptions}"/></td>
+    <td>Sex:</td>
+    <td><form:radiobuttons path="sex" items="${sexOptions}"/></td>
 </tr>
 ```
 
@@ -248,21 +248,21 @@ This tag renders an HTML 'input' tag with type 'password' using the bound value.
 
 ```js
 <tr>
-	<td>Password:</td>
-	<td>
-		<form:password path="password"/>
-	</td>
+    <td>Password:</td>
+    <td>
+        <form:password path="password"/>
+    </td>
 </tr>
 ```
 
-Please note that by default, the password value is_not_shown. If you do want the password value to be shown, then set the value of the`'showPassword'`attribute to true, like so.
+Please note that by default, the password value is\_not\_shown. If you do want the password value to be shown, then set the value of the`'showPassword'`attribute to true, like so.
 
 ```js
 <tr>
-	<td>Password:</td>
-	<td>
-		<form:password path="password" value="^76525bvHGq" showPassword="true"/>
-	</td>
+    <td>Password:</td>
+    <td>
+        <form:password path="password" value="^76525bvHGq" showPassword="true"/>
+    </td>
 </tr>
 ```
 
@@ -274,8 +274,8 @@ Let’s assume a`User`has a list of skills.
 
 ```js
 <tr>
-	<td>Skills:</td>
-	<td><form:select path="skills" items="${skills}"/></td>
+    <td>Skills:</td>
+    <td><form:select path="skills" items="${skills}"/></td>
 </tr>
 ```
 
@@ -283,14 +283,14 @@ If the`User’s`skill were in Herbology, the HTML source of the 'Skills' row wou
 
 ```js
 <tr>
-	<td>Skills:</td>
-	<td>
-		<select name="skills" multiple="true">
-			<option value="Potions">Potions</option>
-			<option value="Herbology" selected="selected">Herbology</option>
-			<option value="Quidditch">Quidditch</option>
-		</select>
-	</td>
+    <td>Skills:</td>
+    <td>
+        <select name="skills" multiple="true">
+            <option value="Potions">Potions</option>
+            <option value="Herbology" selected="selected">Herbology</option>
+            <option value="Quidditch">Quidditch</option>
+        </select>
+    </td>
 </tr>
 ```
 
@@ -300,15 +300,15 @@ This tag renders an HTML 'option'. It sets 'selected' as appropriate based on th
 
 ```js
 <tr>
-	<td>House:</td>
-	<td>
-		<form:select path="house">
-			<form:option value="Gryffindor"/>
-			<form:option value="Hufflepuff"/>
-			<form:option value="Ravenclaw"/>
-			<form:option value="Slytherin"/>
-		</form:select>
-	</td>
+    <td>House:</td>
+    <td>
+        <form:select path="house">
+            <form:option value="Gryffindor"/>
+            <form:option value="Hufflepuff"/>
+            <form:option value="Ravenclaw"/>
+            <form:option value="Slytherin"/>
+        </form:select>
+    </td>
 </tr>
 ```
 
@@ -316,15 +316,15 @@ If the`User’s`house was in Gryffindor, the HTML source of the 'House' row woul
 
 ```js
 <tr>
-	<td>House:</td>
-	<td>
-		<select name="house">
-			<option value="Gryffindor" selected="selected">Gryffindor</option>
-			<option value="Hufflepuff">Hufflepuff</option>
-			<option value="Ravenclaw">Ravenclaw</option>
-			<option value="Slytherin">Slytherin</option>
-		</select>
-	</td>
+    <td>House:</td>
+    <td>
+        <select name="house">
+            <option value="Gryffindor" selected="selected">Gryffindor</option>
+            <option value="Hufflepuff">Hufflepuff</option>
+            <option value="Ravenclaw">Ravenclaw</option>
+            <option value="Slytherin">Slytherin</option>
+        </select>
+    </td>
 </tr>
 ```
 
@@ -334,13 +334,13 @@ This tag renders a list of HTML 'option' tags. It sets the 'selected' attribute 
 
 ```js
 <tr>
-	<td>Country:</td>
-	<td>
-		<form:select path="country">
-			<form:option value="-" label="--Please Select"/>
-			<form:options items="${countryList}" itemValue="code" itemLabel="name"/>
-		</form:select>
-	</td>
+    <td>Country:</td>
+    <td>
+        <form:select path="country">
+            <form:option value="-" label="--Please Select"/>
+            <form:options items="${countryList}" itemValue="code" itemLabel="name"/>
+        </form:select>
+    </td>
 </tr>
 ```
 
@@ -348,15 +348,15 @@ If the`User`lived in the UK, the HTML source of the 'Country' row would look lik
 
 ```js
 <tr>
-	<td>Country:</td>
-	<td>
-		<select name="country">
-			<option value="-">--Please Select</option>
-			<option value="AT">Austria</option>
-			<option value="UK" selected="selected">United Kingdom</option>
-			<option value="US">United States</option>
-		</select>
-	</td>
+    <td>Country:</td>
+    <td>
+        <select name="country">
+            <option value="-">--Please Select</option>
+            <option value="AT">Austria</option>
+            <option value="UK" selected="selected">United Kingdom</option>
+            <option value="US">United States</option>
+        </select>
+    </td>
 </tr>
 ```
 
@@ -370,9 +370,9 @@ This tag renders an HTML 'textarea'.
 
 ```js
 <tr>
-	<td>Notes:</td>
-	<td><form:textarea path="notes" rows="3" cols="20"/></td>
-	<td><form:errors path="notes"/></td>
+    <td>Notes:</td>
+    <td><form:textarea path="notes" rows="3" cols="20"/></td>
+    <td><form:errors path="notes"/></td>
 </tr>
 ```
 
@@ -399,14 +399,14 @@ Let’s assume we want to display all error messages for the`firstName`and`lastN
 ```java
 public class UserValidator implements Validator {
 
-	public boolean supports(Class candidate) {
-		return User.class.isAssignableFrom(candidate);
-	}
+    public boolean supports(Class candidate) {
+        return User.class.isAssignableFrom(candidate);
+    }
 
-	public void validate(Object obj, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required", "Field is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required", "Field is required.");
-	}
+    public void validate(Object obj, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required", "Field is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required", "Field is required.");
+    }
 }
 ```
 
@@ -414,26 +414,26 @@ The`form.jsp`would look like:
 
 ```js
 <form:form>
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><form:input path="firstName"/></td>
-			<%-- Show errors for firstName field --%>
-			<td><form:errors path="firstName"/></td>
-		</tr>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><form:input path="firstName"/></td>
+            <%-- Show errors for firstName field --%>
+            <td><form:errors path="firstName"/></td>
+        </tr>
 
-		<tr>
-			<td>Last Name:</td>
-			<td><form:input path="lastName"/></td>
-			<%-- Show errors for lastName field --%>
-			<td><form:errors path="lastName"/></td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+        <tr>
+            <td>Last Name:</td>
+            <td><form:input path="lastName"/></td>
+            <%-- Show errors for lastName field --%>
+            <td><form:errors path="lastName"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -441,26 +441,26 @@ If we submit a form with empty values in the`firstName`and`lastName`fields, this
 
 ```js
 <form method="POST">
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><input name="firstName" type="text" value=""/></td>
-			<%-- Associated errors to firstName field displayed --%>
-			<td><span name="firstName.errors">Field is required.</span></td>
-		</tr>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input name="firstName" type="text" value=""/></td>
+            <%-- Associated errors to firstName field displayed --%>
+            <td><span name="firstName.errors">Field is required.</span></td>
+        </tr>
 
-		<tr>
-			<td>Last Name:</td>
-			<td><input name="lastName" type="text" value=""/></td>
-			<%-- Associated errors to lastName field displayed --%>
-			<td><span name="lastName.errors">Field is required.</span></td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+        <tr>
+            <td>Last Name:</td>
+            <td><input name="lastName" type="text" value=""/></td>
+            <%-- Associated errors to lastName field displayed --%>
+            <td><span name="lastName.errors">Field is required.</span></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form>
 ```
 
@@ -476,24 +476,24 @@ The example below will display a list of errors at the top of the page, followed
 
 ```js
 <form:form>
-	<form:errors path="*" cssClass="errorBox"/>
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><form:input path="firstName"/></td>
-			<td><form:errors path="firstName"/></td>
-		</tr>
-		<tr>
-			<td>Last Name:</td>
-			<td><form:input path="lastName"/></td>
-			<td><form:errors path="lastName"/></td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
-	</table>
+    <form:errors path="*" cssClass="errorBox"/>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><form:input path="firstName"/></td>
+            <td><form:errors path="firstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><form:input path="lastName"/></td>
+            <td><form:errors path="lastName"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
+    </table>
 </form:form>
 ```
 
@@ -501,24 +501,24 @@ The HTML would look like:
 
 ```js
 <form method="POST">
-	<span name="*.errors" class="errorBox">Field is required.<br/>Field is required.</span>
-	<table>
-		<tr>
-			<td>First Name:</td>
-			<td><input name="firstName" type="text" value=""/></td>
-			<td><span name="firstName.errors">Field is required.</span></td>
-		</tr>
+    <span name="*.errors" class="errorBox">Field is required.<br/>Field is required.</span>
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input name="firstName" type="text" value=""/></td>
+            <td><span name="firstName.errors">Field is required.</span></td>
+        </tr>
 
-		<tr>
-			<td>Last Name:</td>
-			<td><input name="lastName" type="text" value=""/></td>
-			<td><span name="lastName.errors">Field is required.</span></td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<input type="submit" value="Save Changes"/>
-			</td>
-		</tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input name="lastName" type="text" value=""/></td>
+            <td><span name="lastName.errors">Field is required.</span></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Save Changes"/>
+            </td>
+        </tr>
        </table>
 </form>
 ```
@@ -531,7 +531,7 @@ To support HTTP method conversion the Spring MVC form tag was updated to support
 
 ```js
 <form:form method="delete">
-	<p class="submit"><input type="submit" value="Delete Pet"/></p>
+    <p class="submit"><input type="submit" value="Delete Pet"/></p>
 </form:form>
 ```
 
@@ -539,13 +539,13 @@ This will actually perform an HTTP POST, with the 'real' DELETE method hidden be
 
 ```java
 <filter>
-	<filter-name>httpMethodFilter</filter-name>
-	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    <filter-name>httpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 </filter>
 
 <filter-mapping>
-	<filter-name>httpMethodFilter</filter-name>
-	<servlet-name>petclinic</servlet-name>
+    <filter-name>httpMethodFilter</filter-name>
+    <servlet-name>petclinic</servlet-name>
 </filter-mapping>
 ```
 
@@ -554,8 +554,8 @@ The corresponding`@Controller`method is shown below:
 ```java
 @RequestMapping(method = RequestMethod.DELETE)
 public String deletePet(@PathVariable int ownerId, @PathVariable int petId) {
-	this.clinic.deletePet(petId);
-	return "redirect:/owners/" + ownerId;
+    this.clinic.deletePet(petId);
+    return "redirect:/owners/" + ownerId;
 }
 ```
 

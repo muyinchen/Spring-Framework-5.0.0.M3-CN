@@ -378,7 +378,7 @@
       * [19.5.1 视图解析](part-v-the-web/19view-technologies/195-jsp-and-jstl/1951-view-resolvers.md)
       * [19.5.2 'Plain-old' JSPs versus JSTL](part-v-the-web/19view-technologies/195-jsp-and-jstl/1952-plain-old-jsps-versus-jstl.md)
       * [19.5.3 Additional tags facilitating development](part-v-the-web/19view-technologies/195-jsp-and-jstl/1953-additional-tags-facilitating-development.md)
-      * [19.5.4 Using Spring’s form tag library](part-v-the-web/19view-technologies/195-jsp-and-jstl/1954-using-springs-form-tag-library.md)
+      * [19.5.4 使用Spring的表单标签库](part-v-the-web/19view-technologies/195-jsp-and-jstl/1954-using-springs-form-tag-library.md)
     * [19.6 Script templates](part-v-the-web/19view-technologies/196-script-templates.md)
       * [19.6.1 Dependencies](part-v-the-web/19view-technologies/196-script-templates/1961-dependencies.md)
       * [19.6.2 How to integrate script based templating](part-v-the-web/19view-technologies/196-script-templates/1962-how-to-integrate-script-based-templating.md)
